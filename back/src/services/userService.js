@@ -32,7 +32,7 @@ class userAuthService {
     const user = await User.findByEmail({ email });
     if (!user) {
       const errorMessage =
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -53,11 +53,13 @@ class userAuthService {
     const token = jwt.sign({ user_id: user.id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
+    const ObjectId = user._id;
     const id = user.id;
     const name = user.name;
     const description = user.description;
 
     const loginUser = {
+      ObjectId,
       token,
       id,
       email,
