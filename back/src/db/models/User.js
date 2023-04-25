@@ -5,7 +5,10 @@ class User {
     const createdNewUser = await UserModel.create(newUser);
     return createdNewUser;
   }
-
+  static async findByObjectId({ objectId }) {
+    const user = await UserModel.findOne({_id: objectId});
+    return user;
+  }
   static async findByEmail({ email }) {
     const user = await UserModel.findOne({ email });
     return user;
