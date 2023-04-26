@@ -1,6 +1,6 @@
-import { Schema, model} from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const ProjectSchema = new Schema({
+const CertificateSchema = new Schema({
     id: {
         type: String,
         required: true,
@@ -9,20 +9,19 @@ const ProjectSchema = new Schema({
         type: String,
         required: true,
     },
-    projectName: {
+    certificateName: {
         type: String,
         required: true,
     },
-    projectDetail: {
+    certificateDetail: {
         type: String,
         required: true,
-    },
-}
-,{
+    }
+},
+{
     timestamps: true,
-}
-)
+})
 
-const ProjectModel = model("Project", ProjectSchema)
+const CertificateModel = model("Certificate", CertificateSchema)
 
-export {ProjectModel};
+export {CertificateModel}

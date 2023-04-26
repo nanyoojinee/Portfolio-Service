@@ -59,7 +59,6 @@ class userAuthService {
     const description = user.description;
 
     const loginUser = {
-      ObjectId,
       token,
       id,
       email,

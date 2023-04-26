@@ -5,12 +5,17 @@ class Project {
         const createdNewProject = await ProjectModel.create(newProject);
         return createdNewProject;
     }
-    static async findByObjectId({ objectId }) {
-        const project = await ProjectModel.findOne({_id: objectId});
+    static async findById({ ProjectId }) {
+        const project = await ProjectModel.findOne({id: ProjectId});
         return project;
     }
-    static async update({ project_id, fieldToUpdate, newValue}) {
-        const filter = { id: project_id};
+    static async findByUserId({ user_id}) {
+        const projects = await ProjectModel.find({user_id});
+        return projects;
+    }
+
+    static async update({ projectId, fieldToUpdate, newValue}) {
+        const filter = { id: projectId};
         const update = { [fieldToUpdate]: newValue};
         const option = { returnOriginal: false};
 
@@ -20,6 +25,12 @@ class Project {
             option
         );
         return updatedProject
+    }
+
+    static async deleteById({projectId}) {
+        const deleteProject = await AwardModel.deleteOne({id: projectId});
+        const checkProjectDeleted = deleteProject.deletedCount === 1;
+        return checkProjectDeleted
     }
 }
 

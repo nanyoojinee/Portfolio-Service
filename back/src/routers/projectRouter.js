@@ -1,11 +1,12 @@
 import is from "@sindresorhus/is"
 import {Router} from 'express';
 import {login_required} from '../middlewares/login_required';
-import { projectAddService } from '../services/projectService';
+import { projectService } from '../services/projectService';
 
 const projectRouter = Router();
-//login_required 나중에 넣으삼
-projectRouter.post('/project', async function (req,res,next) {
+projectRouter.use(login_required);
+
+projectRouter.post('/project/create', async function (req,res,next) {
     try{
         if (is.emptyObject(req.body)) {
             throw new Error(
@@ -13,20 +14,16 @@ projectRouter.post('/project', async function (req,res,next) {
             );
         }
         // req (request) 에서 데이터 가져오기
-        const id = req.body.id;
+        const user_id = req.body.user_id;
         const projectName = req.body.projectName;
         const projectDetail = req.body.projectDetail;
 
         // 위 데이터를 프로젝트 db에 추가하기
-        const newProject = await projectAddService.addProject({
-            id,
+        const newProject = await projectService.addProject({
+            user_id,
             projectName,
             projectDetail
         })
-
-        if (newProject.errorMessage) {
-            throw new Error(newProject.errorMessage);
-        }
 
         res.status(201).json(newProject);
     } catch (error) {
@@ -34,17 +31,32 @@ projectRouter.post('/project', async function (req,res,next) {
     }
 });
 
-projectRouter.put('/project/edit', login_required, async function(req,res,next) {
+projectRouter.get("/projects/:id", async function (req,res,next) {
     try {
-        //Object Id로 사용자가 작성한 프로젝트를 추출함.
-        const id = req.params.id;
-        const ProjectName = req.body.projectName ?? null;
-        const ProjectDetail = req.body.projectDetail ?? null;
+        const projectId = req.params.id;
 
-        const toUpdate = {ProjectName, ProjectDetail};
+        const project = await projectService.getAward({projectId});
+
+        if([project].errorMessage) {
+            throw new Error(project.errorMessage)
+        }
+        res.status(200).send(project);
+    } catch (error) {
+        next(error);
+    }
+})
+
+projectRouter.put('/projects/:id', async function(req,res,next) {
+    try {
+        //URI로 사용자가 작성한 프로젝트를 추출함.
+        const projectId = req.params.id;
+        const projectName = req.body.projectName ?? null;
+        const projectDetail = req.body.projectDetail ?? null;
+
+        const toUpdate = {projectName, projectDetail};
 
         // 해당 Object id로 Project 정보를 찾아 업데이트함. 업데이트 요소가 없을시 생략
-        const updatedProject = await projectAddService.setProject({id, toUpdate});
+        const updatedProject = await projectService.setProject({projectId, toUpdate});
 
         if (updatedProject.errorMessage) {
             throw new Error(updatedProject.errorMessage);
@@ -54,5 +66,30 @@ projectRouter.put('/project/edit', login_required, async function(req,res,next) 
         next(error);
     }
 });
+
+projectRouter.delete("projects/:id", async function (req,res,next) {
+    try {
+        const projectId = req.params.id;
+
+        const deleteProject = await projectService.deleteProject({ projectId });
+
+        if(deleteProject.errorMessage) {
+            throw new Error(deleteProject.errorMessage);
+        }
+        res.status(200).send(deleteProject);
+    } catch (error) {
+        next(error);
+    }
+})
+
+projectRouter.get("projectlist/:user_id", async function (req,res,next) {
+    try {
+        const user_id = req.params.user_id;
+        const projectList = await projectService.getProjectList({ user_id });
+        res.status(200).send(projectList);
+    } catch (error) {
+        next(error);
+    }
+})
 
 export {projectRouter}

@@ -1,43 +1,63 @@
-import {User, Project} from "../db";
-import {ObjectId} from 'mongodb'
+import {Project} from "../db";
+import { v4 as uuidv4} from "uuid";
 
-class projectAddService{
-    static async addProject({ id, projectName, projectDetail }) {
-        const user = await User.findByObjectId({ id })
-        if (!user) {
-            const errorMessage =
-            id+user+"유저를 찾을수 없습니다. 아마 ObjectId 연결 관련 에러"
-            return { errorMessage };
-        }
-        const newProject = {id, projectName, projectDetail};
+class projectService{
+    static async addProject({ user_id, projectName, projectDetail }) {
+        
+        const id = uuidv4();
+
+        const newProject = {id, user_id, projectName, projectDetail};
         const createdNewProject = await Project.create({ newProject });
         createdNewProject.errorMessage = null;
 
         return createdNewProject;
     }
     
-    static async setProject({ id, toUpdate}) {
-        let project = await Project.findByObjectId({_id: ObjectId(id)})
+    static async getProject({projectId}){
+        const project = await Project.findById({projectId});
+        if (!project) {
+            const errorMessage = "해당 id를 가진 프로젝트가 존재하지 않습니다.";
+            return {errorMessage};
+        }
+        return project;
+    }
+
+    static async getProjectList({ user_id }) {
+        const project = await Project.findByUserId({user_id});
+        return project;
+    }
+
+    static async setProject({ projectId, toUpdate}) {
+        let project = await Project.findById({ projectId })
 
         if (!project) {
-            const errorMessage =
-            "작성한 프로젝트를 찾을수 없습니다. 에러도 몰루겠습니다."
+            const errorMessage = "해당 id를 가진 프로젝트가 존재하지 않습니다."
             return {errorMessage};
         }
 
         if (toUpdate.projectName) {
             const fieldToUpdate = 'projectName';
             const newValue = toUpdate.projectName;
-            project = await Project.update({id, fieldToUpdate, newValue})
+            project = await Project.update({projectId, fieldToUpdate, newValue})
         }
 
         if (toUpdate.projectDetail) {
             const fieldToUpdate = 'projectDetail';
             const newValue = toUpdate.projectDetail;
-            project = await Project.update({id, fieldToUpdate, newValue})
+            project = await Project.update({projectId, fieldToUpdate, newValue})
         }
         return project;
     }
+
+    static async deleteProject({projectId}) {
+        const checkProjectDeleted = await Project.deleteById({projectId});
+
+        if(!checkProjectDeleted) {
+            const errorMessage = "해당 id를 가진 프로젝트가 존재하지 않습니다."
+            return {errorMessage}
+        }
+        return {status: "ok"}
+    }
 }
 
-export {projectAddService};
+export {projectService};
