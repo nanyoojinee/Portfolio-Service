@@ -31,7 +31,7 @@ class certificateService{
         let certificate = await Certificate.findById({ certificateId })
 
         if (!certificate) {
-            const errorMessage = "해당 id를 가진 프로젝트가 존재하지 않습니다."
+            const errorMessage = "해당 id를 가진 자격증이 존재하지 않습니다."
             return {errorMessage};
         }
 
@@ -49,11 +49,11 @@ class certificateService{
         return certificate;
     }
 
-    static async deleteCertificate({CertificateId}) {
+    static async deleteCertificate({certificateId}) {
         const checkCertificateDeleted = await Certificate.deleteById({certificateId});
 
         if(!checkCertificateDeleted) {
-            const errorMessage = "해당 id를 가진 프로젝트가 존재하지 않습니다."
+            const errorMessage = "해당 id를 가진 자격증이 존재하지 않습니다."
             return {errorMessage}
         }
         return {status: "ok"}
