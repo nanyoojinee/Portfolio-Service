@@ -1,10 +1,13 @@
 import { Schema, model} from 'mongoose';
 
 const ProjectSchema = new Schema({
-    _id: Schema.Types.ObjectId,
     id: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        required: true,
+    },
+    user_id: {
+        type: String,
+        required: true,
     },
     projectName: {
         type: String,

@@ -5,7 +5,6 @@ class User {
     const createdNewUser = await UserModel.create(newUser);
     return createdNewUser;
   }
-
   static async findByEmail({ email }) {
     const user = await UserModel.findOne({ email });
     return user;
