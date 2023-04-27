@@ -28,7 +28,7 @@ class Project {
     }
 
     static async deleteById({projectId}) {
-        const deleteProject = await AwardModel.deleteOne({id: projectId});
+        const deleteProject = await ProjectModel.deleteOne({id: projectId});
         const checkProjectDeleted = deleteProject.deletedCount === 1;
         return checkProjectDeleted
     }

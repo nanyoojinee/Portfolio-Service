@@ -35,7 +35,7 @@ projectRouter.get("/projects/:id", async function (req,res,next) {
     try {
         const projectId = req.params.id;
 
-        const project = await projectService.getAward({projectId});
+        const project = await projectService.getProject({projectId});
 
         if([project].errorMessage) {
             throw new Error(project.errorMessage)
