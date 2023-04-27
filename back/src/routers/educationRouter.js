@@ -23,7 +23,7 @@ educationRouter.post("/education/create", async function (req, res, next) {
       user_id,
       school,
       major,
-      graduationStatus
+      graduationStatus,
     });
 
     res.status(201).json(newEducation);
@@ -58,7 +58,10 @@ educationRouter.put("/educations/:id", async function (req, res, next) {
 
     const toUpdate = { school, major, graduationStatus };
 
-    const education = await EducationService.setEducation({ educationId, toUpdate });
+    const education = await EducationService.setEducation({
+      educationId,
+      toUpdate,
+    });
 
     if (education.errorMessage) {
       throw new Error(education.errorMessage);
@@ -86,7 +89,7 @@ educationRouter.delete("/educations/:id", async function (req, res, next) {
   }
 });
 
-educationRouter.get("/awardlist/:user_id", async function (req, res, next) {
+educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
   try {
     const user_id = req.params.user_id;
     const EducationList = await EducationService.getEducationList({ user_id });
