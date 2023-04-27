@@ -3,8 +3,9 @@ import express from "express";
 import { awardRouter } from "./routers/awardRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { certificateRouter } from "./routers/certificateRouter";
-import { awardRouter } from "./routers/awardRouter";
 import { educationRouter } from "./routers/educationRouter";
+import { userAuthRouter} from "./routers/userRouter"
+import { projectRouter } from "./routers/projectRouter";
 
 const app = express();
 
