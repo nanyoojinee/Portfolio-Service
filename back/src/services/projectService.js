@@ -38,13 +38,21 @@ class projectService{
         if (toUpdate.projectName) {
             const fieldToUpdate = 'projectName';
             const newValue = toUpdate.projectName;
+<<<<<<< HEAD
             project = await Project.update({proejctid, fieldToUpdate, newValue})
+=======
+            project = await Project.update({projectId, fieldToUpdate, newValue})
+>>>>>>> backend
         }
 
         if (toUpdate.projectDetail) {
             const fieldToUpdate = 'projectDetail';
             const newValue = toUpdate.projectDetail;
+<<<<<<< HEAD
             project = await Project.update({projectid, fieldToUpdate, newValue})
+=======
+            project = await Project.update({projectId, fieldToUpdate, newValue})
+>>>>>>> backend
         }
         return project;
     }
