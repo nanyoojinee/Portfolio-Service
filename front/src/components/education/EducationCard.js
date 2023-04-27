@@ -1,14 +1,13 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 
-function EducationCard({ education, isEditable, setIsEditing }) {
+function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
   const handleDelete = async () => {
-    try {
-      await Api.delete("educations", education.id);
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    await Api.delete("educations", education.id).then(() => {
+      setEducations((prevEducations) =>
+        prevEducations.filter((a) => a.id !== education.id)
+      );
+    });
   };
 
   return (
