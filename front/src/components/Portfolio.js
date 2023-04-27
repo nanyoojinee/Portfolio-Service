@@ -63,12 +63,12 @@ function Portfolio() {
           />
         </Col>
         <Col>
-          <Awards
+          <Educations
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
           <br />
-          <Educations
+          <Awards
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />

@@ -17,8 +17,9 @@ function EducationCard({ education, isEditable, setIsEditing }) {
         <Col>
           <span>{education.school}</span>
           <br />
-          <span className="text-muted">{education.major}</span>
-          {education.graduationStatus}
+          <span className="text-muted">
+            {education.major} ({education.graduationStatus})
+          </span>
         </Col>
         {isEditable && (
           <Col xs lg="1">
@@ -30,6 +31,10 @@ function EducationCard({ education, isEditable, setIsEditing }) {
             >
               편집
             </Button>
+          </Col>
+        )}
+        {isEditable && (
+          <Col xs lg="1">
             <Button variant="outline-danger" size="sm" onClick={handleDelete}>
               삭제
             </Button>
