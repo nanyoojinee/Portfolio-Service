@@ -3,8 +3,8 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Award from "./Award";
 import AwardAddForm from "./AwardAddForm";
-
-function Awards({ portfolioOwnerId, isEditable }) {
+import AwardCard from "./AwardCard";
+function Awards({ portfolioOwnerId, isEditable, setIsEditing }) {
   const [awards, setAwards] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -16,13 +16,23 @@ function Awards({ portfolioOwnerId, isEditable }) {
     <Card>
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
-        {awards.map((award) => (
+        {/* {awards.map((award) => (
           <Award
             key={award.id}
             award={award}
             setAwards={setAwards}
+            setIsEditing={setIsEditing}
             isEditable={isEditable}
           />
+        ))} */}
+        {awards.map((award) => (
+            <AwardCard
+              key={award.id}
+              award={award}
+              isEditable={true}
+              setIsEditing={setIsEditing}
+              setAwards={setAwards}
+            />
         ))}
         {isAdding && (
           <AwardAddForm

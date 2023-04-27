@@ -1,14 +1,22 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
-function AwardCard({ award, isEditable, setIsEditing }) {
+function AwardCard({ award, isEditable, setIsEditing,setAwards }) {
   const handleDelete = async () => {
-    try {
-      await Api.delete("awards", award.id);
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-    }
+    await Api.delete("awards", award.id).then(() => {
+    setAwards((prevAwards) => prevAwards.filter((a) => a.id !== award.id));
+    });
   };
+  //예외처리
+  // const handleDelete = async () => {
+  //   try {
+  //     await Api.delete("awards", award.id);
+  //     setAwards((prevAwards) => prevAwards.filter((a) => a.id !== award.id));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }; 
+
+  
   return (
     <Card.Text>
       <Row className="align-items-center">
