@@ -1,30 +1,24 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
-function AwardCard({ award, isEditable, setIsEditing,setAwards }) {
-  
+
+function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
   const handleDelete = async () => {
-    await Api.delete("awards", award.id).then(() => {
-    setAwards((prevAwards) => prevAwards.filter((a) => a.id !== award.id));
+    await Api.delete("educations", education.id).then(() => {
+      setEducations((prevEducations) =>
+        prevEducations.filter((a) => a.id !== education.id)
+      );
     });
   };
-  //예외처리
-  // const handleDelete = async () => {
-  //   try {
-  //     await Api.delete("awards", award.id);
-  //     setAwards((prevAwards) => prevAwards.filter((a) => a.id !== award.id));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }; 
 
-  
   return (
     <Card.Text>
       <Row className="align-items-center">
         <Col>
-          <span>{award.title}</span>
+          <span>{education.school}</span>
           <br />
-          <span className="text-muted">{award.description}</span>
+          <span className="text-muted">
+            {education.major} ({education.graduationStatus})
+          </span>
         </Col>
         {isEditable && (
           <Col xs lg="1">
@@ -44,11 +38,10 @@ function AwardCard({ award, isEditable, setIsEditing,setAwards }) {
               삭제
             </Button>
           </Col>
-          
         )}
       </Row>
     </Card.Text>
   );
 }
 
-export default AwardCard;
+export default EducationCard;

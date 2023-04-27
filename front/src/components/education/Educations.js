@@ -1,35 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
-import Award from "./Award";
-import AwardAddForm from "./AwardAddForm";
+import Education from "./Education";
+import EducationAddForm from "./EducationAddForm";
 
-function Awards({ portfolioOwnerId, isEditable, setIsEditing }) {
-  
-  const [awards, setAwards] = useState([]);
+function Educations({ portfolioOwnerId, isEditable }) {
+  const [educations, setEducations] = useState([]);
+
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    Api.get("awardlist", portfolioOwnerId).then((res) => setAwards(res.data));
+    Api.get("educationlist", portfolioOwnerId).then((res) =>
+      setEducations(res.data)
+    );
   }, [portfolioOwnerId]);
 
   return (
     <Card>
       <Card.Body>
-        <Card.Title>수상이력</Card.Title>
-        {awards.map((award) => (
-          <Award
-            key={award.id}
-            award={award}
-            setAwards={setAwards}
-            setIsEditing={setIsEditing}
+        <Card.Title>학력</Card.Title>
+        {educations.map((education) => (
+          <Education
+            key={education.id}
+            education={education}
+            setEducations={setEducations}
             isEditable={isEditable}
           />
         ))}
+
         {isAdding && (
-          <AwardAddForm
+          <EducationAddForm
             portfolioOwnerId={portfolioOwnerId}
-            setAwards={setAwards}
+            setEducations={setEducations}
             setIsAdding={setIsAdding}
           />
         )}
@@ -45,9 +47,4 @@ function Awards({ portfolioOwnerId, isEditable, setIsEditing }) {
   );
 }
 
-export default Awards;
-
-
-
-
-
+export default Educations;
