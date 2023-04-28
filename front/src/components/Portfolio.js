@@ -56,14 +56,16 @@ function Portfolio() {
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
-          <User
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}
-          />
-        </Col>
+    <Container fluid style={{ display: "flex", flexWrap: "wrap" }}>
+
+    <Col style={{ flex: "0 0 25%" }}>
+      <User
+        portfolioOwnerId={portfolioOwner.id}
+        isEditable={portfolioOwner.id === userState.user?.id}
+      />
+    </Col>
+    <Col style={{ flex: "1 75%" }}>
+    
         <Col>
           <Educations
             portfolioOwnerId={portfolioOwner.id}
@@ -86,8 +88,8 @@ function Portfolio() {
           />
           <br />
         </Col>
-      </Row>
-    </Container>
+    </Col>
+  </Container>
   );
 }
 
