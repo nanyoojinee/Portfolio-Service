@@ -26,7 +26,7 @@ function LoginForm() {
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPasswordValid = password.length >= 4;
+  const isPasswordValid = password.length >= 8;
   //
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const isFormValid = isEmailValid && isPasswordValid;
@@ -89,7 +89,7 @@ function LoginForm() {
               />
               {!isPasswordValid && (
                 <Form.Text className="text-success">
-                  비밀번호는 4글자 이상입니다.
+                  비밀번호는 8글자 이상입니다.
                 </Form.Text>
               )}
             </Form.Group>
