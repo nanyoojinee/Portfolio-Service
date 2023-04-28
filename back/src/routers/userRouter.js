@@ -3,6 +3,8 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 
+const multer = require("multer");
+
 const userAuthRouter = Router();
 
 userAuthRouter.post("/user/register", async function (req, res, next) {
@@ -90,8 +92,28 @@ userAuthRouter.get(
   }
 );
 
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" }); // 업로드된 파일을 저장할 폴더 경로를 지정합니다.
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "upload");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString().replace(/:/g , "-") + "-" + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({ storage: fileStorage, fileFilter: fileFilter }); // 업로드된 파일을 저장할 폴더 경로를 지정합니다.
 
 userAuthRouter.post(
   "/users/:id",
