@@ -69,6 +69,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
               </Button>
             </Col>
           </Form.Group>
+
         </Form>
       </Card.Body>
     </Card>
