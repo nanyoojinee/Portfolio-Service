@@ -48,7 +48,7 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
       throw new Error(user.errorMessage);
     }
 
-    res.status(200).send(user);
+    res.status(200).json(user);
   } catch (error) {
     next(error);
   }
@@ -89,6 +89,32 @@ userAuthRouter.get(
     }
   }
 );
+
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" }); // 업로드된 파일을 저장할 폴더 경로를 지정합니다.
+
+userAuthRouter.post(
+  "/users/:id",
+  login_required,
+  upload.single("profileImage"), // single 메소드를 사용하여 하나의 파일만 업로드할 수 있도록 합니다.
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+      const { mimetype, originalname, filename, path } = req.file; // "req.file"에서 추출해야 할 속성 이름도 일치해야 합니다.
+      const profileImage = { mimetype, originalname, filename, path };
+      console.log(profileImage)
+      const user = await userAuthService.uploadProfileImage({ user_id, profileImage });
+  
+      if (user.errorMessage) {
+        throw new Error(user.errorMessage);
+      }
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 
 userAuthRouter.put(
   "/users/:id",
