@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 
+
 class userAuthService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
@@ -74,6 +75,37 @@ class userAuthService {
     return users;
   }
 
+  // static async uploadProfileImage({userId, image}) {
+  //   const user = await User.findByIdAndupdate(
+  //     userId,
+  //     { $set: { profileImage: image}},
+  //     {new: true},
+  //   )
+  //   return user;
+  // }
+
+  static async uploadProfileImage({ user_id, profileImage }) {
+    let user = await User.findById({user_id});
+    
+    if (!user) {
+      const errorMessage = `${user_id} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
+      return { errorMessage };
+    }
+  
+    const { mimetype, originalname, filename, path } = profileImage;
+    
+    user.profileImage = {
+      originalname,
+      mimetype,
+      filename,
+      path,
+    };
+  
+    await user.save();
+  
+    return user;
+  }
+
   static async setUser({ user_id, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById({ user_id });
@@ -109,6 +141,8 @@ class userAuthService {
       const newValue = toUpdate.description;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
+
+
 
     return user;
   }
