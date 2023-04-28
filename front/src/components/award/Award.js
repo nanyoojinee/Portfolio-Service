@@ -18,6 +18,7 @@ function Award({ award, setAwards, isEditable}) {
           isEditable={isEditable}
           setAwards={setAwards}
           setIsEditing={setIsEditing}
+          setAwards={setAwards}
         />
       )}
     </>
