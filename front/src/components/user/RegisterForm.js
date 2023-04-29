@@ -25,11 +25,16 @@ function RegisterForm() {
       );
   };
 
+  const validatePassword = (password) => {
+    return password
+      .toLowerCase()
+      .match(/^(?=.*[A-Za-z])(?=.*[@$!%*#?&])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/);
+  };
 
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPasswordValid = password.length >= 8;
+  const isPasswordValid = validatePassword(password);
   // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
   const isPasswordSame = password === confirmPassword;
   // 이름이 2글자 이상인지 여부를 확인함.
@@ -53,7 +58,7 @@ function RegisterForm() {
       // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (err) {
-      console.log("회원가입에 실패하였습니다.", err);
+      alert("이미 사용중인 이메일입니다.", err);
     }
   };
 
@@ -87,7 +92,7 @@ function RegisterForm() {
               />
               {!isPasswordValid && (
                 <Form.Text className="text-success">
-                  비밀번호는 8글자 이상으로 설정해 주세요.
+                  문자, 숫자, 기호를 조합하여 8자 이상으로 설정해주세요.
                 </Form.Text>
               )}
             </Form.Group>
