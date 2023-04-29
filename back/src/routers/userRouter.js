@@ -115,46 +115,24 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage: fileStorage, fileFilter: fileFilter }); // 업로드된 파일을 저장할 폴더 경로를 지정합니다.
 
-userAuthRouter.post(
-  "/users/:id",
-  login_required,
-  upload.single("profileImage"), // single 메소드를 사용하여 하나의 파일만 업로드할 수 있도록 합니다.
-  async function (req, res, next) {
-    try {
-      const user_id = req.params.id;
-      const { mimetype, originalname, filename, path } = req.file; // "req.file"에서 추출해야 할 속성 이름도 일치해야 합니다.
-      const profileImage = { mimetype, originalname, filename, path };
-      console.log(profileImage)
-      const user = await userAuthService.uploadProfileImage({ user_id, profileImage });
-  
-      if (user.errorMessage) {
-        throw new Error(user.errorMessage);
-      }
-      res.status(200).json(user);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-
 userAuthRouter.put(
   "/users/:id",
   login_required,
+  upload.single("profileImage"),
   async function (req, res, next) {
     try {
-      // URI로부터 사용자 id를 추출함.
       const user_id = req.params.id;
-      // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
-
-      const toUpdate = { name, email, password, description };
-
-      // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+      const profileImage = req.file ?? null;
+      const toUpdate = { name, email, password, description, profileImage };
+      console.log(toUpdate)
+      const updatedUser = await userAuthService.setUser({
+        user_id,
+        toUpdate,
+      });
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
@@ -166,6 +144,7 @@ userAuthRouter.put(
     }
   }
 );
+
 
 userAuthRouter.get(
   "/users/:id",

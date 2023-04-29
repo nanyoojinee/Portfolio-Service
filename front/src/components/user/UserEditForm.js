@@ -66,25 +66,11 @@ function UserEditForm({ user, setIsEditing, setUser }) {
           <Form.Group controlId="userEditProfileImage">
             <Form.Control
               type="file"
-              name="image"
-              id="image"
+              name="profileImage"
+              id="profileImage"
               onChange={(e) => setProfileImage(e.target.files[0])}
             />
           </Form.Group>
-
-          {/* <form
-              class="product-form"
-              action=""
-              method="POST"
-              enctype="multipart/form-data">
-              <label for="image">Image</lable>
-              <input
-              type="file"
-              name="image"
-              id="image">
-              </form>
-           */}
-
 
           <Form.Group as={Row} className="mt-3 text-center">
             <Col sm={{ span: 20 }}>

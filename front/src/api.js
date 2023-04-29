@@ -28,22 +28,22 @@ async function post(endpoint, data) {
   return axios.post(serverUrl + endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",
-      // "Content-Type": "multipart/form-data", // 변경된 Content-Type
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
 
 async function put(endpoint, data) {
-  // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
-  // 예시: {name: "Kim"} => {"name": "Kim"}
-  const bodyData = JSON.stringify(data);
+  const formData = new FormData();
+  for (const key in data) {
+    formData.append(key, data[key]);
+  }
   console.log(`%cPUT 요청: ${serverUrl + endpoint}`, "color: #059c4b;");
-  console.log(`%cPUT 요청 데이터: ${bodyData}`, "color: #059c4b;");
+  console.log(`%cPUT 요청 데이터:`, "color: #059c4b;", formData);
 
-  return axios.put(serverUrl + endpoint, bodyData, {
+  return axios.put(serverUrl + endpoint, formData, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });

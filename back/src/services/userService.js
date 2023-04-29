@@ -75,77 +75,39 @@ class userAuthService {
     return users;
   }
 
-  // static async uploadProfileImage({userId, image}) {
-  //   const user = await User.findByIdAndupdate(
-  //     userId,
-  //     { $set: { profileImage: image}},
-  //     {new: true},
-  //   )
-  //   return user;
-  // }
+static async setUser({ user_id, toUpdate}) {
+  let user = await User.findById({user_id});
 
-  static async uploadProfileImage({ user_id, profileImage }) {
-    let user = await User.findById({user_id});
-    
-    if (!user) {
-      const errorMessage = `${user_id} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
-      return { errorMessage };
-    }
-  
-    const { mimetype, originalname, filename, path } = profileImage;
-    
-    user.profileImage = {
-      originalname,
-      mimetype,
-      filename,
-      path,
-    };
-  
-    await user.save();
-  
-    return user;
+  if (!user) {
+    const errorMessage = `${user_id} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
+    return { errorMessage };
   }
 
-  static async setUser({ user_id, toUpdate }) {
-    // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
-    let user = await User.findById({ user_id });
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      const errorMessage =
-        "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
-    }
-
-    // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
-    if (toUpdate.name) {
-      const fieldToUpdate = "name";
-      const newValue = toUpdate.name;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.email) {
-      const fieldToUpdate = "email";
-      const newValue = toUpdate.email;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.password) {
-      const fieldToUpdate = "password";
-      const newValue = bcrypt.hash(toUpdate.password, 10);
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.description) {
-      const fieldToUpdate = "description";
-      const newValue = toUpdate.description;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-
-
-    return user;
+  if (toUpdate.name) {
+    user.name = toUpdate.name;
   }
+
+  if (toUpdate.email) {
+    user.email = toUpdate.email;
+  }
+
+  if (toUpdate.password) {
+    user.password = bcrypt.hash(toUpdate.password, 10);
+  }
+
+  if (toUpdate.description) {
+    user.description = toUpdate.description;
+  }
+
+  if (toUpdate.profileImage) {
+    const { mimetype, originalname, filename, path } = toUpdate.profileImage;
+    user.profileImage = { originalname, mimetype, filename, path };
+  }
+  await user.save();
+
+  return user;
+}
+
 
   static async getUserInfo({ user_id }) {
     const user = await User.findById({ user_id });
