@@ -14,13 +14,21 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
     e.stopPropagation();
 
     const userId = portfolioOwnerId;
-
-    await Api.post("education/create", {
+    
+    const response = await Api.post("education/create", {
       userId: portfolioOwnerId,
       school,
       major,
       graduationStatus,
     });
+    // create에 성공했다면
+    if(response.status === 200){
+      // 추가된 award 객체를 만들고 (response에서 새롭게 생성된 award의 id를 준다고 가정했을 경우)
+      const newCertificate = {school, major, graduationStatus, id: response.id};
+      // 기존 Awards 배열에 맨 앞에 추가
+      setEducations(prev => [newCertificate , ...prev])
+      setIsAdding(false);
+    }
 
     const res = await Api.get("educationlist", userId);
 

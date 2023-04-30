@@ -6,17 +6,22 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
   const [title, setTitle] = useState(currentAward.title);
   const [description, setDescription] = useState(currentAward.description);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
 
-    const userId = currentAward.userId;
-
-    await Api.put(`awards/${currentAward.id}`, {
-      userId,
-      title,
-      description,
-    });
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+  
+      const userId = currentAward.userId;
+  
+      try {
+        await Api.put(`awards/${currentAward.id}`, {
+          userId,
+          title,
+          description,
+        });
+      } catch (error) {
+        alert(`An error occurred while updating the award: ${error.message}`);
+      }
 
     const res = await Api.get("awardlist", userId);
     setAwards(res.data);

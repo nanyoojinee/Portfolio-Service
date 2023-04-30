@@ -9,14 +9,18 @@ function CertificateEditForm({ currentCertificate, setCertificates, setIsEditing
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+  
     const userId = currentCertificate.userId;
-
-    await Api.put(`certificates/${currentCertificate.id}`, {
-      userId,
-      certificateName,
-      certificateDetail,
-    });
+  
+    try {
+      await Api.put(`certificates/${currentCertificate.id}`, {
+        userId,
+        certificateName,
+        certificateDetail,
+      });
+    } catch (error) {
+      alert(`An error occurred while updating the certificate: ${error.message}`);
+    }
 
     const res = await Api.get("certificatelist", userId);
     setCertificates(res.data);

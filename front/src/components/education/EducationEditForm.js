@@ -12,15 +12,19 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+  
     const userId = currentEducation.userId;
-
-    await Api.put(`educations/${currentEducation.id}`, {
-      userId,
-      school,
-      major,
-      graduationStatus,
-    });
+  
+    try {
+      await Api.put(`educations/${currentEducation.id}`, {
+        userId,
+        school,
+        major,
+        graduationStatus,
+      });
+    } catch (error) {
+      alert(`An error occurred while updating the education: ${error.message}`);
+    }
 
     const res = await Api.get("educationlist", userId);
 
