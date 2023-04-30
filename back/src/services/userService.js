@@ -22,10 +22,7 @@ class userAuthService {
     const newUser = { id, name, email, password: hashedPassword };
 
     // db에 저장
-    const createdNewUser = await User.create({ newUser });
-    createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
-
-    return createdNewUser;
+    return User.create({ newUser });
   }
 
   static async getUser({ email, password }) {
@@ -51,7 +48,7 @@ class userAuthService {
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-    const token = jwt.sign({ user_id: user.id }, secretKey);
+    const token = jwt.sign({ userId: user.id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
     const id = user.id;
@@ -75,11 +72,11 @@ class userAuthService {
     return users;
   }
 
-static async setUser({ user_id, toUpdate}) {
-  let user = await User.findById({user_id});
+static async setUser({ userId, toUpdate}) {
+  let user = await User.findById({userId});
 
   if (!user) {
-    const errorMessage = `${user_id} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
+    const errorMessage = `${userId} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
     return { errorMessage };
   }
 
@@ -100,17 +97,16 @@ static async setUser({ user_id, toUpdate}) {
   }
 
   if (toUpdate.profileImage) {
-    const { mimetype, originalname, filename, path } = toUpdate.profileImage;
-    user.profileImage = { originalname, mimetype, filename, path };
+    const { mimetype, filename, path } = toUpdate.profileImage;
+    user.profileImage = { mimetype, filename, path };
   }
-  await user.save();
-
-  return user;
+  
+  return user.save();
 }
 
 
-  static async getUserInfo({ user_id }) {
-    const user = await User.findById({ user_id });
+  static async getUserInfo({ userId }) {
+    const user = await User.findById({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {

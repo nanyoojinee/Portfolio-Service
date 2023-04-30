@@ -2,13 +2,10 @@ import { Award } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class AwardService {
-  static async addAward({ user_id, title, description }) {
+  static async addAward({ userId, title, description }) {
     const id = uuidv4();
-
-    const newAward = { id, user_id, title, description };
-    const createdNewAward = await Award.create({ newAward });
-
-    return createdNewAward;
+    const award = { id, userId, title, description };
+    return Award.create({ award });
   }
 
   static async getAward({ awardId }) {
@@ -22,9 +19,8 @@ class AwardService {
     return award;
   }
 
-  static async getAwardList({ user_id }) {
-    const awards = await Award.findByUserId({ user_id });
-    return awards;
+  static async getAwardList({ userId }) {
+    return Award.findByUserId({ userId });
   }
 
   static async setAward({ awardId, toUpdate }) {
@@ -37,18 +33,14 @@ class AwardService {
     }
 
     if (toUpdate.title) {
-      const fieldToUpdate = "title";
-      const newValue = toUpdate.title;
-      award = await Award.update({ awardId, fieldToUpdate, newValue });
+      award.title = toUpdate.title;
     }
 
     if (toUpdate.description) {
-      const fieldToUpdate = "description";
-      const newValue = toUpdate.description;
-      award = await Award.update({ awardId, fieldToUpdate, newValue });
+      award.description = toUpdate.description
     }
-
-    return award;
+    
+    return award.save();
   }
 
   static async deleteAward({ awardId }) {

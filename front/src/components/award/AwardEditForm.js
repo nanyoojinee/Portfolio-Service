@@ -10,15 +10,15 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = currentAward.user_id;
+    const userId = currentAward.userId;
 
     await Api.put(`awards/${currentAward.id}`, {
-      user_id,
+      userId,
       title,
       description,
     });
 
-    const res = await Api.get("awardlist", user_id);
+    const res = await Api.get("awardlist", userId);
     setAwards(res.data);
     setIsEditing(false);
   };

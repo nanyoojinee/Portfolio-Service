@@ -2,14 +2,10 @@ import { Project } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class ProjectService {
-  static async addProject({ user_id, projectName, projectDetail }) {
+  static async addProject({ userId, projectName, projectDetail }) {
     const id = uuidv4();
-
-    const newProject = { id, user_id, projectName, projectDetail };
-    const createdNewProject = await Project.create({ newProject });
-    createdNewProject.errorMessage = null;
-
-    return createdNewProject;
+    const project = { id, userId, projectName, projectDetail };
+    return Project.create({ project });
   }
 
   static async getProject({ projectId }) {
@@ -21,9 +17,8 @@ class ProjectService {
     return project;
   }
 
-  static async getProjectList({ user_id }) {
-    const projects = await Project.findByUserId({ user_id });
-    return projects;
+  static async getProjectList({ userId }) {
+    return Project.findByUserId({ userId });
   }
 
   static async setProject({ projectId, toUpdate }) {
@@ -35,17 +30,14 @@ class ProjectService {
     }
 
     if (toUpdate.projectName) {
-      const fieldToUpdate = "projectName";
-      const newValue = toUpdate.projectName;
-      project = await Project.update({ projectId, fieldToUpdate, newValue });
+      project.projectName = toUpdate.projectName;
     }
 
     if (toUpdate.projectDetail) {
-      const fieldToUpdate = "projectDetail";
-      const newValue = toUpdate.projectDetail;
-      project = await Project.update({ projectId, fieldToUpdate, newValue });
+      project.projectDetail = toUpdate.projectDetail;
     }
-    return project;
+
+    return project.save();
   }
 
   static async deleteProject({ projectId }) {

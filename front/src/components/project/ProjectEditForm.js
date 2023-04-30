@@ -10,15 +10,15 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         e.preventDefault();
         e.stopPropagation();
 
-        const user_id = currentProject.user_id;
+        const userId = currentProject.userId;
 
         await Api.put(`projects/${currentProject.id}`, {
-            user_id,
+            userId,
             projectName,
             projectDetail,
         });
 
-        const res = await Api.get("projectlist", user_id);
+        const res = await Api.get("projectlist", userId);
         setProjects(res.data);
         setIsEditing(false);
     };

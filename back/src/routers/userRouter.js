@@ -2,7 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
-
+// userRouter에서 multer로 프로필 사진을 업로드 하는 기능을 넣어서 put 요청을 form-data로 받아야 함
 const multer = require("multer");
 
 const userAuthRouter = Router();
@@ -76,9 +76,9 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-      const user_id = req.currentUserId;
+      const userId = req.currentUserId;
       const currentUserInfo = await userAuthService.getUserInfo({
-        user_id,
+        userId,
       });
 
       if (currentUserInfo.errorMessage) {
@@ -97,7 +97,9 @@ const fileStorage = multer.diskStorage({
     cb(null, "upload");
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString().replace(/:/g , "-") + "-" + file.originalname);
+    const date = new Date().toISOString().replace(/:/g, "-");
+    const filename = Buffer.from(file.originalname, "latin1").toString("utf8");
+    cb(null, `${date}-${filename}`);
   },
 });
 
@@ -121,16 +123,15 @@ userAuthRouter.put(
   upload.single("profileImage"),
   async function (req, res, next) {
     try {
-      const user_id = req.params.id;
+      const userId = req.params.id;
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
       const profileImage = req.file ?? null;
       const toUpdate = { name, email, password, description, profileImage };
-      console.log(toUpdate)
       const updatedUser = await userAuthService.setUser({
-        user_id,
+        userId,
         toUpdate,
       });
 
@@ -151,8 +152,8 @@ userAuthRouter.get(
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.params.id;
-      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+      const userId = req.params.id;
+      const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);

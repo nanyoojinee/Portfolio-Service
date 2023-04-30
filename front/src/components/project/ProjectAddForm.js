@@ -10,15 +10,15 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
       e.preventDefault();
       e.stopPropagation();
 
-      const user_id = portfolioOwnerId;
+      const userId = portfolioOwnerId;
 
         await Api.post("project/create", {
-            user_id: portfolioOwnerId,
+            userId: portfolioOwnerId,
             projectName,
             projectDetail,
         });
 
-        const res = await Api.get("projectlist", user_id);
+        const res = await Api.get("projectlist", userId);
         setProjects(res.data);
         setIsAdding(false);
     };

@@ -10,15 +10,15 @@ function CertificateEditForm({ currentCertificate, setCertificates, setIsEditing
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = currentCertificate.user_id;
+    const userId = currentCertificate.userId;
 
     await Api.put(`certificates/${currentCertificate.id}`, {
-      user_id,
+      userId,
       certificateName,
       certificateDetail,
     });
 
-    const res = await Api.get("certificatelist", user_id);
+    const res = await Api.get("certificatelist", userId);
     setCertificates(res.data);
     setIsEditing(false);
   };
