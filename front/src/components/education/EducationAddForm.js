@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
+const graduationList = ['재학중', '학사졸업', '석사졸업', '박사졸업'];
+
 function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
@@ -47,46 +49,20 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
         />
       </Form.Group>
       <br />
+      {graduationList.map((graduation,index)=>
       <Form.Check
+        key={graduation}
         inline
-        label="재학중"
+        label={graduation}
         name="graduationStatus"
         type={"radio"}
-        id={`inline-radio-1`}
-        value="재학중"
-        checked={graduationStatus === "재학중"}
+        id={`inline-radio-${index}`}
+        value={graduation}
+        checked={graduationStatus === graduation}
         onChange={(e) => setGraduationStatus(e.target.value)}
       />
-      <Form.Check
-        inline
-        label="학사졸업"
-        name="graduationStatus"
-        type={"radio"}
-        id={`inline-radio-2`}
-        value="학사졸업"
-        checked={graduationStatus === "학사졸업"}
-        onChange={(e) => setGraduationStatus(e.target.value)}
-      />
-      <Form.Check
-        inline
-        label="석사졸업"
-        name="graduationStatus"
-        type={"radio"}
-        id={`inline-radio-3`}
-        value="석사졸업"
-        checked={graduationStatus === "석사졸업"}
-        onChange={(e) => setGraduationStatus(e.target.value)}
-      />
-      <Form.Check
-        inline
-        label="박사졸업"
-        name="graduationStatus"
-        type={"radio"}
-        id={`inline-radio-4`}
-        value="박사졸업"
-        checked={graduationStatus === "박사졸업"}
-        onChange={(e) => setGraduationStatus(e.target.value)}
-      />
+  )}
+
       <br />
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>

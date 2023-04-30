@@ -9,9 +9,14 @@ function User({ portfolioOwnerId, isEditable }) {
   // useState 훅을 통해 user 상태를 생성함.
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    // "users/유저id" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
-    Api.get("users", portfolioOwnerId).then((res) => setUser(res.data));
+  useEffect(async () => {
+    try {
+      const res = await Api.get("users", portfolioOwnerId);
+      setUser(res.data);
+    } catch (error) {
+      // handle error here
+      console.error(error);
+    }
   }, [portfolioOwnerId]);
 
   return (
