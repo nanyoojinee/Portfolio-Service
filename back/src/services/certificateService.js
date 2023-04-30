@@ -2,13 +2,10 @@ import { Certificate } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class CertificateService {
-  static async addCertificate({ user_id, certificateName, certificateDetail }) {
+  static async addCertificate({ userId, certificateName, certificateDetail }) {
     const id = uuidv4();
-
-    const newCertificate = { id, user_id, certificateName, certificateDetail };
-    const createdNewCertificate = await Certificate.create({ newCertificate });
-
-    return createdNewCertificate;
+    const certificate = { id, userId, certificateName, certificateDetail };
+    return Certificate.create({ certificate });
   }
 
   static async getCertificate({ certificateId }) {
@@ -22,9 +19,8 @@ class CertificateService {
     return certificate;
   }
 
-  static async getCertificateList({ user_id }) {
-    const certificates = await Certificate.findByUserId({ user_id });
-    return certificates;
+  static async getCertificateList({ userId }) {
+    return Certificate.findByUserId({ userId });
   }
 
   static async setCertificate({ certificateId, toUpdate }) {
@@ -37,18 +33,14 @@ class CertificateService {
     }
 
     if (toUpdate.certificateName) {
-      const fieldToUpdate = "certificateName";
-      const newValue = toUpdate.certificateName;
-      certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue });
+      certificate.certificateName = toUpdate.certificateName;
     }
 
     if (toUpdate.certificateDetail) {
-      const fieldToUpdate = "certificateDetail";
-      const newValue = toUpdate.certificateDetail;
-      certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue });
+      certificate.certificateDetail = toUpdate.certificateDetail;
     }
-
-    return certificate;
+    
+    return certificate.save();
   }
 
   static async deleteCertificate({ certificateId }) {

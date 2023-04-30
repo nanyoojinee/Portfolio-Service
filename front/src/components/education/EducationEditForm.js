@@ -13,16 +13,16 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = currentEducation.user_id;
+    const userId = currentEducation.userId;
 
     await Api.put(`educations/${currentEducation.id}`, {
-      user_id,
+      userId,
       school,
       major,
       graduationStatus,
     });
 
-    const res = await Api.get("educationlist", user_id);
+    const res = await Api.get("educationlist", userId);
 
     setEducations(res.data);
 

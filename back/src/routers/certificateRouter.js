@@ -2,6 +2,8 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { CertificateService } from "../services/certificateService";
+// 파일 업로드 기능이 없으나 form-data로 application/json 처럼 요청을 받으려면 multer().none()로 설정하면 가능함
+const multer = require("multer");
 
 const certificateRouter = Router();
 certificateRouter.use(login_required);
@@ -14,12 +16,12 @@ certificateRouter.post("/certificate/create", async function (req, res, next) {
       );
     }
 
-    const user_id = req.body.user_id;
+    const userId = req.body.userId;
     const certificateName = req.body.certificateName;
     const certificateDetail = req.body.certificateDetail;
 
     const newCertificate = await CertificateService.addCertificate({
-      user_id,
+      userId,
       certificateName,
       certificateDetail,
     });
@@ -46,7 +48,7 @@ certificateRouter.get("/certificates/:id", async function (req, res, next) {
   }
 });
 
-certificateRouter.put("/certificates/:id", async function (req, res, next) {
+certificateRouter.put("/certificates/:id",multer().none(), async function (req, res, next) {
   try {
     const certificateId = req.params.id;
 
@@ -83,10 +85,10 @@ certificateRouter.delete("/certificates/:id", async function (req, res, next) {
   }
 });
 
-certificateRouter.get("/certificatelist/:user_id", async function (req, res, next) {
+certificateRouter.get("/certificatelist/:userId", async function (req, res, next) {
   try {
-    const user_id = req.params.user_id;
-    const certificateList = await CertificateService.getCertificateList({ user_id });
+    const userId = req.params.userId;
+    const certificateList = await CertificateService.getCertificateList({ userId });
     res.status(200).send(certificateList);
   } catch (error) {
     next(error);

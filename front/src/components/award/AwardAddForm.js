@@ -10,15 +10,15 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = portfolioOwnerId;
+    const userId = portfolioOwnerId;
 
     await Api.post("award/create", {
-      user_id: portfolioOwnerId,
+      userId: portfolioOwnerId,
       title,
       description,
     });
 
-    const res = await Api.get("awardlist", user_id);
+    const res = await Api.get("awardlist", userId);
     setAwards(res.data);
     setIsAdding(false);
   };

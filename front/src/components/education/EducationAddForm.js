@@ -13,16 +13,16 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = portfolioOwnerId;
+    const userId = portfolioOwnerId;
 
     await Api.post("education/create", {
-      user_id: portfolioOwnerId,
+      userId: portfolioOwnerId,
       school,
       major,
       graduationStatus,
     });
 
-    const res = await Api.get("educationlist", user_id);
+    const res = await Api.get("educationlist", userId);
 
     setEducations(res.data);
 

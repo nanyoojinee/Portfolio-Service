@@ -22,10 +22,7 @@ class userAuthService {
     const newUser = { id, name, email, password: hashedPassword };
 
     // db에 저장
-    const createdNewUser = await User.create({ newUser });
-    createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
-
-    return createdNewUser;
+    return User.create({ newUser });
   }
 
   static async getUser({ email, password }) {
@@ -51,7 +48,7 @@ class userAuthService {
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-    const token = jwt.sign({ user_id: user.id }, secretKey);
+    const token = jwt.sign({ userId: user.id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
     const id = user.id;
@@ -75,80 +72,41 @@ class userAuthService {
     return users;
   }
 
-  // static async uploadProfileImage({userId, image}) {
-  //   const user = await User.findByIdAndupdate(
-  //     userId,
-  //     { $set: { profileImage: image}},
-  //     {new: true},
-  //   )
-  //   return user;
-  // }
+static async setUser({ userId, toUpdate}) {
+  let user = await User.findById({userId});
 
-  static async uploadProfileImage({ user_id, profileImage }) {
-    let user = await User.findById({user_id});
-    
-    if (!user) {
-      const errorMessage = `${user_id} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
-      return { errorMessage };
-    }
-  
-    const { mimetype, originalname, filename, path } = profileImage;
-    
-    user.profileImage = {
-      originalname,
-      mimetype,
-      filename,
-      path,
-    };
-  
-    await user.save();
-  
-    return user;
+  if (!user) {
+    const errorMessage = `${userId} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
+    return { errorMessage };
   }
 
-  static async setUser({ user_id, toUpdate }) {
-    // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
-    let user = await User.findById({ user_id });
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      const errorMessage =
-        "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
-    }
-
-    // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
-    if (toUpdate.name) {
-      const fieldToUpdate = "name";
-      const newValue = toUpdate.name;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.email) {
-      const fieldToUpdate = "email";
-      const newValue = toUpdate.email;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.password) {
-      const fieldToUpdate = "password";
-      const newValue = bcrypt.hash(toUpdate.password, 10);
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.description) {
-      const fieldToUpdate = "description";
-      const newValue = toUpdate.description;
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
-
-
-    return user;
+  if (toUpdate.name) {
+    user.name = toUpdate.name;
   }
 
-  static async getUserInfo({ user_id }) {
-    const user = await User.findById({ user_id });
+  if (toUpdate.email) {
+    user.email = toUpdate.email;
+  }
+
+  if (toUpdate.password) {
+    user.password = bcrypt.hash(toUpdate.password, 10);
+  }
+
+  if (toUpdate.description) {
+    user.description = toUpdate.description;
+  }
+
+  if (toUpdate.profileImage) {
+    const { mimetype, filename, path } = toUpdate.profileImage;
+    user.profileImage = { mimetype, filename, path };
+  }
+  
+  return user.save();
+}
+
+
+  static async getUserInfo({ userId }) {
+    const user = await User.findById({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {

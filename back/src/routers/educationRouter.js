@@ -2,6 +2,8 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { EducationService } from "../services/educationService";
+// 파일 업로드 기능이 없으나 form-data로 application/json 처럼 요청을 받으려면 multer().none()로 설정하면 가능함
+const multer = require("multer");
 
 const educationRouter = Router();
 educationRouter.use(login_required);
@@ -14,13 +16,13 @@ educationRouter.post("/education/create", async function (req, res, next) {
       );
     }
 
-    const user_id = req.body.user_id;
+    const userId = req.body.userId;
     const school = req.body.school;
     const major = req.body.major;
     const graduationStatus = req.body.graduationStatus;
 
     const newEducation = await EducationService.addEducation({
-      user_id,
+      userId,
       school,
       major,
       graduationStatus,
@@ -48,7 +50,7 @@ educationRouter.get("/educations/:id", async function (req, res, next) {
   }
 });
 
-educationRouter.put("/educations/:id", async function (req, res, next) {
+educationRouter.put("/educations/:id",multer().none(), async function (req, res, next) {
   try {
     const educationId = req.params.id;
 
@@ -89,10 +91,10 @@ educationRouter.delete("/educations/:id", async function (req, res, next) {
   }
 });
 
-educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
+educationRouter.get("/educationlist/:userId", async function (req, res, next) {
   try {
-    const user_id = req.params.user_id;
-    const EducationList = await EducationService.getEducationList({ user_id });
+    const userId = req.params.userId;
+    const EducationList = await EducationService.getEducationList({ userId });
     res.status(200).send(EducationList);
   } catch (error) {
     next(error);
