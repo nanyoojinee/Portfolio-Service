@@ -1,13 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
-
+import { setPageColor } from "./SetPageColor";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
 
 
 function Network() {
+  setPageColor();
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   const [page, setPage] = useState(1);
@@ -37,7 +38,7 @@ function Network() {
 
   const handlePerPageChange = (event) => {
     const newPerPage = Number(event.target.value);
-    setPerPage(/* newPerPage */event.target.value);
+    setPerPage(newPerPage);
     setPage(1);
   };
 

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Card, Col, Row, ToggleButton } from "react-bootstrap";
 import * as Api from "../../api";
+import { setPageColor } from "./SetPageColor";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
+  setPageColor(user.backgroundColor);
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
   //useState로 email 상태를 생성함.
@@ -12,42 +14,13 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
   const [profileImage, setProfileImage] = useState(user.profileImage);
 
-  const [value, setValue] = useState(1);
   const [pageBackgroundColor, setPageBackgroundColor] = useState("white");
   console.log(user)
 
   const handleClick = async (color) => {
     setPageBackgroundColor(color);
-
-    const res = await Api.put(`users/${user.id}`, {
-      pageBackgroundColor: color,
-    });
-    const updatedUser = res.data;
-    
-    setUser(updatedUser);
+    setPageColor(color);
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // "users/유저id" 엔드포인트로 PUT 요청함.
-  //   const res = await Api.put(`users/${user.id}`, {
-  //     name,
-  //     email,
-  //     description,
-  //     profileImage,
-  //     pageBackgroundColor,
-
-  //   });
-  //   // 유저 정보는 response의 data임.
-  //   const updatedUser = res.data;
-  //   // 해당 유저 정보로 user을 세팅함.
-  //   setUser(updatedUser);
-
-  //   // isEditing을 false로 세팅함.
-  //   setIsEditing(false);
-
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,20 +36,10 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     setUser(updatedUser);
   
     // 배경색상값 업데이트
-    /* handleClick(user.pageBackgroundColor); */
-    document.body.style.backgroundColor = pageBackgroundColor;
+    setPageColor(updatedUser.pageBackgroundColor)
     setIsEditing(false);
   };
   
-  // useEffect(() => {
-  //   const body = document.body;
-  //   body.style.backgroundColor = user.pageBackgroundColor;
-  //   console.log(user)
-  //   return () => {
-  //     body.style.backgroundColor = null;
-  //   };
-  // }, [pageBackgroundColor]);
-
   return (
     <Card className="mb-2">
       <Card.Body>
@@ -140,7 +103,6 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "white" }}></div>
               </ToggleButton>
             </div>
-            <style>{`body { margin: 0; background-color: ${user.pageBackgroundColor}; }`}</style>
           </Form.Group>
           <Form.Group as={Row} className="mt-3 text-center">
             <Col sm={{ span: 20 }}>
