@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { Container, Col, Row, ToggleButton } from "react-bootstrap";
 
 import { UserStateContext } from "../App";
 import * as Api from "../api";
@@ -10,7 +10,7 @@ import Projects from './project/Projects';
 import Educations from "./education/Educations";
 import Certificates from "./certificate/Certificates";
 
-function Portfolio(user,setUser) {
+function Portfolio({user,setUser}) {
   const navigate = useNavigate();
   const params = useParams();
   // useState 훅을 통해 portfolioOwner 상태를 생성함.
@@ -21,19 +21,19 @@ function Portfolio(user,setUser) {
   const [value, setValue] = useState(1);
   const [pageBackgroundColor, setPageBackgroundColor] = useState("white");
   
-  // const handleClick = (color) => {
-  //   setPageBackgroundColor(color);
-  // };
+
   const handleClick = async (color) => {
     setPageBackgroundColor(color);
-    
+
     const res = await Api.put(`users/${user.id}`, {
-      backgroundColor: pageBackgroundColor,
+      pageBackgroundColor: color,
     });
     const updatedUser = res.data;
     // 해당 유저 정보로 user을 세팅함.
     setUser(updatedUser);
   };
+  
+  
 
   const userState = useContext(UserStateContext);
 
