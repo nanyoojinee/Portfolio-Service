@@ -1,14 +1,12 @@
 import { Education } from "../db";
 import { v4 as uuidv4 } from "uuid";
+import { EducationModel } from "../db/schemas/education";
 
 class EducationService {
-  static async addEducation({ user_id, school, major, graduationStatus }) {
+  static async addEducation({ userId, school, major, graduationStatus }) {
     const id = uuidv4();
-
-    const newEducation = { id, user_id, school, major, graduationStatus };
-    const createdNewEducation = await Education.create({ newEducation });
-
-    return createdNewEducation;
+    const education = { id, userId, school, major, graduationStatus };
+    return Education.create({ education });
   }
 
   static async getEducation({ educationId }) {
@@ -18,13 +16,11 @@ class EducationService {
         "해당 id를 가진 학력 데이터는 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
-
     return education;
   }
 
-  static async getEducationList({ user_id }) {
-    const educations = await Education.findByUserId({ user_id });
-    return educations;
+  static async getEducationList({ userId }) {
+    return Education.findByUserId({ userId });
   }
 
   static async setEducation({ educationId, toUpdate }) {
@@ -37,24 +33,18 @@ class EducationService {
     }
 
     if (toUpdate.school) {
-      const fieldToUpdate = "school";
-      const newValue = toUpdate.school;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
+      education.school = toUpdate.school;
     }
 
     if (toUpdate.major) {
-      const fieldToUpdate = "major";
-      const newValue = toUpdate.major;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
+      education.major = toUpdate.major;
     }
 
     if (toUpdate.graduationStatus) {
-        const fieldToUpdate = "graduationStatus";
-        const newValue = toUpdate.graduationStatus;
-        education = await Education.update({ educationId, fieldToUpdate, newValue });
+        education.graduationStatus = toUpdate.graduationStatus;
       }
-
-    return education;
+    
+    return education.save();
   }
 
   static async deleteEducation({ educationId }) {

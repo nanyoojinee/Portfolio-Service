@@ -1,11 +1,13 @@
 import { Schema, model } from "mongoose";
 
+const academicStatus = ["재학중", "학사졸업", "석사졸업", "박사졸업"];
+
 const EducationSchema = new Schema({
   id: {
     type: String,
     required: true,
   },
-  user_id: {
+  userId: {
     type: String,
     require: true,
   },
@@ -19,7 +21,7 @@ const EducationSchema = new Schema({
   },
   graduationStatus: {
     type: String,
-    enum: ["재학중", "학사졸업", "석사졸업", "박사졸업"],
+    enum: academicStatus,
     required: true,
   },
 });

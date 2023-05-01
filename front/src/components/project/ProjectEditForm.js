@@ -7,18 +7,22 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     const [projectDetail, setProjectDetail] = useState(currentProject.projectDetail);
     
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const user_id = currentProject.user_id;
-
+      e.preventDefault();
+      e.stopPropagation();
+    
+      const userId = currentProject.userId;
+    
+      try {
         await Api.put(`projects/${currentProject.id}`, {
-            user_id,
-            projectName,
-            projectDetail,
+          userId,
+          projectName,
+          projectDetail,
         });
+      } catch (error) {
+        alert(`An error occurred while updating the project: ${error.message}`);
+      }
 
-        const res = await Api.get("projectlist", user_id);
+        const res = await Api.get("projectlist", userId);
         setProjects(res.data);
         setIsEditing(false);
     };

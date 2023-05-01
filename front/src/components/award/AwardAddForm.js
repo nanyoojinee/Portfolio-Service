@@ -10,15 +10,24 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = portfolioOwnerId;
+    const userId = portfolioOwnerId;
 
-    await Api.post("award/create", {
-      user_id: portfolioOwnerId,
+    const response = await Api.post("award/create", {
+      userId: portfolioOwnerId,
       title,
       description,
     });
+    // create에 성공했다면
+    if(response.status === 200){
+      // 추가된 award 객체를 만들고 (response에서 새롭게 생성된 award의 id를 준다고 가정했을 경우)
+      const newAward = {title, description, id: response.id};
+      // 기존 Awards 배열에 맨 앞에 추가
+      setAwards(prev => [newAward , ...prev])
+      setIsAdding(false);
+    }
 
-    const res = await Api.get("awardlist", user_id);
+
+    const res = await Api.get("awardlist", userId);
     setAwards(res.data);
     setIsAdding(false);
   };

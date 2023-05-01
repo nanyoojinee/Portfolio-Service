@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-
+import { validateEmail } from "./ValidateEmail";
 import * as Api from "../../api";
 
 function RegisterForm() {

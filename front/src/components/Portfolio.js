@@ -38,22 +38,30 @@ function Portfolio() {
       return;
     }
 
-    if (params.userId) {
-      // 만약 현재 URL이 "/users/:userId" 라면, 이 userId를 유저 id로 설정함.
-      const ownerId = params.userId;
-      // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
-      fetchPorfolioOwner(ownerId);
-    } else {
-      // 이외의 경우, 즉 URL이 "/" 라면, 전역 상태의 user.id를 유저 id로 설정함.
-      const ownerId = userState.user.id;
-      // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
-      fetchPorfolioOwner(ownerId);
-    }
+    // if (params.userId) {
+    //   // 만약 현재 URL이 "/users/:userId" 라면, 이 userId를 유저 id로 설정함.
+    //   const ownerId = params.userId;
+    //   // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
+    //   fetchPorfolioOwner(ownerId);
+    // } else {
+    //   // 이외의 경우, 즉 URL이 "/" 라면, 전역 상태의 user.id를 유저 id로 설정함.
+    //   const ownerId = userState.user.id;
+    //   // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
+    //   fetchPorfolioOwner(ownerId);
+    // }
+
+    const ownerId = params.userId || userState.user.id;
+    fetchPorfolioOwner(ownerId);
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
     return "loading...";
   }
+
+  const portfolioInfoProps = {
+    portfolioOwnerId: portfolioOwner.id,
+    isEditable: portfolioOwner.id === userState.user?.id,
+  };
 
   return (
     <Container fluid style={{ display: "flex", flexWrap: "wrap" }}>
@@ -65,25 +73,13 @@ function Portfolio() {
       </Col>
       <Col style={{ flex: "1 75%" }}>
         <Col>
-          <Educations
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}
-          />
+          <Educations {...portfolioInfoProps} />
           <br />
-          <Awards
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}
-          />
+          <Awards {...portfolioInfoProps} />
           <br />
-          <Projects
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}
-          />
+          <Projects {...portfolioInfoProps} />
           <br />
-          <Certificates
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}
-          />
+          <Certificates {...portfolioInfoProps} />
           <br />
         </Col>
       </Col>

@@ -10,15 +10,23 @@ function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) 
     e.preventDefault();
     e.stopPropagation();
 
-    const user_id = portfolioOwnerId;
+    const userId = portfolioOwnerId;
 
-    await Api.post("certificate/create", {
-      user_id: portfolioOwnerId,
+    const response = await Api.post("certificate/create", {
+      userId: portfolioOwnerId,
       certificateName,
       certificateDetail,
     });
+    // create에 성공했다면
+    if(response.status === 200){
+      // 추가된 award 객체를 만들고 (response에서 새롭게 생성된 award의 id를 준다고 가정했을 경우)
+      const newCertificate = {certificateName, certificateDetail, id: response.id};
+      // 기존 Awards 배열에 맨 앞에 추가
+      setCertificates(prev => [newCertificate , ...prev])
+      setIsAdding(false);
+    }
 
-    const res = await Api.get("certificatelist", user_id);
+    const res = await Api.get("certificatelist", userId);
     setCertificates(res.data);
     setIsAdding(false);
   };

@@ -10,15 +10,25 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
       e.preventDefault();
       e.stopPropagation();
 
-      const user_id = portfolioOwnerId;
+      const userId = portfolioOwnerId;
 
-        await Api.post("project/create", {
-            user_id: portfolioOwnerId,
-            projectName,
-            projectDetail,
+        const response = await Api.post("project/create", {
+          userId: portfolioOwnerId,
+          projectName,
+          projectDetail,
         });
+        // create에 성공했다면
+        if(response.status === 200){
+          // 추가된 award 객체를 만들고 (response에서 새롭게 생성된 award의 id를 준다고 가정했을 경우)
+          const newProject = {  projectName, projectDetail, id: response.id};
+          // 기존 Awards 배열에 맨 앞에 추가
+          setProjects(prev => [newProject , ...prev])
+          setIsAdding(false);
+        }
 
-        const res = await Api.get("projectlist", user_id);
+        
+
+        const res = await Api.get("projectlist", userId);
         setProjects(res.data);
         setIsAdding(false);
     };
