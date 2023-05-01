@@ -64,11 +64,14 @@ function Portfolio() {
   };
 
   return (
-    <Container fluid style={{ display: "flex", flexWrap: "wrap" }}>
-      <Col style={{ flex: "0 0 25%" }}>
-        <User {...portfolioInfoProps} />
-      </Col>
-      <Col style={{ flex: "1 75%" }}>
+    <Container fluid style={{ display: "flex", flexWrap: "wrap", justifyContent: "center",  marginTop: "50px" }}>
+
+    <Col style={{ flex: "0 0 25%" }}>
+      <User {...portfolioInfoProps}
+      />
+    </Col>
+    <Col style={{ flex: "1 75%" }}>
+    
         <Col>
           <Educations {...portfolioInfoProps} />
           <br />

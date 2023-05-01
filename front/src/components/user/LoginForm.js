@@ -13,12 +13,10 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  //const [isValid, setIsValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
-  
-  const isFormValid = isEmailValid && isPasswordValid;
 
   const checkValidity = (email, password) => {
     const emailIsValid = validateEmail(email);
@@ -27,9 +25,11 @@ function LoginForm() {
     const passwordIsValid = password.length >= 8;
     setIsPasswordValid(passwordIsValid);
 
-    setIsValid(isFormValid);
+    //setIsValid(isEmailValid && isPasswordValid);
   };
 
+  const isFormValid = isEmailValid && isPasswordValid;
+  
   useEffect(() => {
     checkValidity(email, password);
   }, [email, password]);
