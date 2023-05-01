@@ -6,31 +6,85 @@ import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
 
+
 function Network() {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
-  // useState 훅을 통해 users 상태를 생성함.
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [totalPage, setTotalPage] = useState(1);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
     if (!userState.user) {
       navigate("/login");
       return;
     }
-    // "userlist" 엔드포인트로 GET 요청을 하고, users를 response의 data로 세팅함.
-    Api.get("userlist").then((res) => setUsers(res.data));
-  }, [userState, navigate]);
+
+    Api.get(`userlist?page=${page}&perPage=${perPage}`).then((res) => {
+      setUsers(res.data.posts);
+      setTotalPage(res.data.totalPage);
+    });
+  }, [userState.user, navigate, page, perPage]);
+
+  const handlePrevPage = () => {
+    setPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setPage((prev) => Math.min(prev + 1, totalPage));
+  };
+
+  const handlePerPageChange = (event) => {
+    const newPerPage = Number(event.target.value);
+    setPerPage(/* newPerPage */event.target.value);
+    setPage(1);
+  };
 
   return (
     <Container fluid>
-      <Row xs="auto" className="jusify-content-center">
+      <div className="d-flex justify-content-end my-3">
+        <label htmlFor="perPage" className="me-2">
+          페이지 당 유저 수:
+        </label>
+        <select
+          id="perPage"
+          value={perPage}
+          onChange={handlePerPageChange}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
+      </div>
+      <Row xs="auto" className="justify-content-center">
         {users.map((user) => (
           <UserCard key={user.id} user={user} isNetwork />
         ))}
       </Row>
+      <div className="d-flex justify-content-center mt-4">
+        <button
+          type="button"
+          className="btn btn-primary mx-2"
+          onClick={handlePrevPage}
+          disabled={page === 1}
+        >
+          이전 페이지
+        </button>
+        {page} / {totalPage} 페이지
+        <button
+          type="button"
+          className="btn btn-primary mx-2"
+          onClick={handleNextPage}
+          disabled={page === totalPage}
+        >
+          다음 페이지
+        </button>
+      </div>
     </Container>
   );
 }
+
+
 
 export default Network;
