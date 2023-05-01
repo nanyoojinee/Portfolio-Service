@@ -96,6 +96,10 @@ static async setUser({ userId, toUpdate}) {
     user.description = toUpdate.description;
   }
 
+  if (toUpdate.pageBackgroundColor) {
+    user.pageBackgroundColor = toUpdate.pageBackgroundColor;
+  }
+
   if (toUpdate.profileImage) {
     const { mimetype, filename, path } = toUpdate.profileImage;
     user.profileImage = { mimetype, filename, path };
