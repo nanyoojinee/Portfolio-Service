@@ -18,21 +18,33 @@ function Portfolio({user,setUser}) {
   // fetchPorfolioOwner 함수가 완료된 이후에만 (isFetchCompleted가 true여야) 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면, isFetchCompleted가 false이면 "loading..."만 반환되어서, 화면에 이 로딩 문구만 뜨게 됨.
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
-  const [value, setValue] = useState(1);
-  const [pageBackgroundColor, setPageBackgroundColor] = useState("white");
-  
+  // const [value, setValue] = useState(1);
+  // const [pageBackgroundColor, setPageBackgroundColor] = useState("white");
+  // console.log(user)
+  // const handleClick = async (color) => {
+  //   setPageBackgroundColor(color);
 
-  const handleClick = async (color) => {
-    setPageBackgroundColor(color);
-
-    const res = await Api.put(`users/${user.id}`, {
-      pageBackgroundColor: color,
-    });
-    const updatedUser = res.data;
-    // 해당 유저 정보로 user을 세팅함.
-    setUser(updatedUser);
-  };
+  //   const res = await Api.put(`users/${user.id}`, {
+  //     pageBackgroundColor: color,
+  //   });
+  //   const updatedUser = res.data;
+    
+  //   setUser(updatedUser);
+  // };
+  // const handleClick = async (color) => {
+  //   setPageBackgroundColor(color);
   
+  //   try {
+  //     const res = await Api.put(`users/${user.id}`, {
+  //       pageBackgroundColor: color,
+  //     });
+  //     const updatedUser = res.data;
+  //     setUser(updatedUser);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+   
   
 
   const userState = useContext(UserStateContext);
@@ -87,7 +99,7 @@ function Portfolio({user,setUser}) {
 
     <Col style={{ flex: "0 0 25%" }}>
       <User {...portfolioInfoProps} />
-      <div style={{ display: "flex", flexDirection: "row" ,  marginTop: 20, marginLeft: 10 }}>
+      {/* <div style={{ display: "flex", flexDirection: "row" ,  marginTop: 20, marginLeft: 5 }}>
         <ToggleButton style={{ border: "none" }} variant="outline-primary" value={1} onClick={() => handleClick("#FAD2E1")}>
           <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FAD2E1" }}></div>
         </ToggleButton>
@@ -103,8 +115,14 @@ function Portfolio({user,setUser}) {
         <ToggleButton style={{ border: "none" }} variant="outline-primary" value={5} onClick={() => handleClick("#FFFACD")}>
           <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FFFACD" }}></div>
         </ToggleButton>
+        <ToggleButton style={{ border: "none" }} variant="outline-primary" value={6} onClick={() => handleClick("#c7f7c4")}>
+          <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#c7f7c4" }}></div>
+        </ToggleButton>
+        <ToggleButton style={{ border: "none" }} variant="outline-primary" value={7} onClick={() => handleClick("white")}>
+          <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "white" }}></div>
+        </ToggleButton>
       </div>
-      <style>{`body { margin: 0; background-color: ${pageBackgroundColor}; }`}</style>
+      <style>{`body { margin: 0; background-color: ${pageBackgroundColor}; }`}</style> */}
     </Col>
 
     <Col style={{ flex: "1 75%" }}>
