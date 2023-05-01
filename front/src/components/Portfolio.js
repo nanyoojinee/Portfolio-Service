@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 
 import { UserStateContext } from "../App";
 import * as Api from "../api";
@@ -10,7 +10,7 @@ import Projects from './project/Projects';
 import Educations from "./education/Educations";
 import Certificates from "./certificate/Certificates";
 
-function Portfolio() {
+function Portfolio(user,setUser) {
   const navigate = useNavigate();
   const params = useParams();
   // useState 훅을 통해 portfolioOwner 상태를 생성함.
@@ -18,6 +18,23 @@ function Portfolio() {
   // fetchPorfolioOwner 함수가 완료된 이후에만 (isFetchCompleted가 true여야) 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면, isFetchCompleted가 false이면 "loading..."만 반환되어서, 화면에 이 로딩 문구만 뜨게 됨.
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  const [value, setValue] = useState(1);
+  const [pageBackgroundColor, setPageBackgroundColor] = useState("white");
+  
+  // const handleClick = (color) => {
+  //   setPageBackgroundColor(color);
+  // };
+  const handleClick = async (color) => {
+    setPageBackgroundColor(color);
+    
+    const res = await Api.put(`users/${user.id}`, {
+      backgroundColor: pageBackgroundColor,
+    });
+    const updatedUser = res.data;
+    // 해당 유저 정보로 user을 세팅함.
+    setUser(updatedUser);
+  };
+
   const userState = useContext(UserStateContext);
 
   const fetchPorfolioOwner = async (ownerId) => {
@@ -69,9 +86,27 @@ function Portfolio() {
     <Container fluid style={{ display: "flex", flexWrap: "wrap" }}>
 
     <Col style={{ flex: "0 0 25%" }}>
-      <User {...portfolioInfoProps}
-      />
+      <User {...portfolioInfoProps} />
+      <div style={{ display: "flex", flexDirection: "row" ,  marginTop: 20, marginLeft: 10 }}>
+        <ToggleButton style={{ border: "none" }} variant="outline-primary" value={1} onClick={() => handleClick("#FAD2E1")}>
+          <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FAD2E1" }}></div>
+        </ToggleButton>
+        <ToggleButton style={{ border: "none" }} variant="outline-primary" value={2} onClick={() => handleClick("#E6E6FA")}>
+          <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#E6E6FA" }}></div>
+        </ToggleButton>
+        <ToggleButton style={{ border: "none" }} variant="outline-primary" value={3} onClick={() => handleClick("#89CFF0")}>
+          <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#89CFF0" }}></div>
+        </ToggleButton>
+        <ToggleButton style={{ border: "none" }} variant="outline-primary" value={4} onClick={() => handleClick("#FFE5B4")}>
+          <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FFE5B4" }}></div>
+        </ToggleButton>
+        <ToggleButton style={{ border: "none" }} variant="outline-primary" value={5} onClick={() => handleClick("#FFFACD")}>
+          <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FFFACD" }}></div>
+        </ToggleButton>
+      </div>
+      <style>{`body { margin: 0; background-color: ${pageBackgroundColor}; }`}</style>
     </Col>
+
     <Col style={{ flex: "1 75%" }}>
     
         <Col>
