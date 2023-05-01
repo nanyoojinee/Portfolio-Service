@@ -66,10 +66,7 @@ function Portfolio() {
   return (
     <Container fluid style={{ display: "flex", flexWrap: "wrap" }}>
       <Col style={{ flex: "0 0 25%" }}>
-        <User
-          portfolioOwnerId={portfolioOwner.id}
-          isEditable={portfolioOwner.id === userState.user?.id}
-        />
+        <User {...portfolioInfoProps} />
       </Col>
       <Col style={{ flex: "1 75%" }}>
         <Col>
