@@ -12,6 +12,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             style={{ width: "10rem", height: "8rem" }}
             className="mx-auto d-block mb-3"
             // src="http://placekitten.com/200/200"
+            src="./2023-05-01T11-43-28.602Z-3472394320304063024_20190416165454276JPG"
             alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
           />
         </Row>
