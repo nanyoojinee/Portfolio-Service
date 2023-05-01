@@ -9,14 +9,17 @@ function User({ portfolioOwnerId, isEditable }) {
   // useState 훅을 통해 user 상태를 생성함.
   const [user, setUser] = useState(null);
 
-  useEffect(async () => {
-    try {
-      const res = await Api.get("users", portfolioOwnerId);
-      setUser(res.data);
-    } catch (error) {
-      // handle error here
-      console.error(error);
-    }
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await Api.get("users", portfolioOwnerId);
+        setUser(res.data);
+      } catch (error) {
+        // handle error here
+        console.error(error);
+      }
+    };
+    fetchUser();
   }, [portfolioOwnerId]);
 
   return (

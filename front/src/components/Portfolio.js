@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-import Awards from './award/Awards';
-import Projects from './project/Projects';
+import Awards from "./award/Awards";
+import Projects from "./project/Projects";
 import Educations from "./education/Educations";
 import Certificates from "./certificate/Certificates";
 
@@ -52,7 +52,6 @@ function Portfolio() {
 
     const ownerId = params.userId || userState.user.id;
     fetchPorfolioOwner(ownerId);
-
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
@@ -62,34 +61,26 @@ function Portfolio() {
   const portfolioInfoProps = {
     portfolioOwnerId: portfolioOwner.id,
     isEditable: portfolioOwner.id === userState.user?.id,
-  }
-
+  };
 
   return (
     <Container fluid style={{ display: "flex", flexWrap: "wrap" }}>
-
-    <Col style={{ flex: "0 0 25%" }}>
-      <User {...portfolioInfoProps}
-      />
-    </Col>
-    <Col style={{ flex: "1 75%" }}>
-    
+      <Col style={{ flex: "0 0 25%" }}>
+        <User {...portfolioInfoProps} />
+      </Col>
+      <Col style={{ flex: "1 75%" }}>
         <Col>
-          <Educations {...portfolioInfoProps}
-          />
+          <Educations {...portfolioInfoProps} />
           <br />
-          <Awards {...portfolioInfoProps}
-          />
+          <Awards {...portfolioInfoProps} />
           <br />
-          <Projects {...portfolioInfoProps}
-          />
+          <Projects {...portfolioInfoProps} />
           <br />
-          <Certificates {...portfolioInfoProps}
-          />
+          <Certificates {...portfolioInfoProps} />
           <br />
         </Col>
-    </Col>
-  </Container>
+      </Col>
+    </Container>
   );
 }
 
