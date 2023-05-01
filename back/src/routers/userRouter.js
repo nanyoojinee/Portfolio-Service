@@ -2,6 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+import {UserModel} from "../db/schemas/user"
 // userRouter에서 multer로 프로필 사진을 업로드 하는 기능을 넣어서 put 요청을 form-data로 받아야 함
 const multer = require("multer");
 
@@ -62,8 +63,18 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
-      const users = await userAuthService.getUsers();
-      res.status(200).send(users);
+      let page = Number(req.query.page);
+      let perPage = parseInt(req.query.perPage);
+      const skip = (page - 1) * perPage;
+      const [total, posts] = await Promise.all([
+        UserModel.countDocuments({}),
+        UserModel.find({})
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(perPage),
+      ]);
+      const totalPage = Math.ceil(total / perPage);
+      res.status(200).json({ posts, page, perPage, totalPage });
     } catch (error) {
       next(error);
     }
