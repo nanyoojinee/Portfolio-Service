@@ -2,6 +2,8 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+// userRouter에서 multer로 프로필 사진을 업로드 하는 기능을 넣어서 put 요청을 form-data로 받아야 함
+const multer = require("multer");
 
 const userAuthRouter = Router();
 
@@ -48,7 +50,7 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
       throw new Error(user.errorMessage);
     }
 
-    res.status(200).send(user);
+    res.status(200).json(user);
   } catch (error) {
     next(error);
   }
@@ -74,9 +76,9 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-      const user_id = req.currentUserId;
+      const userId = req.currentUserId;
       const currentUserInfo = await userAuthService.getUserInfo({
-        user_id,
+        userId,
       });
 
       if (currentUserInfo.errorMessage) {
@@ -90,23 +92,48 @@ userAuthRouter.get(
   }
 );
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "upload");
+  },
+  filename: (req, file, cb) => {
+    const date = new Date().toISOString().replace(/:/g, "-");
+    const filename = Buffer.from(file.originalname, "latin1").toString("utf8");
+    cb(null, `${date}-${filename}`);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({ storage: fileStorage, fileFilter: fileFilter }); // 업로드된 파일을 저장할 폴더 경로를 지정합니다.
+
 userAuthRouter.put(
   "/users/:id",
   login_required,
+  upload.single("profileImage"),
   async function (req, res, next) {
     try {
-      // URI로부터 사용자 id를 추출함.
-      const user_id = req.params.id;
-      // body data 로부터 업데이트할 사용자 정보를 추출함.
+      const userId = req.params.id;
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
-
-      const toUpdate = { name, email, password, description };
-
-      // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+      const profileImage = req.file ?? null;
+      const toUpdate = { name, email, password, description, profileImage };
+      const updatedUser = await userAuthService.setUser({
+        userId,
+        toUpdate,
+      });
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
@@ -119,13 +146,14 @@ userAuthRouter.put(
   }
 );
 
+
 userAuthRouter.get(
   "/users/:id",
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.params.id;
-      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+      const userId = req.params.id;
+      const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);

@@ -10,6 +10,8 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
 
+  const [profileImage, setProfileImage] = useState(user.profileImage);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -18,6 +20,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
       name,
       email,
       description,
+      profileImage,
     });
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
@@ -27,6 +30,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     // isEditing을 false로 세팅함.
     setIsEditing(false);
   };
+  
 
   return (
     <Card className="mb-2">
@@ -50,12 +54,21 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             />
           </Form.Group>
 
-          <Form.Group controlId="userEditDescription">
+          <Form.Group controlId="userEditDescription" className="mb-3">
             <Form.Control
               type="text"
               placeholder="정보, 인사말"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="userEditProfileImage">
+            <Form.Control
+              type="file"
+              name="profileImage"
+              id="profileImage"
+              onChange={(e) => setProfileImage(e.target.files[0])}
             />
           </Form.Group>
 
@@ -69,6 +82,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
               </Button>
             </Col>
           </Form.Group>
+
         </Form>
       </Card.Body>
     </Card>
