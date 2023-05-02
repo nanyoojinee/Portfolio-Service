@@ -28,8 +28,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     }
 }, [user?.profileImage?.path]);
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
-      <Card.Body>
+    <Card className="mb-2 ms-3 mr-5" style={{ width: "16rem" }}>
+      <Card.Body >
         <Row className="justify-content-md-center">
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}

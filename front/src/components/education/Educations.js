@@ -16,7 +16,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
   }, [portfolioOwnerId]);
 
   return (
-    <Card>
+    <Card style={{ width: '90%', margin: '0 auto' }}>
       <Card.Body>
         <Card.Title>학력</Card.Title>
         {educations.map((education) => (

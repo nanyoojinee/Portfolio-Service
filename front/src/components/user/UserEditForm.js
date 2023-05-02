@@ -79,7 +79,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             />
           </Form.Group>
           <Form.Group>
-            <div style={{ display: "flex", flexDirection: "row" ,  marginTop: 20, marginLeft: 5 }}>
+            <div style={{ display: "flex", flexDirection: "row" ,  marginTop: 20, marginLeft: -20 }}>
               <ToggleButton style={{ border: "none" }} variant="outline-primary" value={1} onClick={() => handleClick("#FAD2E1")}>
                 <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FAD2E1" }}></div>
               </ToggleButton>
