@@ -187,7 +187,6 @@ userAuthRouter.get(
     try {
       const { imgPath } = req.params;
       const absolutePath = path.join(__dirname,'../../upload', imgPath);
-      console.log(absolutePath);
       res.sendFile(absolutePath);
     } catch (error) {
       next(error);
