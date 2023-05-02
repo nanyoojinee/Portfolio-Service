@@ -4,8 +4,10 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { validateEmail } from "./ValidateEmail";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
+import { setPageColor } from "./SetPageColor";
 
 function LoginForm() {
+  setPageColor();
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
 

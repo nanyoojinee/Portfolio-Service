@@ -15,7 +15,7 @@ function Projects({ portfolioOwnerId, isEditable, setIsEditing }){
     }, [portfolioOwnerId]);
 
     return (
-        <Card>
+        <Card style={{ width: '90%', margin: '0 auto' }}>
         <Card.Body>
           <Card.Title>프로젝트 이력</Card.Title>
           {projects.map((project) => (

@@ -28,6 +28,14 @@ const UserSchema = new Schema(
       filename: { type: String },
       path: {type: String},
     },
+    pageBackgroundColor: {
+      type: String,
+      default: "white",
+    },
+    socialLikes: {
+      type: Number,
+      default: 0,
+    }
   },
   {
     timestamps: true,

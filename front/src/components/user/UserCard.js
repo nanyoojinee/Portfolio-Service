@@ -1,18 +1,41 @@
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { Card, Row, Button, Col } from "react-bootstrap";
+import * as Api from "../../api";
+import axios from "axios";
+
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
+  const [imageUrl, setImageUrl] = useState("http://placekitten.com/200/200");
+  useEffect(() => {
+    if (user?.profileImage?.path) {
+/*    Api.get(user?.profileImage.path).then((res) => {
+      setImageUrl(URL.createObjectURL(res.data));
+    }) */
+    axios
+      .get(`http://localhost:5001/${user?.profileImage?.path}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
+        responseType: "blob", // blob 데이터로 받기 위해 responseType 설정
+      })
+      .then((res) => {
+        const imageUrl = URL.createObjectURL(res.data); // Blob 데이터를 가리키는 URL 생성
+        setImageUrl(imageUrl);
+      })
+      .catch((error) => console.error(error));
+    }
+}, [user?.profileImage?.path]);
   return (
-    
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
-      <Card.Body>
+    <Card className="mb-2 ms-3 mr-5" style={{ width: "16rem" }}>
+      <Card.Body >
         <Row className="justify-content-md-center">
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}
             className="mx-auto d-block mb-3"
-            // src="http://placekitten.com/200/200"
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+            src= {imageUrl}
+            alt= "랜덤 고양이 사진 (http://placekitten.com API 사용)"
           />
         </Row>
         <Card.Title>{user?.name}</Card.Title>

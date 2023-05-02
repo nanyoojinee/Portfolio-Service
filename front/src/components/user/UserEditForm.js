@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Button, Form, Card, Col, Row, ToggleButton } from "react-bootstrap";
 import * as Api from "../../api";
+import { setPageColor } from "./SetPageColor";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
+  // 받아온 user의 pagebackgroundcolor로 배경색 설정
+  setPageColor(user.pageBackgroundColor);
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
   //useState로 email 상태를 생성함.
@@ -12,26 +15,30 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
   const [profileImage, setProfileImage] = useState(user.profileImage);
 
+  const [pageBackgroundColor, setPageBackgroundColor] = useState(user.pageBackgroundColor);
+
+  const handleClick = async (color) => {
+    setPageBackgroundColor(color);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // "users/유저id" 엔드포인트로 PUT 요청함.
+  
     const res = await Api.put(`users/${user.id}`, {
       name,
       email,
       description,
       profileImage,
+      pageBackgroundColor,
     });
-    // 유저 정보는 response의 data임.
     const updatedUser = res.data;
-    // 해당 유저 정보로 user을 세팅함.
     setUser(updatedUser);
-
-    // isEditing을 false로 세팅함.
+  
+    // 배경색상값 업데이트
+    setPageColor(updatedUser.pageBackgroundColor)
     setIsEditing(false);
   };
   
-
   return (
     <Card className="mb-2">
       <Card.Body>
@@ -71,7 +78,31 @@ function UserEditForm({ user, setIsEditing, setUser }) {
               onChange={(e) => setProfileImage(e.target.files[0])}
             />
           </Form.Group>
-
+          <Form.Group>
+            <div style={{ display: "flex", flexDirection: "row" ,  marginTop: 20, marginLeft: -20 }}>
+              <ToggleButton style={{ border: "none" }} variant="outline-primary" value={1} onClick={() => handleClick("#FAD2E1")}>
+                <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FAD2E1" }}></div>
+              </ToggleButton>
+              <ToggleButton style={{ border: "none" }} variant="outline-primary" value={2} onClick={() => handleClick("#E6E6FA")}>
+                <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#E6E6FA" }}></div>
+              </ToggleButton>
+              <ToggleButton style={{ border: "none" }} variant="outline-primary" value={3} onClick={() => handleClick("#89CFF0")}>
+                <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#89CFF0" }}></div>
+              </ToggleButton>
+              <ToggleButton style={{ border: "none" }} variant="outline-primary" value={4} onClick={() => handleClick("#FFE5B4")}>
+                <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FFE5B4" }}></div>
+              </ToggleButton>
+              <ToggleButton style={{ border: "none" }} variant="outline-primary" value={5} onClick={() => handleClick("#FFFACD")}>
+                <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#FFFACD" }}></div>
+              </ToggleButton>
+              <ToggleButton style={{ border: "none" }} variant="outline-primary" value={6} onClick={() => handleClick("#c7f7c4")}>
+                <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#c7f7c4" }}></div>
+              </ToggleButton>
+              <ToggleButton style={{ border: "none" }} variant="outline-primary" value={7} onClick={() => handleClick("white")}>
+                <div style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "white" }}></div>
+              </ToggleButton>
+            </div>
+          </Form.Group>
           <Form.Group as={Row} className="mt-3 text-center">
             <Col sm={{ span: 20 }}>
               <Button variant="primary" type="submit" className="me-3">
