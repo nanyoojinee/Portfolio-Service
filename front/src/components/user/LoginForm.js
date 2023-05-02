@@ -10,6 +10,7 @@ function LoginForm() {
   setPageColor();
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
+  const completionWord = 'Hello, PortFolio!!';
 
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
@@ -18,6 +19,29 @@ function LoginForm() {
   //const [isValid, setIsValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [blogTitle, setBlogTitle] = useState('');
+  const [count, setCount] = useState(0);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+
+  useEffect(() => {
+    const typingInterval = setInterval(() => {
+      setBlogTitle((prevTitleValue) => {
+        const result = prevTitleValue ? prevTitleValue + completionWord[count] : completionWord[0];
+        setCount(count + 1);
+  
+        if (count >= completionWord.length) {
+          setIsTypingComplete(true);
+          clearInterval(typingInterval);
+        }
+  
+        return result;
+      });
+    }, 70);
+  
+    return () => {
+      clearInterval(typingInterval);
+    };
+  });
 
 
   const checkValidity = (email, password) => {
@@ -67,9 +91,14 @@ function LoginForm() {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-md-center mt-5">
-        <Col lg={8}>
+<Container className="d-flex flex-column justify-content-center align-items-center" style={{ height: '100vh'}}>
+  <Container  style={{padding: '1rem', border: '1px solid gray', borderRadius: "10px"}}>
+    <Row className="text-center">
+      <h1>{isTypingComplete ? completionWord : blogTitle}</h1>
+    </Row>
+    {isTypingComplete &&
+      <Row className="mt-5">
+        <Col lg={12}>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="loginEmail">
               <Form.Label>이메일 주소</Form.Label>
@@ -112,14 +141,18 @@ function LoginForm() {
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
                 <Button variant="light" onClick={() => navigate("/register")}>
-                  회원가입하기
+                  회원가입
                 </Button>
               </Col>
             </Form.Group>
+
           </Form>
         </Col>
       </Row>
-    </Container>
+    }
+  </Container>
+  </Container>
+
   );
 }
 

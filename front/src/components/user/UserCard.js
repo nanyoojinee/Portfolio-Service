@@ -5,7 +5,8 @@ import * as Api from "../../api";
 import axios from "axios";
 
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+
+function UserCard({ user, setIsEditing, isEditable, isNetwork}) {
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("http://placekitten.com/200/200");
   useEffect(() => {
@@ -62,7 +63,9 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           <Card.Link
             className="mt-3"
             href="#"
-            onClick={() => navigate(`/users/${user.id}`)}
+            onClick={() => {
+              navigate(`/users/${user.id}`)  
+            }}
           >
             포트폴리오
           </Card.Link>
