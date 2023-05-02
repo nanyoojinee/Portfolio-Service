@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 
-
 class userAuthService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
@@ -72,42 +71,45 @@ class userAuthService {
     return users;
   }
 
-static async setUser({ userId, toUpdate}) {
-  let user = await User.findById({userId});
+  static async setUser({ userId, toUpdate }) {
+    let user = await User.findById({ userId });
 
-  if (!user) {
-    const errorMessage = `${userId} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
-    return { errorMessage };
+    if (!user) {
+      const errorMessage = `${userId} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
+      return { errorMessage };
+    }
+
+    if (toUpdate.name) {
+      user.name = toUpdate.name;
+    }
+
+    if (toUpdate.email) {
+      user.email = toUpdate.email;
+    }
+
+    if (toUpdate.password) {
+      user.password = bcrypt.hash(toUpdate.password, 10);
+    }
+
+    if (toUpdate.description) {
+      user.description = toUpdate.description;
+    }
+
+    if (toUpdate.pageBackgroundColor) {
+      user.pageBackgroundColor = toUpdate.pageBackgroundColor;
+    }
+
+    if (toUpdate.socialLikes) {
+      user.socialLikes = toUpdate.socialLikes;
+    }
+
+    if (toUpdate.profileImage) {
+      const { mimetype, filename, path } = toUpdate.profileImage;
+      user.profileImage = { mimetype, filename, path };
+    }
+
+    return user.save();
   }
-
-  if (toUpdate.name) {
-    user.name = toUpdate.name;
-  }
-
-  if (toUpdate.email) {
-    user.email = toUpdate.email;
-  }
-
-  if (toUpdate.password) {
-    user.password = bcrypt.hash(toUpdate.password, 10);
-  }
-
-  if (toUpdate.description) {
-    user.description = toUpdate.description;
-  }
-
-  if (toUpdate.pageBackgroundColor) {
-    user.pageBackgroundColor = toUpdate.pageBackgroundColor;
-  }
-
-  if (toUpdate.profileImage) {
-    const { mimetype, filename, path } = toUpdate.profileImage;
-    user.profileImage = { mimetype, filename, path };
-  }
-  
-  return user.save();
-}
-
 
   static async getUserInfo({ userId }) {
     const user = await User.findById({ userId });

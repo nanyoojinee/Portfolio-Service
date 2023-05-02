@@ -26,11 +26,24 @@ const UserSchema = new Schema(
     profileImage: {
       mimetype: { type: String },
       filename: { type: String },
-      path: {type: String},
+      path: { type: String },
     },
     pageBackgroundColor: {
       type: String,
-    }
+      default: "white",
+    },
+    socialLikes: {
+      type: Number,
+      default: 0,
+    },
+    pageBackgroundColor: {
+      type: String,
+      default: "white",
+    },
+    socialLikes: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

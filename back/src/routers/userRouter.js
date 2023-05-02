@@ -2,7 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
-import {UserModel} from "../db/schemas/user"
+import { UserModel } from "../db/schemas/user";
 // userRouter에서 multer로 프로필 사진을 업로드 하는 기능을 넣어서 put 요청을 form-data로 받아야 함
 const multer = require("multer");
 
@@ -68,10 +68,7 @@ userAuthRouter.get(
       const skip = (page - 1) * perPage;
       const [total, posts] = await Promise.all([
         UserModel.countDocuments({}),
-        UserModel.find({})
-          .sort({ createdAt: -1 })
-          .skip(skip)
-          .limit(perPage),
+        UserModel.find({}).sort({ createdAt: -1 }).skip(skip).limit(perPage),
       ]);
       const totalPage = Math.ceil(total / perPage);
       res.status(200).json({ posts, page, perPage, totalPage });
@@ -140,8 +137,17 @@ userAuthRouter.put(
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
       const pageBackgroundColor = req.body.pageBackgroundColor ?? null;
+      const socialLikes = req.body.socialLikes ?? null;
       const profileImage = req.file ?? null;
-      const toUpdate = { name, email, password, description, pageBackgroundColor, profileImage };
+      const toUpdate = {
+        name,
+        email,
+        password,
+        description,
+        pageBackgroundColor,
+        socialLikes,
+        profileImage,
+      };
       const updatedUser = await userAuthService.setUser({
         userId,
         toUpdate,
@@ -157,7 +163,6 @@ userAuthRouter.put(
     }
   }
 );
-
 
 userAuthRouter.get(
   "/users/:id",
