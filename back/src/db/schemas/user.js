@@ -30,6 +30,11 @@ const UserSchema = new Schema(
     },
     pageBackgroundColor: {
       type: String,
+      default: "white",
+    },
+    socialLikes: {
+      type: Number,
+      default: 0,
     }
   },
   {

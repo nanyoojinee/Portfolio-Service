@@ -25,6 +25,7 @@ function Portfolio({user}) {
     const res = await Api.get("users", ownerId);
     // 사용자 정보는 response의 data임.
     const ownerData = res.data;
+    // 해당 유저의 pagebackgroundcolor로 배경색 설정
     setPageColor(ownerData.pageBackgroundColor)
     // portfolioOwner을 해당 사용자 정보로 세팅함.
     setPortfolioOwner(ownerData);

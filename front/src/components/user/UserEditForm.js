@@ -4,7 +4,8 @@ import * as Api from "../../api";
 import { setPageColor } from "./SetPageColor";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
-  setPageColor(user.backgroundColor);
+  // 받아온 user의 pagebackgroundcolor로 배경색 설정
+  setPageColor(user.pageBackgroundColor);
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
   //useState로 email 상태를 생성함.
@@ -14,12 +15,10 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
   const [profileImage, setProfileImage] = useState(user.profileImage);
 
-  const [pageBackgroundColor, setPageBackgroundColor] = useState("white");
-  console.log(user)
+  const [pageBackgroundColor, setPageBackgroundColor] = useState(user.pageBackgroundColor);
 
   const handleClick = async (color) => {
     setPageBackgroundColor(color);
-    setPageColor(color);
   };
 
   const handleSubmit = async (e) => {

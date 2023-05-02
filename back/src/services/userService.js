@@ -100,6 +100,10 @@ static async setUser({ userId, toUpdate}) {
     user.pageBackgroundColor = toUpdate.pageBackgroundColor;
   }
 
+  if (toUpdate.socialLikes) {
+    user.socialLikes = toUpdate.socialLikes;
+  }
+  
   if (toUpdate.profileImage) {
     const { mimetype, filename, path } = toUpdate.profileImage;
     user.profileImage = { mimetype, filename, path };

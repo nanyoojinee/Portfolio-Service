@@ -140,8 +140,9 @@ userAuthRouter.put(
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
       const pageBackgroundColor = req.body.pageBackgroundColor ?? null;
+      const socialLikes = req.body.socialLikes ?? null;
       const profileImage = req.file ?? null;
-      const toUpdate = { name, email, password, description, pageBackgroundColor, profileImage };
+      const toUpdate = { name, email, password, description, pageBackgroundColor, socialLikes, profileImage };
       const updatedUser = await userAuthService.setUser({
         userId,
         toUpdate,
