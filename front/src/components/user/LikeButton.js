@@ -1,5 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import * as Api from "../../api";
+import styled from "styled-components";
+import HeartImg from "../../img/heart.png";
+
+const Heart = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`;
 
 function LikeButton({ user }) {
   const [like, setLike] = useState(user?.socialLikes);
@@ -21,7 +29,7 @@ function LikeButton({ user }) {
 
   return (
     <>
-      <button onClick={handleLikeButton}>👍</button>
+      <Heart src={HeartImg} onClick={handleLikeButton} />
       {like}
     </>
   );
