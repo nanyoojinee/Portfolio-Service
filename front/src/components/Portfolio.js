@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Col } from "react-bootstrap";
-
+import { setPageColor } from "./user/SetPageColor";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
@@ -10,7 +10,7 @@ import Projects from "./project/Projects";
 import Educations from "./education/Educations";
 import Certificates from "./certificate/Certificates";
 
-function Portfolio() {
+function Portfolio({ user }) {
   const navigate = useNavigate();
   const params = useParams();
   // useState 훅을 통해 portfolioOwner 상태를 생성함.
@@ -25,6 +25,7 @@ function Portfolio() {
     const res = await Api.get("users", ownerId);
     // 사용자 정보는 response의 data임.
     const ownerData = res.data;
+    setPageColor(ownerData.pageBackgroundColor);
     // portfolioOwner을 해당 사용자 정보로 세팅함.
     setPortfolioOwner(ownerData);
     // fetchPorfolioOwner 과정이 끝났으므로, isFetchCompleted를 true로 바꿈.
@@ -37,18 +38,6 @@ function Portfolio() {
       navigate("/login", { replace: true });
       return;
     }
-
-    // if (params.userId) {
-    //   // 만약 현재 URL이 "/users/:userId" 라면, 이 userId를 유저 id로 설정함.
-    //   const ownerId = params.userId;
-    //   // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
-    //   fetchPorfolioOwner(ownerId);
-    // } else {
-    //   // 이외의 경우, 즉 URL이 "/" 라면, 전역 상태의 user.id를 유저 id로 설정함.
-    //   const ownerId = userState.user.id;
-    //   // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
-    //   fetchPorfolioOwner(ownerId);
-    // }
 
     const ownerId = params.userId || userState.user.id;
     fetchPorfolioOwner(ownerId);
@@ -64,14 +53,20 @@ function Portfolio() {
   };
 
   return (
-    <Container fluid style={{ display: "flex", flexWrap: "wrap", justifyContent: "center",  marginTop: "50px" }}>
+    <Container
+      fluid
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        marginTop: "50px",
+      }}
+    >
+      <Col style={{ flex: "0 0 25%" }}>
+        <User {...portfolioInfoProps} />
+      </Col>
 
-    <Col style={{ flex: "0 0 25%" }}>
-      <User {...portfolioInfoProps}
-      />
-    </Col>
-    <Col style={{ flex: "1 75%" }}>
-    
+      <Col style={{ flex: "1 75%" }}>
         <Col>
           <Educations {...portfolioInfoProps} />
           <br />

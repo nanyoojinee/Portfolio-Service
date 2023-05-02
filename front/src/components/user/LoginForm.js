@@ -4,8 +4,10 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { validateEmail } from "./ValidateEmail";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
+import { setPageColor } from "./SetPageColor";
 
 function LoginForm() {
+  setPageColor();
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
 
@@ -16,7 +18,6 @@ function LoginForm() {
   //const [isValid, setIsValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
-
 
   const checkValidity = (email, password) => {
     const emailIsValid = validateEmail(email);
@@ -29,11 +30,10 @@ function LoginForm() {
   };
 
   const isFormValid = isEmailValid && isPasswordValid;
-  
+
   useEffect(() => {
     checkValidity(email, password);
   }, [email, password]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

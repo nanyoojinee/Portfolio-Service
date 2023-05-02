@@ -28,6 +28,9 @@ const UserSchema = new Schema(
       filename: { type: String },
       path: {type: String},
     },
+    pageBackgroundColor: {
+      type: String,
+    }
   },
   {
     timestamps: true,
