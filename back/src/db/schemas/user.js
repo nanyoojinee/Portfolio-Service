@@ -36,14 +36,6 @@ const UserSchema = new Schema(
       type: Number,
       default: 0,
     },
-    pageBackgroundColor: {
-      type: String,
-      default: "white",
-    },
-    socialLikes: {
-      type: Number,
-      default: 0,
-    },
   },
   {
     timestamps: true,
