@@ -6,6 +6,7 @@ import {UserModel} from "../db/schemas/user"
 // userRouter에서 multer로 프로필 사진을 업로드 하는 기능을 넣어서 put 요청을 form-data로 받아야 함
 const multer = require("multer");
 const path = require("path");
+const fs = require('fs');
 
 const userAuthRouter = Router();
 
@@ -106,7 +107,11 @@ userAuthRouter.get(
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "upload");
+    // 업로드 폴더 생성
+    if (!fs.existsSync('upload/')) {
+      fs.mkdirSync('upload/');
+    }
+    cb(null, "upload/");
   },
   filename: (req, file, cb) => {
     const date = new Date().toISOString().replace(/:/g, "-");
