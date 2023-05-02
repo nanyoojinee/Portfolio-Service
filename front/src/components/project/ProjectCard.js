@@ -18,17 +18,17 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
             <span className="text-muted">{project.projectDetail}</span>
           </Col>
           {isEditable && (
-                  <>
-                    <Col xs={6} md={1} className="d-flex justify-content-end">
-                      <Button
-                        variant="outline-info"
-                        size="sm"
-                        onClick={() => setIsEditing((prev) => !prev)}
-                        className="mr-3"
-                      >
-                        편집
-                      </Button>
-                    </Col>
+            <>
+              <Col xs={6} md={1} className="d-flex justify-content-end">
+                <Button
+                  variant="outline-info"
+                  size="sm"
+                  onClick={() => setIsEditing((prev) => !prev)}
+                   className="mr-3"
+                >
+                  편집
+                </Button>
+                </Col>
                     <Col xs={6} md={1}>
                       <Button
                         variant="outline-danger"

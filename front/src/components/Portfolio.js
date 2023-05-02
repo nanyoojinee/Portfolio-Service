@@ -9,6 +9,8 @@ import Awards from "./award/Awards";
 import Projects from "./project/Projects";
 import Educations from "./education/Educations";
 import Certificates from "./certificate/Certificates";
+import "./portfolio.css";
+import Header from "./Header";
 
 function Portfolio({ user }) {
   const navigate = useNavigate();
@@ -54,21 +56,55 @@ function Portfolio({ user }) {
   };
 
   return (
-    <Container
-      fluid
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        marginTop: "50px",
-      }}
-    >
-      <Col style={{ flex: "0 0 25%" }}>
-        <User {...portfolioInfoProps} />
-      </Col>
-
-      <Col style={{ flex: "1 75%" }}>
-        <Col>
+    <>
+      <div
+        className="header"
+        style={{
+          marginTop: "0px",
+          marginBottom: "0px",
+          marginLeft: "0px",
+          marginRight: "0px",
+        }}
+      >
+        <div
+          className="header__menu"
+          style={{ marginTop: "10px", marginBottom: "10px" }}
+        >
+          <span
+            aria-label="red circle icon"
+            className="header__menu-icon header__menu-icon--red"
+          ></span>
+          <span
+            aria-label="yellow circle icon"
+            className="header__menu-icon header__menu-icon--yellow"
+          ></span>
+          <span
+            aria-label="green circle icon"
+            className="header__menu-icon header__menu-icon--green"
+          ></span>
+          <div className="header__menu-bar" />
+          <span style={{ float: "right" }}>
+            <Header />
+          </span>
+        </div>
+      </div>
+      <Container
+        className="page-content"
+        fluid
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginTop: "0px",
+          marginBottom: "0px",
+          marginLeft: "0px",
+          marginRight: "0px",
+        }}
+      >
+        <Col lg={3} className="sidebar" style={{ flex: "0 0 25%" }}>
+          <User {...portfolioInfoProps} />
+        </Col>
+        <Col lg={9} className="main-content" style={{ flex: "1 75%" }}>
           <Educations {...portfolioInfoProps} />
           <br />
           <Awards {...portfolioInfoProps} />
@@ -78,8 +114,8 @@ function Portfolio({ user }) {
           <Certificates {...portfolioInfoProps} />
           <br />
         </Col>
-      </Col>
-    </Container>
+      </Container>
+    </>
   );
 }
 

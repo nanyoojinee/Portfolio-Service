@@ -86,7 +86,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 display: "flex",
                 flexDirection: "row",
                 marginTop: 20,
-                marginLeft: 5,
+                marginLeft: -20,
               }}
             >
               <ToggleButton
