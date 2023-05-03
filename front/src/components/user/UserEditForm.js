@@ -93,14 +93,14 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 style={{ border: "none" }}
                 variant="outline-primary"
                 value={1}
-                onClick={() => handleClick("#FAD2E1")}
+                onClick={() => handleClick("#FADCDE")}
               >
                 <div
                   style={{
                     width: 20,
                     height: 20,
                     borderRadius: 10,
-                    backgroundColor: "#FAD2E1",
+                    backgroundColor: "#FADCDE",
                   }}
                 ></div>
               </ToggleButton>
@@ -123,14 +123,14 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 style={{ border: "none" }}
                 variant="outline-primary"
                 value={3}
-                onClick={() => handleClick("#89CFF0")}
+                onClick={() => handleClick("#AFEAF0")}
               >
                 <div
                   style={{
                     width: 20,
                     height: 20,
                     borderRadius: 10,
-                    backgroundColor: "#89CFF0",
+                    backgroundColor: "#AFEAF0",
                   }}
                 ></div>
               </ToggleButton>
@@ -168,14 +168,14 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 style={{ border: "none" }}
                 variant="outline-primary"
                 value={6}
-                onClick={() => handleClick("#c7f7c4")}
+                onClick={() => handleClick("#B7EBDF")}
               >
                 <div
                   style={{
                     width: 20,
                     height: 20,
                     borderRadius: 10,
-                    backgroundColor: "#c7f7c4",
+                    backgroundColor: "#B7EBDF",
                   }}
                 ></div>
               </ToggleButton>

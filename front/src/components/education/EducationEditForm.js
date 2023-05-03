@@ -80,7 +80,7 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
         </Form.Group>
 
         <Form.Group as={Col} controlId="formBasicGraduationDate">
-          <Form.Label>졸업(예정)년월</Form.Label>
+          <Form.Label>* 졸업(예정)년월</Form.Label>
           <DatePicker
             selected={graduationDate}
             onChange={(date) => setGraduationDate(date)}

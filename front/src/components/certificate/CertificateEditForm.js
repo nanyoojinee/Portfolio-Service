@@ -58,7 +58,7 @@ function CertificateEditForm({ currentCertificate, setCertificates, setIsEditing
         </Form.Group>
 
         <Form.Group as={Col} controlId="formBasicCertificationGrade" className="mt-3">
-          <Form.Label>* 자격증 등급</Form.Label>
+          <Form.Label>자격증 등급</Form.Label>
           <Form.Control
             style={{width:"80%"}}
             type="text"
