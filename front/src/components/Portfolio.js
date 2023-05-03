@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row} from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import { setPageColor } from "./user/SetPageColor";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
@@ -9,12 +9,10 @@ import Awards from "./award/Awards";
 import Projects from "./project/Projects";
 import Educations from "./education/Educations";
 import Certificates from "./certificate/Certificates";
-import './portfolio.css';
+import "./portfolio.css";
 import Header from "./Header";
 
-
-
-function Portfolio({user}) {
+function Portfolio() {
   const navigate = useNavigate();
   const params = useParams();
   // useState 훅을 통해 portfolioOwner 상태를 생성함.
@@ -30,7 +28,7 @@ function Portfolio({user}) {
     // 사용자 정보는 response의 data임.
     const ownerData = res.data;
     // 해당 유저의 pagebackgroundcolor로 배경색 설정
-    setPageColor(ownerData.pageBackgroundColor)
+    setPageColor(ownerData.pageBackgroundColor);
     // portfolioOwner을 해당 사용자 정보로 세팅함.
     setPortfolioOwner(ownerData);
     // fetchPorfolioOwner 과정이 끝났으므로, isFetchCompleted를 true로 바꿈.
@@ -59,40 +57,66 @@ function Portfolio({user}) {
 
   return (
     <>
-    <div className="header" style={{ marginTop: "0px", marginBottom: "0px", marginLeft: "0px", marginRight: "0px" }}>
-      <div className="header__menu" style={{ marginTop: "10px", marginBottom: "10px" }}>
-        <span aria-label="red circle icon" className="header__menu-icon header__menu-icon--red">      
-        </span>
-        <span aria-label="yellow circle icon" className="header__menu-icon header__menu-icon--yellow">
-        </span>
-        <span aria-label="green circle icon" className="header__menu-icon header__menu-icon--green">
-        </span>
-        <div className="header__menu-bar" />
-        <span style={{float: "right"}}><Header /></span>
-      </div> 
-    </div>
-      <Container className="page-content" fluid style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginTop: "0px", marginBottom: "0px", marginLeft: "0px", marginRight: "0px" }}>
-          <Col lg={3} className="sidebar" style={{ flex: "0 0 25%"}} >
-            <User {...portfolioInfoProps} />
-          </Col>
-          <Col lg={9} className="main-content" style={{ flex: "1 75%"}}>
-            <Educations {...portfolioInfoProps} />
-            <br />
-            <Awards {...portfolioInfoProps} />
-            <br />
-            <Projects {...portfolioInfoProps} />
-            <br />
-            <Certificates {...portfolioInfoProps} />
-            <br />
-          </Col>
+      <div
+        className="header"
+        style={{
+          marginTop: "0px",
+          marginBottom: "0px",
+          marginLeft: "0px",
+          marginRight: "0px",
+        }}
+      >
+        <div
+          className="header__menu"
+          style={{ marginTop: "10px", marginBottom: "10px" }}
+        >
+          <span
+            aria-label="red circle icon"
+            className="header__menu-icon header__menu-icon--red"
+          ></span>
+          <span
+            aria-label="yellow circle icon"
+            className="header__menu-icon header__menu-icon--yellow"
+          ></span>
+          <span
+            aria-label="green circle icon"
+            className="header__menu-icon header__menu-icon--green"
+          ></span>
+          <div className="header__menu-bar" />
+          <span style={{ float: "right" }}>
+            <Header />
+          </span>
+        </div>
+      </div>
+      <Container
+        className="page-content"
+        fluid
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginTop: "0px",
+          marginBottom: "0px",
+          marginLeft: "0px",
+          marginRight: "0px",
+        }}
+      >
+        <Col  className="sidebar" style={{ flex: "0 0 20%" }}>
+          <User {...portfolioInfoProps} />
+        </Col>
+        <Col  className="main-content" style={{ flex: "1 80%", minWidth: "300px", maxWidth: "1000px", margin: "auto" }}>
+          <Educations {...portfolioInfoProps} />
+          <br />
+          <Awards {...portfolioInfoProps} />
+          <br />
+          <Projects {...portfolioInfoProps} />
+          <br />
+          <Certificates {...portfolioInfoProps} />
+          <br />
+        </Col>
       </Container>
     </>
   );
-  
-
-
-
-  
 }
 
 export default Portfolio;

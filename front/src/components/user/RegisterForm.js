@@ -16,12 +16,16 @@ function RegisterForm() {
   //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
 
+  const validatePassword = (password) => {
+    return password
+      .toLowerCase()
+      .match(/^(?=.*[A-Za-z])(?=.*[@$!%*#?&])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/);
+  };
 
-  
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPasswordValid = password.length >= 8;
+  const isPasswordValid = validatePassword(password);
   // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
   const isPasswordSame = password === confirmPassword;
   // 이름이 2글자 이상인지 여부를 확인함.
@@ -45,12 +49,13 @@ function RegisterForm() {
       // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (err) {
-      console.log("회원가입에 실패하였습니다.", err);
+      alert("이미 사용중인 이메일입니다.", err);
     }
   };
 
   return (
-    <Container>
+  <Container className="d-flex flex-column justify-content-center align-items-center " style={{ padding : "5rem",maxHeight: "100vh"}}>
+    <Container  style={{ maxWidth: '550px', width: '100%', padding: '1rem', border: '1.5px solid rgba(128, 128, 128, 0.5)', borderRadius: "10px", backgroundColor:"#F5F5F5"}}>
       <Row className="justify-content-md-center mt-5">
         <Col lg={8}>
           <Form onSubmit={handleSubmit}>
@@ -79,7 +84,7 @@ function RegisterForm() {
               />
               {!isPasswordValid && (
                 <Form.Text className="text-success">
-                  비밀번호는 8글자 이상으로 설정해 주세요.
+                  문자, 숫자, 기호를 조합하여 8자 이상으로 설정해주세요.
                 </Form.Text>
               )}
             </Form.Group>
@@ -121,18 +126,23 @@ function RegisterForm() {
                 </Button>
               </Col>
             </Form.Group>
-
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="light" onClick={() => navigate("/login")}>
-                  로그인하기
-                </Button>
-              </Col>
-            </Form.Group>
           </Form>
         </Col>
       </Row>
     </Container>
+    <Container 
+    style={{ marginTop: '10px', maxWidth: '550px', width: '100%', padding: '1rem', 
+    border: '1.5px solid rgba(128, 128, 128, 0.5)', borderRadius: "10px", backgroundColor:"#F5F5F5"}}>
+  <Form.Group as={Row} className="mt-3 text-center">
+              <Col sm={{ span: 20 }}>
+                <Form.Text>계정이 있으신가요? </Form.Text>
+                <Button  variant="#F5F5F5" onClick={() => navigate("/login")}>
+                  로그인
+                </Button>
+              </Col>
+            </Form.Group>
+  </Container>
+  </Container>
   );
 }
 

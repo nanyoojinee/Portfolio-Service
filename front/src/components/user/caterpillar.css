@@ -1,0 +1,23 @@
+.caterpillar {
+    position: absolute;
+    left: 500px;
+    bottom: 800px;
+    width: 200px;
+    height: 50px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/305/305838.png?w=740&t=st=1683117723~exp=1683118323~hmac=bac7e77b5c547a1f5ad4b4c2da9d457e1a17e4985431cc318d54f1d13a838489');
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation-name: crawl;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes crawl {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(500px);
+    }
+  }

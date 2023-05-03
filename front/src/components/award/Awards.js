@@ -14,7 +14,7 @@ function Awards({ portfolioOwnerId, isEditable, setIsEditing }) {
   }, [portfolioOwnerId]);
 
   return (
-    <Card style={{ width: '90%', margin: '0 auto' }}>
+    <Card style={{ width: '100%', margin: '0 auto' }}>
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
         {awards.map((award) => (
@@ -36,7 +36,7 @@ function Awards({ portfolioOwnerId, isEditable, setIsEditing }) {
         {isEditable && (
           <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
+              <Button style={{backgroundColor: "#8a8a8a", color: "#ffffff", border: "none"}}onClick={() => setIsAdding(true)}>+</Button>
             </Col>
           </Row>
         )}

@@ -5,8 +5,7 @@ import { setPageColor } from "./SetPageColor";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
-
-
+import Header from "../Header";
 function Network() {
   setPageColor();
   const navigate = useNavigate();
@@ -44,15 +43,12 @@ function Network() {
 
   return (
     <Container fluid>
+      <span><Header /></span>
       <div className="d-flex justify-content-end my-3">
         <label htmlFor="perPage" className="me-2">
           페이지 당 유저 수:
         </label>
-        <select
-          id="perPage"
-          value={perPage}
-          onChange={handlePerPageChange}
-        >
+        <select id="perPage" value={perPage} onChange={handlePerPageChange}>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>
@@ -85,7 +81,5 @@ function Network() {
     </Container>
   );
 }
-
-
 
 export default Network;

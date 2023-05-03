@@ -5,12 +5,13 @@ import { validateEmail } from "./ValidateEmail";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
 import { setPageColor } from "./SetPageColor";
+import caterpillar from "./caterpillar.css";
 
 function LoginForm() {
   setPageColor();
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
-  const completionWord = 'Hello, PortFolio!!';
+  const completionWord = 'Port Planet';
 
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
@@ -19,25 +20,30 @@ function LoginForm() {
   //const [isValid, setIsValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [blogTitle, setBlogTitle] = useState('');
+  const [typingTitle, setTypingTitle] = useState('');
   const [count, setCount] = useState(0);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
 
   useEffect(() => {
     const typingInterval = setInterval(() => {
-      setBlogTitle((prevTitleValue) => {
-        const result = prevTitleValue ? prevTitleValue + completionWord[count] : completionWord[0];
-        setCount(count + 1);
-  
-        if (count >= completionWord.length) {
+      if (count >= completionWord.length) {
+        clearInterval(typingInterval);
+
+        setTimeout(() => {
+          setTypingTitle(completionWord);
           setIsTypingComplete(true);
-          clearInterval(typingInterval);
-        }
-  
-        return result;
-      });
+        }, 500);
+      } else {
+        setTypingTitle((prevTitleValue) => {
+          const result = prevTitleValue
+            ? prevTitleValue + completionWord[count]
+            : completionWord[0];
+          setCount(count + 1);
+          return result;
+        });
+      }
     }, 70);
-  
+
     return () => {
       clearInterval(typingInterval);
     };
@@ -91,10 +97,11 @@ function LoginForm() {
   };
 
   return (
-<Container className="d-flex flex-column justify-content-center align-items-center" style={{ height: '100vh'}}>
-  <Container  style={{padding: '1rem', border: '1px solid gray', borderRadius: "10px"}}>
+  <Container className="d-flex flex-column justify-content-center align-items-center " style={{ padding : "5rem",maxHeight: "100vh"}}>
+  {/*<div className="caterpillar"></div> {}*/}
+  <Container  style={{ maxWidth: '550px', width: '100%', padding: '85px', border: '1.5px solid rgba(128, 128, 128, 0.5)', borderRadius: "10px", backgroundColor:"#F5F5F5"}}>
     <Row className="text-center">
-      <h1>{isTypingComplete ? completionWord : blogTitle}</h1>
+      <h1><img src = "https://cdn-icons-png.flaticon.com/512/768/768464.png?w=740&t=st=1683117616~exp=1683118216~hmac=1efef7fc266c902b5fedae87213037a482f8adfed985e8114442c3854884bb8e" width="30" height="30"></img>{isTypingComplete ? completionWord : typingTitle}</h1>
     </Row>
     {isTypingComplete &&
       <Row className="mt-5">
@@ -137,21 +144,27 @@ function LoginForm() {
                 </Button>
               </Col>
             </Form.Group>
-
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="light" onClick={() => navigate("/register")}>
-                  회원가입
-                </Button>
-              </Col>
-            </Form.Group>
-
           </Form>
         </Col>
       </Row>
     }
   </Container>
+  {isTypingComplete &&
+  <Container 
+    style={{ marginTop: '10px', maxWidth: '550px', width: '100%', padding: '1rem', 
+    border: '1.5px solid rgba(128, 128, 128, 0.5)', borderRadius: "10px", backgroundColor:"#F5F5F5"}}>
+  <Form.Group as={Row} className="mt-3 text-center">
+              <Col sm={{ span: 20 }}>
+                <Form.Text>아직도 계정이 없으신가요? </Form.Text>
+                <Button variant="#F5F5F5" onClick={() => navigate("/register")}>
+                  회원가입
+                </Button>
+              </Col>
+            </Form.Group>
   </Container>
+  }
+</Container>
+
 
   );
 }

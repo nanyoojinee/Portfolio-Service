@@ -54,7 +54,11 @@ function App() {
       <UserStateContext.Provider value={userState}>
         <Router>
           <Routes>
-            <Route path="/" exact element={<Portfolio user={userState.user}/>} />
+            <Route
+              path="/"
+              exact
+              element={<Portfolio user={userState.user} />}
+            />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/users/:userId" element={<Portfolio />} />
