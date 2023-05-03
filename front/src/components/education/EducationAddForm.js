@@ -40,6 +40,10 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
         school,
         major,
         graduationStatus,
+        entranceDate,
+        graduationDate,
+        score,
+        scoremax,
         id: response.id,
       };
       // 기존 Awards 배열에 맨 앞에 추가
@@ -88,7 +92,7 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
         </Form.Group>
 
         <Form.Group as={Col} controlId="formBasicGraduationDate">
-          <Form.Label>졸업(예정)년월</Form.Label>
+          <Form.Label>* 졸업(예정)년월</Form.Label>
           <DatePicker
             selected={graduationDate}
             onChange={(date) => setGraduationDate(date)}

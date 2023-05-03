@@ -1,7 +1,11 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 function CertificateCard({ certificate, isEditable, setIsEditing,setCertificates }) {
-  
+   // UTC+0 시간에서 UTC+9 시간으로 변환
+   const certificationDate = new Date(certificate.certificationDate);
+   certificationDate.setUTCHours(certificationDate.getUTCHours() + 9);
+   // YYYY-MM-DD 형식으로 출력
+   const formattedcertificationDate = certificationDate.toLocaleDateString("ko-KR")
   const handleDelete = async () => {
     await Api.delete("certificates", certificate.id).then(() => {
     setCertificates((prevCertificates) => prevCertificates.filter((a) => a.id !== certificate.id));
@@ -15,6 +19,10 @@ function CertificateCard({ certificate, isEditable, setIsEditing,setCertificates
           <span>{certificate.certificateName}</span>
           <br />
           <span className="text-muted">{certificate.certificateDetail}</span>
+          <br />
+          <span>{formattedcertificationDate}</span>
+          <br />
+          <span>{certificate.certificationGrade}</span>
         </Col>
         {isEditable && (
             <>

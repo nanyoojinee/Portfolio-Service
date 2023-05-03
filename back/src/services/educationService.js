@@ -1,11 +1,10 @@
 import { Education } from "../db";
 import { v4 as uuidv4 } from "uuid";
-import { EducationModel } from "../db/schemas/education";
 
 class EducationService {
-  static async addEducation({ userId, school, major, graduationStatus }) {
+  static async addEducation({ userId, school, major, graduationStatus, entranceDate, graduationDate, score, scoremax }) {
     const id = uuidv4();
-    const education = { id, userId, school, major, graduationStatus };
+    const education = { id, userId, school, major, graduationStatus, entranceDate, graduationDate, score, scoremax };
     return Education.create({ education });
   }
 
@@ -43,6 +42,22 @@ class EducationService {
     if (toUpdate.graduationStatus) {
         education.graduationStatus = toUpdate.graduationStatus;
       }
+    
+    if (toUpdate.entranceDate) {
+      education.entranceDate = toUpdate.entranceDate;
+    }
+
+    if (toUpdate.graduationDate) {
+      education.graduationDate = toUpdate.graduationDate;
+    }
+
+    if (toUpdate.score) {
+      education.score = toUpdate.score;
+    }
+
+    if (toUpdate.scoremax) {
+      education.scoremax = toUpdate.scoremax;
+    }
     
     return education.save();
   }

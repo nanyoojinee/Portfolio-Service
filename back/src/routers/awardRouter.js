@@ -19,10 +19,12 @@ awardRouter.post("/award/create", async function (req, res, next) {
     const userId = req.body.userId;
     const title = req.body.title;
     const description = req.body.description;
+    const selectedDate = req.body.selectedDate;
     const newAward = await AwardService.addAward({
       userId,
       title,
       description,
+      selectedDate
     });
 
     res.status(201).json(newAward);
@@ -53,9 +55,9 @@ awardRouter.put("/awards/:id",multer().none(),async function (req, res, next) {
     console.log(req.body);
     const title = req.body.title ?? null;
     const description = req.body.description ?? null;
+    const selectedDate = req.body.selectedDate ?? null;
 
-    const toUpdate = { title, description };
-
+    const toUpdate = { title, description, selectedDate };
     const award = await AwardService.setAward({
       awardId,
       toUpdate,

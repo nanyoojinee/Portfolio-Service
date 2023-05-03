@@ -15,7 +15,12 @@ const CertificateSchema = new Schema({
     },
     certificateDetail: {
         type: String,
-        required: true,
+    },
+    certificationDate: {
+        type: Date,
+    },
+    certificationGrade: {
+        type: String,
     }
 },
 {

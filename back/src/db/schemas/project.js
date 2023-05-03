@@ -17,6 +17,12 @@ const ProjectSchema = new Schema({
         type: String,
         required: true,
     },
+    startDate: {
+        type: Date,
+    },
+    endDate: {
+        type: Date,
+    }
 }
 ,{
     timestamps: true,

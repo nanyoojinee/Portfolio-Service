@@ -24,6 +24,19 @@ const EducationSchema = new Schema({
     enum: academicStatus,
     required: true,
   },
+  entranceDate: {
+    type: Date,
+    required: true,
+  },
+  graduationDate: {
+    type: Date,
+  },
+  score: {
+    type: Number,
+  },
+  scoremax: {
+    type: Number,
+  }
 });
 
 const EducationModel = model("Education", EducationSchema);

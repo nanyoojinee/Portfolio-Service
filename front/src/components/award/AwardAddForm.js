@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState();
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -23,7 +23,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     // create에 성공했다면
     if(response.status === 200){
       // 추가된 award 객체를 만들고 (response에서 새롭게 생성된 award의 id를 준다고 가정했을 경우)
-      const newAward = {title, description, id: response.id};
+      const newAward = {title, description, selectedDate, id: response.id};
       // 기존 Awards 배열에 맨 앞에 추가
       setAwards(prev => [newAward , ...prev])
       setIsAdding(false);

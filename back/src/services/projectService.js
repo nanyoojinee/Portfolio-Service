@@ -2,9 +2,9 @@ import { Project } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class ProjectService {
-  static async addProject({ userId, projectName, projectDetail }) {
+  static async addProject({ userId, projectName, projectDetail, startDate, endDate }) {
     const id = uuidv4();
-    const project = { id, userId, projectName, projectDetail };
+    const project = { id, userId, projectName, projectDetail, startDate, endDate };
     return Project.create({ project });
   }
 
@@ -35,6 +35,14 @@ class ProjectService {
 
     if (toUpdate.projectDetail) {
       project.projectDetail = toUpdate.projectDetail;
+    }
+
+    if (toUpdate.startDate) {
+      project.startDate = toUpdate.startDate;
+    }
+
+    if (toUpdate.endDate) {
+      project.endDate = toUpdate.endDate;
     }
 
     return project.save();

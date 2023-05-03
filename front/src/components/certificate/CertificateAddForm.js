@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) {
   const [certificateName, setCertificateName] = useState("");
   const [certificateDetail, setCertificateDetail] = useState("");
-  const [certificationDate, setCertificationDate] = useState("");
+  const [certificationDate, setCertificationDate] = useState();
   const [certificationGrade, setCertificationGrade] = useState("");
 
   const handleSubmit = async (e) => {
@@ -62,7 +62,7 @@ function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) 
         </Form.Group>
 
         <Form.Group as={Col} controlId="formBasicCertificationGrade" className="mt-3">
-          <Form.Label>* 자격증 등급</Form.Label>
+          <Form.Label>자격증 등급</Form.Label>
           <Form.Control
             style={{width:"80%"}}
             type="text"
