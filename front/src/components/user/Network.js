@@ -5,7 +5,11 @@ import { setPageColor } from "./SetPageColor";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
+import "../Network.css";
 import Header from "../Header";
+import SelectBox from "./SelectBox";
+import NetworkCard from "./NetworkCard";
+
 function Network() {
   setPageColor();
   const navigate = useNavigate();
@@ -35,50 +39,57 @@ function Network() {
     setPage((prev) => Math.min(prev + 1, totalPage));
   };
 
-  const handlePerPageChange = (event) => {
-    const newPerPage = Number(event.target.value);
-    setPerPage(newPerPage);
-    setPage(1);
+  // const handlePerPageChange = (event) => {
+  //   const newPerPage = Number(event.target.value);
+  //   setPerPage(newPerPage);
+  //   setPage(1);
+  // };
+
+  const handlePerPageChange = (value) => {
+    setPerPage(value);
   };
 
   return (
-    <Container fluid>
-      <span><Header /></span>
-      <div className="d-flex justify-content-end my-3">
-        <label htmlFor="perPage" className="me-2">
-          페이지 당 유저 수:
-        </label>
-        <select id="perPage" value={perPage} onChange={handlePerPageChange}>
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-        </select>
-      </div>
-      <Row xs="auto" className="justify-content-center">
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} isNetwork />
-        ))}
-      </Row>
-      <div className="d-flex justify-content-center mt-4">
-        <button
-          type="button"
-          className="btn btn-primary mx-2"
-          onClick={handlePrevPage}
-          disabled={page === 1}
-        >
-          이전 페이지
-        </button>
-        {page} / {totalPage} 페이지
-        <button
-          type="button"
-          className="btn btn-primary mx-2"
-          onClick={handleNextPage}
-          disabled={page === totalPage}
-        >
-          다음 페이지
-        </button>
-      </div>
-    </Container>
+    <div>
+      <Header />
+      <Container fluid>
+        <span style={{ float: "right" }}></span>
+        <Row
+          xs="auto"
+          className="networkcard-form">
+          {users.map((user) => (
+            <NetworkCard
+              key={user.id}
+              user={user}
+              isNetwork
+            />
+          ))}
+        </Row>
+        <div>
+          <SelectBox
+            perPage={perPage}
+            handlePerPageChange={handlePerPageChange}
+          />
+        </div>
+        <div className="justify-content-center mt-4">
+          <button
+            type="button"
+            onClick={handlePrevPage}
+            disabled={page === 1}>
+            이전 페이지
+          </button>
+          <div class="pagetext">
+            {page} / {totalPage}
+          </div>
+          <button
+            type="button"
+            onClick={handleNextPage}
+            disabled={page === totalPage}>
+            다음 페이지
+          </button>
+        </div>
+      </Container>
+    </div>
   );
 }
 
