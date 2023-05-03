@@ -40,6 +40,10 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
         school,
         major,
         graduationStatus,
+        entranceDate,
+        graduationDate,
+        score,
+        scoremax,
         id: response.id,
       };
       // 기존 Awards 배열에 맨 앞에 추가

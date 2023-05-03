@@ -19,11 +19,15 @@ projectRouter.post("/project/create", async function (req, res, next) {
     const userId = req.body.userId;
     const projectName = req.body.projectName;
     const projectDetail = req.body.projectDetail;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
 
     const newProject = await ProjectService.addProject({
       userId,
       projectName,
       projectDetail,
+      startDate,
+      endDate
     });
 
     res.status(201).json(newProject);
@@ -54,8 +58,10 @@ projectRouter.put("/projects/:id",multer().none(), async function (req, res, nex
 
     const projectName = req.body.projectName ?? null;
     const projectDetail = req.body.projectDetail ?? null;
+    const startDate = req.body.startDate ?? null;
+    const endDate = req.body.endDate ?? null;
 
-    const toUpdate = { projectName, projectDetail };
+    const toUpdate = { projectName, projectDetail, startDate, endDate };
 
     const project = await ProjectService.setProject({ projectId, toUpdate });
 

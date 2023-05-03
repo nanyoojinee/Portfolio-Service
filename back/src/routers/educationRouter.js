@@ -20,12 +20,20 @@ educationRouter.post("/education/create", async function (req, res, next) {
     const school = req.body.school;
     const major = req.body.major;
     const graduationStatus = req.body.graduationStatus;
+    const entranceDate = req.body.entranceDate;
+    const graduationDate = req.body.graduationDate;
+    const score = req.body.score;
+    const scoremax = req.body.scoremax;
 
     const newEducation = await EducationService.addEducation({
       userId,
       school,
       major,
       graduationStatus,
+      entranceDate,
+      graduationDate,
+      score,
+      scoremax
     });
 
     res.status(201).json(newEducation);
@@ -57,8 +65,12 @@ educationRouter.put("/educations/:id",multer().none(), async function (req, res,
     const school = req.body.school ?? null;
     const major = req.body.major ?? null;
     const graduationStatus = req.body.graduationStatus ?? null;
+    const entranceDate = req.body.entranceDate ?? null;
+    const graduationDate = req.body.graduationDate ?? null;
+    const score = req.body.score ?? null;
+    const scoremax = req.body.scoremax ?? null;
 
-    const toUpdate = { school, major, graduationStatus };
+    const toUpdate = { school, major, graduationStatus, entranceDate, graduationDate, score, scoremax};
 
     const education = await EducationService.setEducation({
       educationId,

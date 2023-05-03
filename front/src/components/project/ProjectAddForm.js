@@ -8,9 +8,9 @@ import "react-datepicker/dist/react-datepicker.css";
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     const [projectName, setProjectName] = useState("");
     const [projectDetail, setProjectDetail] = useState("");
-    const [startDate,setStartDate] =useState("")
-    const [endDate,setEndDate] =useState("")
-
+    const [startDate,setStartDate] =useState();
+    const [endDate,setEndDate] =useState();
+    
     const handleSubmit = async (e) => {
       e.preventDefault();
       e.stopPropagation();

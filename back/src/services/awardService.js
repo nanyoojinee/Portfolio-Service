@@ -2,9 +2,9 @@ import { Award } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class AwardService {
-  static async addAward({ userId, title, description }) {
+  static async addAward({ userId, title, description, selectedDate }) {
     const id = uuidv4();
-    const award = { id, userId, title, description };
+    const award = { id, userId, title, description, selectedDate };
     return Award.create({ award });
   }
 
@@ -37,9 +37,13 @@ class AwardService {
     }
 
     if (toUpdate.description) {
-      award.description = toUpdate.description
+      award.description = toUpdate.description;
     }
-    
+
+    if (toUpdate.selectedDate) {
+      award.selectedDate = toUpdate.selectedDate;
+    }
+
     return award.save();
   }
 

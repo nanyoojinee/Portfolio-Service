@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "multer": "^1.4.5-lts.1",
-    "styled-components": "^5.3.10"
+    "react-datepicker": "^4.11.0"
   }
 }

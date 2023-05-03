@@ -19,11 +19,15 @@ certificateRouter.post("/certificate/create", async function (req, res, next) {
     const userId = req.body.userId;
     const certificateName = req.body.certificateName;
     const certificateDetail = req.body.certificateDetail;
+    const certificationDate = req.body.certificationDate;
+    const certificationGrade = req.body.certificationGrade;
 
     const newCertificate = await CertificateService.addCertificate({
       userId,
       certificateName,
       certificateDetail,
+      certificationDate,
+      certificationGrade
     });
 
     res.status(201).json(newCertificate);
@@ -54,8 +58,10 @@ certificateRouter.put("/certificates/:id",multer().none(), async function (req, 
 
     const certificateName = req.body.certificateName ?? null;
     const certificateDetail = req.body.certificateDetail ?? null;
+    const certificationDate = req.body.certificationDate;
+    const certificationGrade = req.body.certificationGrade ?? null;
 
-    const toUpdate = { certificateName, certificateDetail };
+    const toUpdate = { certificateName, certificateDetail, certificationDate, certificationGrade };
 
     const certificate = await CertificateService.setCertificate({ certificateId, toUpdate });
 
