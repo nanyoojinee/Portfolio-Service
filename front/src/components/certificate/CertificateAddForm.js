@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) {
   const [certificateName, setCertificateName] = useState("");
   const [certificateDetail, setCertificateDetail] = useState("");
-  const [certificationDate, setCertificationDate] = useState();
+  const [certificationDate, setCertificationDate] = useState("");
   const [certificationGrade, setCertificationGrade] = useState("");
 
   const handleSubmit = async (e) => {
