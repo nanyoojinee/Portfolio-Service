@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
   const [title, setTitle] = useState(currentAward.title);
   const [description, setDescription] = useState(currentAward.description);
-
+  const [selectedDate, setSelectedDate] = useState(currentAward.selectedDate);
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -18,6 +20,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
           userId,
           title,
           description,
+          selectedDate
         });
       } catch (error) {
         alert(`An error occurred while updating the award: ${error.message}`);
@@ -48,12 +51,21 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
         />
       </Form.Group>
 
+      <Form.Group controlId="formBasicDate" className="mt-3">
+        <Form.Label>수상년월</Form.Label>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          dateFormat="yyyy.MM.dd"
+          placeholderText="YYYY.MM.DD"
+        />
+      </Form.Group>
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
-          <Button variant="primary" type="submit" className="me-3">
+          <Button variant="outline-primary"  size="sm" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(false)}>
+          <Button variant= "outline-dark"  size="sm" onClick={() => setIsEditing(false)}>
             취소
           </Button>
         </Col>

@@ -23,17 +23,12 @@ function Header() {
   };
 
   return (
+    
     <Nav activeKey={location.pathname} className="justify-content-center">
-      {isLogin && (
-        <NavDropdown title="Menu" id="nav-dropdown">
-          <NavDropdown.Item
-            eventKey="4.1"
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            나의 페이지
-          </NavDropdown.Item>
+    {isLogin &&(
+      <NavDropdown title={<span className="navbar-toggler-icon text-white" style={{ fontSize: "30px" }}>☰</span>}>
+        <NavDropdown.Item eventKey="4.1" onClick={() => {
+          navigate("/");}}>나의 페이지</NavDropdown.Item>
 
           <NavDropdown.Item
             eventKey="4.2"

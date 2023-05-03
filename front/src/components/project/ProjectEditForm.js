@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     const [projectName, setProjectName] = useState(currentProject.projectName);
     const [projectDetail, setProjectDetail] = useState(currentProject.projectDetail);
-    
+    const [startDate,setStartDate] =useState(currentProject.startDate)
+    const [endDate,setEndDate] =useState(currentProject.endDate)
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -17,6 +21,8 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
           userId,
           projectName,
           projectDetail,
+          startDate,
+          endDate
         });
       } catch (error) {
         alert(`An error occurred while updating the project: ${error.message}`);
@@ -46,13 +52,40 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
             onChange={(e) => setProjectDetail(e.target.value)}
           />
         </Form.Group>
-  
+
+        <Form.Group controlId="formBasicDate" className="mt-4">
+          <Form.Label>제작년월</Form.Label>
+          <Row>
+            <Col sm={3} className="mt-2">  
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                dateFormat="yyyy.MM"
+                showMonthYearPicker
+                placeholderText="시작 날짜"
+              />
+            </Col>
+            <Col xs="auto" className="px-0">
+              <span className="mx-2" style={{fontSize: "2rem"}}>~</span>
+            </Col>
+            <Col sm={1} className="mt-2">
+              <DatePicker
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                dateFormat="yyyy.MM"
+                showMonthYearPicker
+                placeholderText="끝 날짜"
+              />
+            </Col>
+          </Row>
+        </Form.Group>
+
         <Form.Group as={Row} className="mt-3 text-center mb-4">
           <Col sm={{ span: 20 }}>
-            <Button variant="primary" type="submit" className="me-3">
+            <Button variant="outline-primary"  size="sm" type="submit" className="me-3">
               확인
             </Button>
-            <Button variant="secondary" onClick={() => setIsEditing(false)}>
+            <Button variant= "outline-dark"  size="sm" onClick={() => setIsEditing(false)}>
               취소
             </Button>
           </Col>
