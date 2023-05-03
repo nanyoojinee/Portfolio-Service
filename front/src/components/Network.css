@@ -1,0 +1,4 @@
+.networkcard-form {
+    display: grid;
+    grid-template: 30% 30%;
+}
