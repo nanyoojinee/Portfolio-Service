@@ -1,7 +1,8 @@
-import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User,Like } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 class userAuthService {
   static async addUser({ name, email, password }) {
@@ -51,14 +52,15 @@ class userAuthService {
 
     // 반환할 loginuser 객체를 위한 변수 설정
     const id = user.id;
+    const _id = user._id;
     const name = user.name;
     const description = user.description;
-
     const loginUser = {
       token,
       id,
       email,
       name,
+      _id,
       description,
       errorMessage: null,
     };
@@ -73,7 +75,6 @@ class userAuthService {
 
   static async setUser({ userId, toUpdate }) {
     let user = await User.findById({ userId });
-
     if (!user) {
       const errorMessage = `${userId} ID와 일치하는 유저를 찾을 수 없습니다.. 다시 한 번 확인해 주세요.`;
       return { errorMessage };
@@ -99,15 +100,29 @@ class userAuthService {
       user.pageBackgroundColor = toUpdate.pageBackgroundColor;
     }
 
-    if (toUpdate.socialLikes) {
-      user.socialLikes = toUpdate.socialLikes;
+    if (toUpdate.isLiked) {
+    let userObjectId = user._id; // user(내가 보고있는 게시글의 작성자)의 user스키마의 Objectid를 넣어줌
+    let sendObjectId = mongoose.Types.ObjectId(toUpdate.sendUser); // sendid(로그인 해있는 사람)의 user스키마의 Objectid를 넣어줌
+      const like = await Like.findLike(userObjectId, sendObjectId);
+      if (like) {
+        if (toUpdate.isLiked === "true") {
+          like.isLiked = true;
+          user.socialLikes += 1;
+        } else{
+          like.isLiked = false;
+          user.socialLikes -= 1;
+        }
+        await like.save();
+      } else {
+        const newLike = await Like.createLike(userObjectId, sendObjectId,true);
+        user.socialLikes += 1;
+        await newLike.save();
+      }
     }
-
     if (toUpdate.profileImage) {
       const { mimetype, filename, path } = toUpdate.profileImage;
       user.profileImage = { mimetype, filename, path };
     }
-
     return user.save();
   }
 
@@ -120,8 +135,19 @@ class userAuthService {
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
-
     return user;
+  }
+  static async getLikeInfo({userId,sendId}) {
+    let user = await User.findById({ userId });
+    let userObjectId = user._id;
+    let sendObjectId = mongoose.Types.ObjectId(sendId);
+    const like = await Like.findLike(userObjectId,sendObjectId);
+    if (!like) {
+      const newLike = await Like.createLike(userObjectId, sendObjectId,false);
+      await newLike.save();
+      return newLike.isLiked;
+    }
+    return like.isLiked;
   }
 }
 
