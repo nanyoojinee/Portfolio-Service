@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserStateContext } from "../../App";
 import styled from "styled-components";
 import * as Api from "../../api";
 import HeartImg from "../../img/heart.png";
 import EmptyHeartImg from "../../img/empty-heart.png";
+
 
 const Heart = styled.img`
   width: 20px;
@@ -12,27 +14,34 @@ const Heart = styled.img`
 
 function LikeButton({ user }) {
   const [like, setLike] = useState(user?.socialLikes);
-  const [isLiked, setIsLiked] = useState(
-    () => JSON.parse(localStorage.getItem(`user-${user.id}-liked`)) || false
-  );
-
+  const userState = useContext(UserStateContext); // 현재 로그인 해있는 사람을 return해주는 userState 정의
+  const [isLiked, setIsLiked] = useState(like)
   useEffect(() => {
-    localStorage.setItem(`user-${user.id}-liked`, JSON.stringify(isLiked));
-  }, [isLiked, user.id]);
-
+    const fetchLikeStatus = async () => {
+      try {
+        const res = await Api.get(`users/${user.id}/${userState.user._id}`); //user는 게시글 작성자, userState.user는 로그인해있는 유저
+        setIsLiked(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchLikeStatus();
+  }, []);
   const handleLikeButton = async () => {
     let res;
     try {
       if (isLiked) {
         // 좋아요 취소하기
         res = await Api.put(`users/${user.id}`, {
-          socialLikes: like - 1, // socialLikes 값 1 감소시키기
+          user: userState.user._id,
+          isLiked: false,
         });
         setIsLiked(false);
       } else {
         // 좋아요 추가하기
         res = await Api.put(`users/${user.id}`, {
-          socialLikes: like + 1, // socialLikes 값 1 증가시키기
+          user: userState.user._id,
+          isLiked: true,
         });
         setIsLiked(true);
       }
