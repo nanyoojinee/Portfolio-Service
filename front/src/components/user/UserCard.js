@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Card, Row, Button, Col } from "react-bootstrap";
-import * as Api from "../../api";
+// import * as Api from "../../api";
 import axios from "axios";
 
 import LikeButton from "./LikeButton";
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+  const isUser = !!user;
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("http://placekitten.com/200/200");
   useEffect(() => {
@@ -42,7 +43,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
         <Card.Text style={{ fontSize: "14px" }}>{user?.description}</Card.Text>
-        <LikeButton user={user} />
+        <Card.Text>{isUser && <LikeButton user={user} />}</Card.Text>
 
         {isEditable && (
           <Col>
