@@ -33,26 +33,29 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
 
   return (
     <Form onSubmit={handleSubmit}>
+      <br></br>
       <Form.Group controlId="formBasicTitle">
+        <Form.Label>* 수상내역</Form.Label>
         <Form.Control
           type="text"
-          placeholder="수상내역"
+          placeholder="입력"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </Form.Group>
 
       <Form.Group controlId="formBasicDescription" className="mt-3">
+        <Form.Label>상세내역</Form.Label>
         <Form.Control
           type="text"
-          placeholder="상세내역"
+          placeholder="위에서 적지 못한 수상내역에 관한 사항을 적어주세요."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>
 
       <Form.Group controlId="formBasicDate" className="mt-3">
-        <Form.Label>수상년월</Form.Label>
+        <Form.Label>* 수상년월</Form.Label>
         <DatePicker
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}

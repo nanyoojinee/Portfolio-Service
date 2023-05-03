@@ -35,62 +35,65 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
 
     return (
         <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicTitle">
-          <Form.Control
-            type="text"
-            placeholder="프로젝트내역"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-          />
-        </Form.Group>
-  
-        <Form.Group controlId="formBasicDescription" className="mt-3">
-          <Form.Control
-            type="text"
-            placeholder="상세내역"
-            value={projectDetail}
-            onChange={(e) => setProjectDetail(e.target.value)}
-          />
-        </Form.Group>
+          <br></br>
+          <Form.Label>* 프로젝트내역</Form.Label>
+          <Form.Group controlId="formBasicTitle">
+            <Form.Control
+              type="text"
+              placeholder="입력"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+            />
+          </Form.Group>
+    
+          <Form.Group controlId="formBasicDescription" className="mt-3">
+            <Form.Label>상세 업무 및 성과</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="위에서 적지 못한 프로젝트내역에 관한 사항을 적어주세요."
+              value={projectDetail}
+              onChange={(e) => setProjectDetail(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formBasicDate" className="mt-4">
-          <Form.Label>제작년월</Form.Label>
-          <Row>
-            <Col sm={3} className="mt-2">  
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                dateFormat="yyyy.MM"
-                showMonthYearPicker
-                placeholderText="시작 날짜"
-              />
-            </Col>
-            <Col xs="auto" className="px-0">
-              <span className="mx-2" style={{fontSize: "2rem"}}>~</span>
-            </Col>
-            <Col sm={1} className="mt-2">
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                dateFormat="yyyy.MM"
-                showMonthYearPicker
-                placeholderText="끝 날짜"
-              />
-            </Col>
-          </Row>
-        </Form.Group>
+          <Form.Group controlId="formBasicDate" className="mt-4">
+            <Form.Label>제작년월</Form.Label>
+            <Row>
+              <Col sm={3} className="mt-2">  
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  dateFormat="yyyy.MM"
+                  showMonthYearPicker
+                  placeholderText="시작 날짜"
+                />
+              </Col>
+              <Col xs="auto" className="px-0">
+                <span className="mx-2" style={{fontSize: "2rem"}}>~</span>
+              </Col>
+              <Col sm={1} className="mt-2">
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  dateFormat="yyyy.MM"
+                  showMonthYearPicker
+                  placeholderText="끝 날짜"
+                />
+              </Col>
+            </Row>
+          </Form.Group>
 
-        <Form.Group as={Row} className="mt-3 text-center mb-4">
-          <Col sm={{ span: 20 }}>
-            <Button variant="outline-primary"  size="sm" type="submit" className="me-3">
-              확인
-            </Button>
-            <Button variant= "outline-dark"  size="sm" onClick={() => setIsEditing(false)}>
-              취소
-            </Button>
-          </Col>
-        </Form.Group>
-      </Form>
+          <Form.Group as={Row} className="mt-3 text-center mb-4">
+            <Col sm={{ span: 20 }}>
+              <Button variant="outline-primary"  size="sm" type="submit" className="me-3">
+                확인
+              </Button>
+              <Button variant= "outline-dark"  size="sm" onClick={() => setIsEditing(false)}>
+                취소
+              </Button>
+            </Col>
+          </Form.Group>
+        </Form>
     );
   }
   

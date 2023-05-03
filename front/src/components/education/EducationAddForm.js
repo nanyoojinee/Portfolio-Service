@@ -61,15 +61,17 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formBasicSchool">
+        <Form.Label>* 학교 이름</Form.Label>
         <Form.Control
           type="text"
-          placeholder="학교 이름"
+          placeholder="학교명"
           value={school}
           onChange={(e) => setSchool(e.target.value)}
         />
       </Form.Group>
 
       <Form.Group controlId="formBasicMajor" className="mt-3">
+        <Form.Label>* 전공</Form.Label>
         <Form.Control
           type="text"
           placeholder="전공"
@@ -79,7 +81,7 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
       </Form.Group>
       <Row className="mt-3" style={{ width: "500px" }}>
         <Form.Group as={Col} controlId="formBasicEntranceDate">
-          <Form.Label>입학년월</Form.Label>
+          <Form.Label>* 입학년월</Form.Label>
           <DatePicker
             selected={entranceDate}
             onChange={(date) => setEntranceDate(date)}
@@ -90,7 +92,7 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
         </Form.Group>
 
         <Form.Group as={Col} controlId="formBasicGraduationDate">
-          <Form.Label>졸업년월</Form.Label>
+          <Form.Label>졸업(예정)년월</Form.Label>
           <DatePicker
             selected={graduationDate}
             onChange={(date) => setGraduationDate(date)}

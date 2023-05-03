@@ -39,7 +39,9 @@ function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) 
 
   return (
     <Form onSubmit={handleSubmit}>
+      <br></br>
       <Form.Group controlId="formBasicCertificateName">
+        <Form.Label>* 자격증 이름</Form.Label>
         <Form.Control
           type="text"
           placeholder="자격증명"
@@ -49,7 +51,7 @@ function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) 
       </Form.Group>
       <Row className="mt-3" style={{ width: "100%" }}>
         <Form.Group as={Col} controlId="formBasicCertificationDate" className="mt-3">
-          <Form.Label>자격증 취득일</Form.Label>
+          <Form.Label>* 자격증 취득일</Form.Label>
           <br />
           <DatePicker
             selected={certificationDate}
@@ -60,7 +62,7 @@ function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) 
         </Form.Group>
 
         <Form.Group as={Col} controlId="formBasicCertificationGrade" className="mt-3">
-          <Form.Label>자격증 등급</Form.Label>
+          <Form.Label>* 자격증 등급</Form.Label>
           <Form.Control
             style={{width:"80%"}}
             type="text"
@@ -70,11 +72,11 @@ function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) 
           />
         </Form.Group>
         <Form.Group as={Col} controlId="formBasicCertificateDetail" className="mt-3" >
-          <Form.Label>상세내역</Form.Label>
+          <Form.Label>기타 설명</Form.Label>
           <Form.Control
             style={{width:"100%"}}
             type="text"
-            placeholder="상세내역"
+            placeholder="입력"
             value={certificateDetail}
             onChange={(e) => setCertificateDetail(e.target.value)}
           />

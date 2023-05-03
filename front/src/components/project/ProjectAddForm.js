@@ -41,26 +41,29 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     };
     return (
         <Form onSubmit={handleSubmit}>
+          <br></br>
+          <Form.Label>* 프로젝트내역</Form.Label>
           <Form.Group controlId="formBasicTitle">
             <Form.Control
               type="text"
-              placeholder="프로젝트내역"
+              placeholder="입력"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
             />
           </Form.Group>
     
           <Form.Group controlId="formBasicDescription" className="mt-3">
+            <Form.Label>상세 업무 및 성과</Form.Label>
             <Form.Control
               type="text"
-              placeholder="상세내역"
+              placeholder="위에서 적지 못한 프로젝트내역에 관한 사항을 적어주세요."
               value={projectDetail}
               onChange={(e) => setProjectDetail(e.target.value)}
             />
           </Form.Group>
 
           <Form.Group controlId="formBasicDate" className="mt-4">
-            <Form.Label>제작년월</Form.Label>
+            <Form.Label>* 제작년월</Form.Label>
             <Row>
               <Col sm={3} className="mt-2">  
                 <DatePicker
