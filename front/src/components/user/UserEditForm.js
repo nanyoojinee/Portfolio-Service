@@ -198,12 +198,12 @@ function UserEditForm({ user, setIsEditing, setUser }) {
           </Form.Group>
           <Form.Group as={Row} className="mt-3 text-center">
             <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
-                확인
-              </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
-                취소
-              </Button>
+            <Button variant="outline-primary"  size="sm" type="submit" className="me-3">
+              확인
+            </Button>
+            <Button variant= "outline-dark"  size="sm" onClick={() => setIsEditing(false)}>
+              취소
+            </Button>
             </Col>
           </Form.Group>
         </Form>

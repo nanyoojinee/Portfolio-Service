@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     const [projectName, setProjectName] = useState("");
     const [projectDetail, setProjectDetail] = useState("");
+    const [startDate,setStartDate] =useState("")
+    const [endDate,setEndDate] =useState("")
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -16,6 +21,8 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
           userId: portfolioOwnerId,
           projectName,
           projectDetail,
+          startDate,
+          endDate
         });
         // create에 성공했다면
         if(response.status === 200){
@@ -51,13 +58,39 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
               onChange={(e) => setProjectDetail(e.target.value)}
             />
           </Form.Group>
-    
+
+          <Form.Group controlId="formBasicDate" className="mt-4">
+            <Form.Label>제작년월</Form.Label>
+            <Row>
+              <Col sm={3} className="mt-2">  
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  dateFormat="yyyy.MM"
+                  showMonthYearPicker
+                  placeholderText="시작 날짜"
+                />
+              </Col>
+              <Col xs="auto" className="px-0">
+                <span className="mx-2" style={{fontSize: "2rem"}}>~</span>
+              </Col>
+              <Col sm={1} className="mt-2">
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  dateFormat="yyyy.MM"
+                  showMonthYearPicker
+                  placeholderText="끝 날짜"
+                />
+              </Col>
+            </Row>
+          </Form.Group>
           <Form.Group as={Row} className="mt-3 text-center">
             <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
+              <Button variant="outline-primary"  size="sm" type="submit" className="me-3">
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsAdding(false)}>
+              <Button variant= "outline-dark"  size="sm" onClick={() => setIsAdding(false)}>
                 취소
               </Button>
             </Col>

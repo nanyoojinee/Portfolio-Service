@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
+  const [selectedDate, setSelectedDate] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -16,6 +18,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
       userId: portfolioOwnerId,
       title,
       description,
+      selectedDate
     });
     // create에 성공했다면
     if(response.status === 200){
@@ -51,13 +54,21 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>
-
+      <Form.Group controlId="formBasicDate" className="mt-3">
+        <Form.Label>수상년월</Form.Label>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          dateFormat="yyyy.MM.dd"
+          placeholderText="YYYY.MM.DD"
+        />
+      </Form.Group>
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
-          <Button variant="primary" type="submit" className="me-3">
+          <Button variant="outline-primary"  size="sm" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsAdding(false)}>
+          <Button variant= "outline-dark"  size="sm" onClick={() => setIsAdding(false)}>
             취소
           </Button>
         </Col>

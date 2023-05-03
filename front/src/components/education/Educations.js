@@ -38,7 +38,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
         {isEditable && (
           <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
+              <Button style={{backgroundColor: "#8a8a8a", color: "#ffffff", border: "none"}}onClick={() => setIsAdding(true)}>+</Button>
             </Col>
           </Row>
         )}

@@ -5,7 +5,7 @@ import { setPageColor } from "./SetPageColor";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
-
+import Header from "../Header";
 function Network() {
   setPageColor();
   const navigate = useNavigate();
@@ -43,6 +43,7 @@ function Network() {
 
   return (
     <Container fluid>
+      <span><Header /></span>
       <div className="d-flex justify-content-end my-3">
         <label htmlFor="perPage" className="me-2">
           페이지 당 유저 수:
