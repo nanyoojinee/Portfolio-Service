@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row, ToggleButton } from "react-bootstrap";
 import * as Api from "../../api";
 import { setPageColor } from "./SetPageColor";
+import { useNavigate } from "react-router-dom";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
   // 받아온 user의 pagebackgroundcolor로 배경색 설정
@@ -39,6 +40,16 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     // 배경색상값 업데이트
     setPageColor(updatedUser.pageBackgroundColor);
     setIsEditing(false);
+  };
+  const navigate = useNavigate();
+  const handleDelete = async () => {
+    const confirmed = window.confirm("정말로 회원탈퇴를 하시겠습니까?");
+    if (confirmed) {
+      await Api.delete("users", user.id).then(() => {
+        alert("그동안 이용해주셔서 감사합니다.");
+        navigate("/login");
+      });
+    }
   };
 
   return (
@@ -198,12 +209,24 @@ function UserEditForm({ user, setIsEditing, setUser }) {
           </Form.Group>
           <Form.Group as={Row} className="mt-3 text-center">
             <Col sm={{ span: 20 }}>
-            <Button variant="outline-primary"  size="sm" type="submit" className="me-3">
-              확인
-            </Button>
-            <Button variant= "outline-dark"  size="sm" onClick={() => setIsEditing(false)}>
-              취소
-            </Button>
+              <Button variant="outline-primary" type="submit" className="me-3">
+                확인
+              </Button>
+              <Button
+                variant="outline-dark"
+                onClick={() => setIsEditing(false)}
+              >
+                취소
+              </Button>
+              <br />
+              <Button
+                variant="outline-danger"
+                size="sm"
+                className="mt-3"
+                onClick={handleDelete}
+              >
+                회원탈퇴
+              </Button>
             </Col>
           </Form.Group>
         </Form>
