@@ -11,7 +11,9 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+    if (!title || !selectedDate) {
+      return alert("수상내역 및 수상년월은 필수 입력 값입니다.")
+    }
     const userId = portfolioOwnerId;
 
     const response = await Api.post("award/create", {

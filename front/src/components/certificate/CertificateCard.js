@@ -11,7 +11,7 @@ function CertificateCard({ certificate, isEditable, setIsEditing,setCertificates
     setCertificates((prevCertificates) => prevCertificates.filter((a) => a.id !== certificate.id));
     });
   };
-
+  
   return (
     <Card.Text>
       <Row className="align-items-center">
@@ -22,7 +22,10 @@ function CertificateCard({ certificate, isEditable, setIsEditing,setCertificates
           <br />
           <span className="text-muted">{formattedcertificationDate}</span>
           <br />
-          <span style={{fontSize: '1.1em', color:'#4c4c4c'}}>{certificate.certificateDetail}</span>
+          {certificate.certificateDetail && <span style={{fontSize: '1.1em', color:'#4c4c4c'}}>{certificate.certificateDetail}<br /></span>}
+          <span>{formattedcertificationDate}</span>
+          <br />
+          <span>{certificate.certificationGrade}</span>
         </Col>
         {isEditable && (
             <>
@@ -31,7 +34,7 @@ function CertificateCard({ certificate, isEditable, setIsEditing,setCertificates
                   variant="outline-info"
                   size="sm"
                   onClick={() => setIsEditing((prev) => !prev)}
-                   className="mr-3"
+                  className="mr-3"
                 >
                   편집
                 </Button>

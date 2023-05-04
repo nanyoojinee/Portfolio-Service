@@ -8,8 +8,8 @@ function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
   entranceDate.setUTCHours(entranceDate.getUTCHours() + 9);
   graduationDate.setUTCHours(graduationDate.getUTCHours() + 9);
   // YYYY-MM-DD 형식으로 출력
-  const formattedEntranceDate = entranceDate.toLocaleDateString("ko-KR");
-  const formattedGraduationDate = graduationDate.toLocaleDateString("ko-KR");
+  const formattedEntranceDate = entranceDate.toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit'});
+  const formattedGraduationDate = graduationDate.toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit'});
   const handleDelete = async () => {
     await Api.delete("educations", education.id).then(() => {
       setEducations((prevEducations) =>
@@ -33,7 +33,7 @@ function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
           </span>
           <br />
           <span className="text-muted">
-            {education.score}/{education.scoremax} 학점
+          {(education.score === "0") || (education.scoremax === "0") ? "" : `${education.score} / ${education.scoremax}`} 학점
           </span>
           <br />
           <span className="text-muted">

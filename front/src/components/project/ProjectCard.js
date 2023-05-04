@@ -8,15 +8,13 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
   startDate.setUTCHours(startDate.getUTCHours() + 9);
   endDate.setUTCHours(endDate.getUTCHours() + 9);
   // YYYY-MM-DD 형식으로 출력
-  const formattedStartDate = startDate.toLocaleDateString("ko-KR");
-  const formattedEndDate = endDate.toLocaleDateString("ko-KR");
-  const handleDelete = async () => {
-    await Api.delete("projects", project.id).then(() => {
-      setProjects((prevProjects) =>
-        prevProjects.filter((a) => a.id !== project.id)
-      );
-    });
-  };
+  const formattedStartDate = startDate.toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit'});
+  const formattedEndDate = endDate.toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit'});
+    const handleDelete = async () => {
+        await Api.delete("projects", project.id).then(() => {
+            setProjects((prevProjects) => prevProjects.filter((a) => a.id !== project.id));
+        });
+    };
 
   return (
     <Card.Text>
@@ -32,7 +30,7 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
             {formattedStartDate}~{formattedEndDate}
           </span>
           <br />
-          <span style={{fontSize: '1.1em', color:'#4c4c4c'}}>{project.projectDetail}</span>
+          {project.projectDetail && <span style={{fontSize: '1.1em', color:'#4c4c4c'}}>{project.projectDetail}</span>}
         </Col>
         {isEditable && (
           <>

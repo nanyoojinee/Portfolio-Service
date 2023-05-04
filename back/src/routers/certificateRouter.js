@@ -55,11 +55,10 @@ certificateRouter.get("/certificates/:id", async function (req, res, next) {
 certificateRouter.put("/certificates/:id",multer().none(), async function (req, res, next) {
   try {
     const certificateId = req.params.id;
-
     const certificateName = req.body.certificateName ?? null;
-    const certificateDetail = req.body.certificateDetail ?? null;
+    const certificateDetail = req.body.certificateDetail;
     const certificationDate = req.body.certificationDate;
-    const certificationGrade = req.body.certificationGrade ?? null;
+    const certificationGrade = req.body.certificationGrade;
 
     const toUpdate = { certificateName, certificateDetail, certificationDate, certificationGrade };
 

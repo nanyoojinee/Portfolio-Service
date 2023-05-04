@@ -33,9 +33,7 @@ class ProjectService {
       project.projectName = toUpdate.projectName;
     }
 
-    if (toUpdate.projectDetail) {
-      project.projectDetail = toUpdate.projectDetail;
-    }
+    project.projectDetail = toUpdate.projectDetail;
 
     if (toUpdate.startDate) {
       project.startDate = toUpdate.startDate;

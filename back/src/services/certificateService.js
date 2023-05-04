@@ -36,17 +36,13 @@ class CertificateService {
       certificate.certificateName = toUpdate.certificateName;
     }
 
-    if (toUpdate.certificateDetail) {
-      certificate.certificateDetail = toUpdate.certificateDetail;
-    }
+    certificate.certificateDetail = toUpdate.certificateDetail;
 
     if (toUpdate.certificationDate) {
       certificate.certificationDate = toUpdate.certificationDate;
     }
 
-    if (toUpdate.certificationGrade) {
-      certificate.certificationGrade = toUpdate.certificationGrade;
-    }
+    certificate.certificationGrade = toUpdate.certificationGrade;
     
     return certificate.save();
   }

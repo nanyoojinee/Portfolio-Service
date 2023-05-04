@@ -32,10 +32,10 @@ const EducationSchema = new Schema({
     type: Date,
   },
   score: {
-    type: Number,
+    type: String,
   },
   scoremax: {
-    type: Number,
+    type: String,
   }
 });
 
