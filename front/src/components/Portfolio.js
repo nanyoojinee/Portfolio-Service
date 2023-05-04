@@ -12,7 +12,7 @@ import Certificates from "./certificate/Certificates";
 import "./portfolio.css";
 import Header from "./Header";
 
-function Portfolio() {
+function Portfolio({ user }) {
   const navigate = useNavigate();
   const params = useParams();
   // useState 훅을 통해 portfolioOwner 상태를 생성함.
@@ -87,5 +87,6 @@ function Portfolio() {
     </>
   );
 }
-
 export default Portfolio;
+
+

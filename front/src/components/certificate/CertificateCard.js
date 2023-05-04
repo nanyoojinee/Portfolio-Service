@@ -15,14 +15,14 @@ function CertificateCard({ certificate, isEditable, setIsEditing,setCertificates
   return (
     <Card.Text>
       <Row className="align-items-center">
-      <Col xs={12} md={10} className="justify-content-center">
-          <span>{certificate.certificateName}</span>
+        <Col xs={12} md={10} className="justify-content-center">
+          <span style={{fontSize: '1.4em', fontWeight: 'bold', color: '#000000'}}>
+            {certificate.certificateName}  ({certificate.certificationGrade})
+          </span>
           <br />
-          <span className="text-muted">{certificate.certificateDetail}</span>
+          <span className="text-muted">{formattedcertificationDate}</span>
           <br />
-          <span>{formattedcertificationDate}</span>
-          <br />
-          <span>{certificate.certificationGrade}</span>
+          <span style={{fontSize: '1.1em', color:'#4c4c4c'}}>{certificate.certificateDetail}</span>
         </Col>
         {isEditable && (
             <>

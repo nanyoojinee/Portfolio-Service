@@ -16,15 +16,16 @@ function AwardCard({ award, isEditable, setIsEditing, setAwards }) {
   return (
     <Card.Text>
       <Row className="align-items-center">
+        <br />
         <Col
           xs={12}
           md={10}
           className="justify-content-center">
-          <span>{award.title}</span>
+          <span style={{fontSize: '1.4em', fontWeight: 'bold', color: '#000000'}}>{award.title}</span>
           <br />
-          <span className="text-muted">{award.description}</span>
+          <span className="text-muted">{formattedSelectedDate}</span>
           <br />
-          <span>{formattedSelectedDate}</span>
+          <span style={{fontSize: '1.1em', color:'#4c4c4c'}}>{award.description}</span>
         </Col>
         {isEditable && (
           <>
