@@ -36,9 +36,7 @@ class AwardService {
       award.title = toUpdate.title;
     }
 
-    if (toUpdate.description) {
-      award.description = toUpdate.description;
-    }
+    award.description = toUpdate.description;
 
     if (toUpdate.selectedDate) {
       award.selectedDate = toUpdate.selectedDate;

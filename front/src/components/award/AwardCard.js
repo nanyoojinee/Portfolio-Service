@@ -1,5 +1,6 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
+
 function AwardCard({ award, isEditable, setIsEditing, setAwards }) {
   // UTC+0 시간에서 UTC+9 시간으로 변환
   const selectedDate = new Date(award.selectedDate);
@@ -22,8 +23,7 @@ function AwardCard({ award, isEditable, setIsEditing, setAwards }) {
           className="justify-content-center">
           <span>{award.title}</span>
           <br />
-          <span className="text-muted">{award.description}</span>
-          <br />
+          {award.description && <span>{award.description}<br /></span>}
           <span>{formattedSelectedDate}</span>
         </Col>
         {isEditable && (

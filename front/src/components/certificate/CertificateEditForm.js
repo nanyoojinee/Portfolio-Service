@@ -7,22 +7,23 @@ import "react-datepicker/dist/react-datepicker.css";
 function CertificateEditForm({ currentCertificate, setCertificates, setIsEditing }) {
   const [certificateName, setCertificateName] = useState(currentCertificate.certificateName);
   const [certificateDetail, setCertificateDetail] = useState(currentCertificate.certificateDetail);
-  const [certificationDate, setCertificationDate] = useState(currentCertificate.certificationDate);
+  const [certificationDate, setCertificationDate] = useState(new Date(currentCertificate.certificationDate));
   const [certificationGrade, setCertificationGrade] = useState(currentCertificate.certificationGrade);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-  
+    if (!certificateName || !certificationDate) {
+      return alert("자격증 이름과 자격층 취득일은 필수 입력 값입니다.");
+    }
     const userId = currentCertificate.userId;
-  
     try {
       await Api.put(`certificates/${currentCertificate.id}`, {
         userId,
         certificateName,
         certificateDetail,
         certificationDate,
-        certificationGrade
+        certificationGrade,
       });
     } catch (error) {
       alert(`An error occurred while updating the certificate: ${error.message}`);

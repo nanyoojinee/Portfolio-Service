@@ -51,13 +51,9 @@ class EducationService {
       education.graduationDate = toUpdate.graduationDate;
     }
 
-    if (toUpdate.score) {
-      education.score = toUpdate.score;
-    }
+    education.score = toUpdate.score;
 
-    if (toUpdate.scoremax) {
-      education.scoremax = toUpdate.scoremax;
-    }
+    education.scoremax = toUpdate.scoremax;
     
     return education.save();
   }

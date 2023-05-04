@@ -12,17 +12,18 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
   const [major, setMajor] = useState("");
   const [graduationStatus, setGraduationStatus] = useState("");
 
-  const [entranceDate, setEntranceDate] = useState("");
-  const [graduationDate, setGraduationDate] = useState("");
-  const [score, setScore] = useState("");
-  const [scoremax, setScoremax] = useState("");
+  const [entranceDate, setEntranceDate] = useState();
+  const [graduationDate, setGraduationDate] = useState();
+  const [score, setScore] = useState(0);
+  const [scoremax, setScoremax] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+    if (!school || !major || !entranceDate || !graduationDate || !graduationStatus) {
+      return alert("학교 이름, 전공, 입학 및 졸업년월, 졸업상태는 필수 입력 값입니다.");
+    }
     const userId = portfolioOwnerId;
-
     const response = await Api.post("education/create", {
       userId: portfolioOwnerId,
       school,

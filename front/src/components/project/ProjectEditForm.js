@@ -7,13 +7,15 @@ import "react-datepicker/dist/react-datepicker.css";
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     const [projectName, setProjectName] = useState(currentProject.projectName);
     const [projectDetail, setProjectDetail] = useState(currentProject.projectDetail);
-    const [startDate,setStartDate] =useState(currentProject.startDate)
-    const [endDate,setEndDate] =useState(currentProject.endDate)
+    const [startDate,setStartDate] = useState(new Date(currentProject.startDate))
+    const [endDate,setEndDate] = useState(new Date(currentProject.endDate))
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       e.stopPropagation();
-    
+      if (!projectName || !startDate || !endDate) {
+        return alert("프로젝트 내역, 제작년월은 필수 입력 값입니다.");
+      }
       const userId = currentProject.userId;
     
       try {

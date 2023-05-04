@@ -7,12 +7,15 @@ import "react-datepicker/dist/react-datepicker.css";
 function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
   const [title, setTitle] = useState(currentAward.title);
   const [description, setDescription] = useState(currentAward.description);
-  const [selectedDate, setSelectedDate] = useState(currentAward.selectedDate);
+  const [selectedDate, setSelectedDate] = useState(new Date(currentAward.selectedDate));
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       e.stopPropagation();
   
+      if (!title || !selectedDate) {
+        return alert("수상내역 및 수상년월은 필수 입력 값입니다.")
+      }
       const userId = currentAward.userId;
   
       try {

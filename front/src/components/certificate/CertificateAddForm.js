@@ -13,7 +13,9 @@ function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) 
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+    if (!certificateName || !certificationDate) {
+      return alert("자격증 이름과 자격층 취득일은 필수 입력 값입니다.");
+    }
     const userId = portfolioOwnerId;
 
     const response = await Api.post("certificate/create", {

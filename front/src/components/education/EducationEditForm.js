@@ -11,15 +11,17 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
   const [graduationStatus, setGraduationStatus] = useState(
     currentEducation.graduationStatus
   );
-  const [entranceDate, setEntranceDate] = useState(currentEducation.entranceDate);
-  const [graduationDate, setGraduationDate] = useState(currentEducation.graduationDate);
+  const [entranceDate, setEntranceDate] = useState(new Date(currentEducation.entranceDate));
+  const [graduationDate, setGraduationDate] = useState(new Date(currentEducation.graduationDate));
   const [score, setScore] = useState(currentEducation.score);
   const [scoremax, setScoremax] = useState(currentEducation.scoremax);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+    if (!school || !major || !entranceDate || !graduationDate || !graduationStatus) {
+      return alert("학교 이름, 전공, 입학 및 졸업년월, 졸업상태는 필수 입력 값입니다.");
+    }
     const userId = currentEducation.userId;
 
     try {
@@ -98,6 +100,7 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
             <Form.Control
               type="number"
               placeholder="평점"
+              value={score}
               min="0"
               max="4.5"
               step="0.1"
@@ -112,6 +115,7 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
             <Form.Control
               type="number"
               placeholder="만점"
+              value={scoremax}
               min="0"
               max="4.5"
               step="0.1"

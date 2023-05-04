@@ -8,13 +8,15 @@ import "react-datepicker/dist/react-datepicker.css";
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     const [projectName, setProjectName] = useState("");
     const [projectDetail, setProjectDetail] = useState("");
-    const [startDate,setStartDate] =useState();
-    const [endDate,setEndDate] =useState();
+    const [startDate,setStartDate] = useState();
+    const [endDate,setEndDate] = useState();
     
     const handleSubmit = async (e) => {
       e.preventDefault();
       e.stopPropagation();
-
+      if (!projectName || !startDate || !endDate) {
+        return alert("프로젝트 내역, 제작년월은 필수 입력 값입니다.");
+      }
       const userId = portfolioOwnerId;
 
         const response = await Api.post("project/create", {

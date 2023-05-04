@@ -52,7 +52,6 @@ awardRouter.get("/awards/:id", async function (req, res, next) {
 awardRouter.put("/awards/:id",multer().none(),async function (req, res, next) {
   try {
     const awardId = req.params.id;
-    console.log(req.body);
     const title = req.body.title ?? null;
     const description = req.body.description ?? null;
     const selectedDate = req.body.selectedDate ?? null;

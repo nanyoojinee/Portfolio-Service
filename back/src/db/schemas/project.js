@@ -15,13 +15,14 @@ const ProjectSchema = new Schema({
     },
     projectDetail: {
         type: String,
-        required: true,
     },
     startDate: {
         type: Date,
+        required: true,
     },
     endDate: {
         type: Date,
+        required: true,
     }
 }
 ,{
