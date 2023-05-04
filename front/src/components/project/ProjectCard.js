@@ -21,17 +21,18 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
   return (
     <Card.Text>
       <Row className="align-items-center">
+        <br />
         <Col
           xs={12}
           md={10}
           className="justify-content-center">
-          <span>{project.projectName}</span>
+          <span style={{fontSize: '1.4em', fontWeight: 'bold', color: '#000000'}}>{project.projectName}</span>
           <br />
-          <span className="text-muted">{project.projectDetail}</span>
-          <br />
-          <span>
+          <span className="text-muted">
             {formattedStartDate}~{formattedEndDate}
           </span>
+          <br />
+          <span style={{fontSize: '1.1em', color:'#4c4c4c'}}>{project.projectDetail}</span>
         </Col>
         {isEditable && (
           <>

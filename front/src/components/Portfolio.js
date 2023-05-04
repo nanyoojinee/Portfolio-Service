@@ -12,7 +12,7 @@ import Certificates from "./certificate/Certificates";
 import "./portfolio.css";
 import Header from "./Header";
 
-function Portfolio() {
+function Portfolio({ user }) {
   const navigate = useNavigate();
   const params = useParams();
   // useState 훅을 통해 portfolioOwner 상태를 생성함.
@@ -57,74 +57,36 @@ function Portfolio() {
 
   return (
     <>
-      <div
-        className="header"
-        style={{
-          marginTop: "0px",
-          marginBottom: "0px",
-          marginLeft: "0px",
-          marginRight: "0px",
-        }}
-      >
-        <div
-          className="header__menu"
-          style={{ marginTop: "10px", marginBottom: "10px" }}
-        >
-          <span
-            aria-label="red circle icon"
-            className="header__menu-icon header__menu-icon--red"
-          ></span>
-          <span
-            aria-label="yellow circle icon"
-            className="header__menu-icon header__menu-icon--yellow"
-          ></span>
-          <span
-            aria-label="green circle icon"
-            className="header__menu-icon header__menu-icon--green"
-          ></span>
-          <div className="header__menu-bar" />
-          <span style={{ float: "right" }}>
-            <Header />
-          </span>
-        </div>
-      </div>
-      <Container
-        className="page-content"
-        fluid
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          marginTop: "0px",
-          marginBottom: "0px",
-          marginLeft: "0px",
-          marginRight: "0px",
-        }}
-      >
-        <Col className="sidebar" style={{ flex: "0 0 20%" }}>
-          <User {...portfolioInfoProps} />
-        </Col>
-        <Col
-          className="main-content"
-          style={{
-            flex: "1 80%",
-            minWidth: "300px",
-            maxWidth: "1000px",
-            margin: "auto",
-          }}
-        >
-          <Educations {...portfolioInfoProps} />
-          <br />
-          <Awards {...portfolioInfoProps} />
-          <br />
-          <Projects {...portfolioInfoProps} />
-          <br />
-          <Certificates {...portfolioInfoProps} />
-          <br />
-        </Col>
+    <div className="header" style={{ marginTop: "0px", marginBottom: "0px", marginLeft: "0px", marginRight: "0px" }}>
+      <div className="header__menu" style={{ marginTop: "10px", marginBottom: "10px" }}>
+        <span aria-label="red circle icon" className="header__menu-icon header__menu-icon--red">      
+        </span>
+        <span aria-label="yellow circle icon" className="header__menu-icon header__menu-icon--yellow">
+        </span>
+        <span aria-label="green circle icon" className="header__menu-icon header__menu-icon--green">
+        </span>
+        <div className="header__menu-bar" />
+      </div> 
+      <span ><Header /></span>
+    </div>
+      <Container className="page-content" fluid style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginTop: "0px", marginBottom: "0px", marginLeft: "0px", marginRight: "0px" }}>
+          <Col lg={3} className="sidebar" style={{ flex: "0 0 25%"}} >
+            <User {...portfolioInfoProps} />
+          </Col>
+          <Col lg={9} className="main-content" style={{ flex: "1 75%"}}>
+            <Educations {...portfolioInfoProps} />
+            <br />
+            <Awards {...portfolioInfoProps} />
+            <br />
+            <Projects {...portfolioInfoProps} />
+            <br />
+            <Certificates {...portfolioInfoProps} />
+            <br />
+          </Col>
       </Container>
     </>
   );
 }
-
 export default Portfolio;
+
+

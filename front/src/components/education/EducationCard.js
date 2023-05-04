@@ -21,22 +21,23 @@ function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
   return (
     <Card.Text>
       <Row className="align-items-center">
+      <br />
         <Col
           xs={12}
           md={10}
           className="justify-content-center">
-          <span>{education.school}</span>
+          <span style={{fontSize: '1.5em', fontWeight: 'bold', color: '#000000'}}>{education.school}</span>
           <br />
-          <span className="text-muted">
+          <span style={{fontSize: '1.2em', color:'#4c4c4c'}}>
             {education.major} ({education.graduationStatus})
           </span>
           <br />
-          <span>
-            {formattedEntranceDate}~{formattedGraduationDate}
+          <span className="text-muted">
+            {education.score}/{education.scoremax} 학점
           </span>
           <br />
-          <span>
-            {education.score}/{education.scoremax}
+          <span className="text-muted">
+            {formattedEntranceDate}~{formattedGraduationDate}
           </span>
         </Col>
         {isEditable && (
