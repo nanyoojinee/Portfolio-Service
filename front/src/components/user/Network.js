@@ -47,21 +47,12 @@ function Network() {
     });
   }, [userState.user, navigate, page, perPage]);
 
-  const handlePrevPage = () => {
-    setPage((prev) => Math.max(prev - 1, 1));
-  };
-
-  const handleNextPage = () => {
-    setPage((prev) => Math.min(prev + 1, totalPage));
-  };
-
   const handlePageChange = (page) => {
     setPage(page);
   };
 
   useEffect(() => {
     const handleResize = () => {
-      console.log("test", window.innerWidth);
       if (window.innerWidth < 1000) {
         setIsMobile(true);
       } else {
@@ -73,12 +64,6 @@ function Network() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  // const handlePerPageChange = (event) => {
-  //   const newPerPage = Number(event.target.value);
-  //   setPerPage(newPerPage);
-  //   setPage(1);
-  // };
 
   const handlePerPageChange = (value) => {
     setPerPage(value);
