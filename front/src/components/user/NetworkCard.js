@@ -12,7 +12,7 @@ function NetworkCard({ user, setIsEditing, isEditable }) {
   useEffect(() => {
     if (user?.profileImage?.path) {
       axios
-        .get(`http://localhost:5001/${user?.profileImage?.path}`, {
+        .get(`http://${window.location.hostname}:5001/${user?.profileImage?.path}`, {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
           },

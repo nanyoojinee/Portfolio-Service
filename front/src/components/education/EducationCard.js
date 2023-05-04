@@ -32,10 +32,7 @@ function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
             {education.major} ({education.graduationStatus})
           </span>
           <br />
-          <span className="text-muted">
-          {(education.score === "0") || (education.scoremax === "0") ? "" : `${education.score} / ${education.scoremax}`} 학점
-          </span>
-          <br />
+          {(education.score === "0") || (education.scoremax === "0") ? "" :<span className="text-muted">{education.score} / {education.scoremax}학점<br /></span>} 
           <span className="text-muted">
             {formattedEntranceDate}~{formattedGraduationDate}
           </span>

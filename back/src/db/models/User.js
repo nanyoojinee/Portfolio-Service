@@ -15,6 +15,11 @@ class User {
   static async findAll() {
     return UserModel.find({});
   }
+
+  static async deleteById({ userId }) {
+    const deleteResult = await UserModel.deleteOne({ id: userId });
+    return deleteResult.deletedCount === 1;
+  }
 }
 
 export { User };

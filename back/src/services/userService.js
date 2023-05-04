@@ -149,6 +149,19 @@ class userAuthService {
     }
     return like.isLiked;
   }
+
+  static async deleteUser({ userId }) {
+    const isDataDeleted = await User.deleteById({ userId });
+
+    if (!isDataDeleted) {
+      const errorMessage =
+        "해당 id를 가진 계정은 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    return { status: "ok" };
+  }
+
 }
 
 export { userAuthService };

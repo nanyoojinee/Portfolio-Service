@@ -13,8 +13,8 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
   );
   const [entranceDate, setEntranceDate] = useState(new Date(currentEducation.entranceDate));
   const [graduationDate, setGraduationDate] = useState(new Date(currentEducation.graduationDate));
-  const [score, setScore] = useState(currentEducation.score);
-  const [scoremax, setScoremax] = useState(currentEducation.scoremax);
+  const [score, setScore] = useState(currentEducation.score?currentEducation.score:0);
+  const [scoremax, setScoremax] = useState(currentEducation.scoremax?currentEducation.scoremax:0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
         entranceDate,
         graduationDate,
         score,
-        scoremax
+        scoremax,
       });
     } catch (error) {
       alert(`An error occurred while updating the education: ${error.message}`);

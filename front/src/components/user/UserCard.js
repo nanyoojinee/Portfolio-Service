@@ -1,22 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Card, Row, Button, Col } from "react-bootstrap";
-// import * as Api from "../../api";
 import axios from "axios";
+import * as Api from "../../api";
 
 import LikeButton from "./LikeButton";
-
+  
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const isUser = !!user;
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("http://placekitten.com/200/200");
+  const handleDelete = async () => {
+    await Api.delete("users", user.id).then(() => {
+      alert("회원탈퇴 성공.");
+    });
+  };
   useEffect(() => {
     if (user?.profileImage?.path) {
-      /*    Api.get(user?.profileImage.path).then((res) => {
-      setImageUrl(URL.createObjectURL(res.data));
-    }) */
       axios
-        .get(`http://localhost:5001/${user?.profileImage?.path}`, {
+        .get(`http://${window.location.hostname}:5001/${user?.profileImage?.path}`, {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
           },
@@ -61,6 +63,12 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
               </Button>
               </Col>
             </Row>
+            <Button
+                variant="outline-danger"
+                size="sm"
+                onClick={handleDelete}>
+                회원탈퇴
+              </Button>
           </Col>
         )}
 
