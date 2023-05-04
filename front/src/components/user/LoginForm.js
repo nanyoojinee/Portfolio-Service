@@ -99,6 +99,7 @@ function LoginForm() {
       className="d-flex flex-column justify-content-center align-items-center "
       style={{ padding: "7rem", maxHeight: "100vh" }}
     >
+      <div className="loginform-container">
       <div className="caterpillar"></div>
       <Container
         style={{
@@ -111,7 +112,7 @@ function LoginForm() {
         }}
       >
         <Row className="text-center">
-          <h1>
+          <h1 style={{ display: "grid", fontSize: "2rem"}}>
             <img
               src="https://cdn-icons-png.flaticon.com/512/768/768464.png?w=740&t=st=1683117616~exp=1683118216~hmac=1efef7fc266c902b5fedae87213037a482f8adfed985e8114442c3854884bb8e"
               alt="우주아이콘"
@@ -122,8 +123,9 @@ function LoginForm() {
           </h1>
         </Row>
         {isTypingComplete && (
-          <Row className="mt-5">
+          <Row className="mt-5" style={{ minWidth: "13rem"}}>
             <Col lg={12}>
+              <div className="login-form">
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="loginEmail">
                   <Form.Label>이메일 주소</Form.Label>
@@ -154,6 +156,8 @@ function LoginForm() {
                     </Form.Text>
                   )}
                 </Form.Group>
+                </Form>
+                </div>
 
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
@@ -166,7 +170,6 @@ function LoginForm() {
                     </Button>
                   </Col>
                 </Form.Group>
-              </Form>
             </Col>
           </Row>
         )}
@@ -193,6 +196,7 @@ function LoginForm() {
           </Form.Group>
         </Container>
       )}
+      </div>
     </Container>
   );
 }
