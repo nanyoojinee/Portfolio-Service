@@ -29,11 +29,11 @@ function SelectBox(props) {
             onClick={() => handleSelect(12)}>
             12
           </li>
-          {/* <li
+          <li
             className="optionItem"
-            onClick={() => handleSelect(15)}>
-            15
-          </li> */}
+            onClick={() => handleSelect(18)}>
+            18
+          </li>
         </ul>
       </div>
     </div>

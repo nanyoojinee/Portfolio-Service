@@ -5,7 +5,7 @@
 }
 
 .form {
-  width: 500px;
+  width: 480px;
   height: 500px;
   display: flex;
   align-items: center;
@@ -29,10 +29,6 @@ section{
   align-items: center;
 }
 
-.swiper{
-  width: 950px;
-}
-
 #card{
   position: relative;
   background: #fff;
@@ -46,7 +42,7 @@ section{
   position: absolute;
   height: 40%;
   width: 100%;
-  background: #FF676D;
+  background: #d4ccee;
   border-radius: 20px 20px 0 0;
 }
 
@@ -64,7 +60,7 @@ section #card .image{
   width: 140px;
   border-radius: 50%;
   padding: 3px;
-  background: #FF676D;
+  background: #d4ccee;
 }
 
 section #card .image img{
@@ -111,10 +107,10 @@ section #card .image img{
 }
 
 #card .link button{
-  background: #FF676D;
+  background: #d4ccee;
   outline: none;
   border: none;
-  color: #fff;
+  color: #8770d1;
   padding: 8px 22px;
   border-radius: 20px;
   font-size: 14px;
@@ -124,4 +120,5 @@ section #card .image img{
 
 .button:hover{
   scale: 105%;
+  color: #6146b9;
 }

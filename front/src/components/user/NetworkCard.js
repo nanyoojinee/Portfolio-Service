@@ -6,8 +6,8 @@ import LikeButton from "./LikeButton";
 import "../networkCard.css";
 
 function NetworkCard({ user, setIsEditing, isEditable }) {
-  const isUser = !!user;
   const navigate = useNavigate();
+  const isUser = !!user;
   const [imageUrl, setImageUrl] = useState("http://placekitten.com/200/200");
   useEffect(() => {
     if (user?.profileImage?.path) {
