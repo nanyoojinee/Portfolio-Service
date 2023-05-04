@@ -1,23 +1,33 @@
+:root {
+  --container-width: 100%; /* Container의 너비를 화면의 80%로 설정 */
+}
+
+.container {
+  width: var(--container-width);
+  margin: 0 auto;
+}
+
 .caterpillar {
-    position: absolute;
-    left: 500px;
-    bottom: 800px;
-    width: 200px;
-    height: 50px;
-    background-image: url('https://cdn-icons-png.flaticon.com/512/305/305838.png?w=740&t=st=1683117723~exp=1683118323~hmac=bac7e77b5c547a1f5ad4b4c2da9d457e1a17e4985431cc318d54f1d13a838489');
-    background-repeat: no-repeat;
-    background-size: contain;
-    animation-name: crawl;
-    animation-duration: 8s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+  position: absolute;
+  bottom: 830px;
+  left: calc((var(--container-width) - 550px) / 2); /* Container의 중앙으로 이동 */
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/305/305838.png?w=740&t=st=1683117723~exp=1683118323~hmac=bac7e77b5c547a1f5ad4b4c2da9d457e1a17e4985431cc318d54f1d13a838489');
+  background-repeat: no-repeat;
+  background-size: contain;
+  animation-name: crawl;
+  animation-duration: 8s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes crawl {
+  from {
+    transform: translateX(0);
   }
-  
-  @keyframes crawl {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(500px);
-    }
+  to {
+    transform: translateX(calc(var(--container-width) + 500px)); /* Container의 오른쪽 끝에서 50px 더한 위치까지 이동 */
   }
+}

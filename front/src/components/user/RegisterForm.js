@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { validateEmail } from "./ValidateEmail";
 import * as Api from "../../api";
+import { setPageColor } from "./SetPageColor";
 
 function RegisterForm() {
+  setPageColor();
   const navigate = useNavigate();
 
   //useState로 email 상태를 생성함.
@@ -54,7 +56,7 @@ function RegisterForm() {
   };
 
   return (
-  <Container className="d-flex flex-column justify-content-center align-items-center " style={{ padding : "5rem",maxHeight: "100vh"}}>
+  <Container className="d-flex flex-column justify-content-center align-items-center " style={{ padding : "10rem",maxHeight: "100vh"}}>
     <Container  style={{ maxWidth: '550px', width: '100%', padding: '1rem', border: '1.5px solid rgba(128, 128, 128, 0.5)', borderRadius: "10px", backgroundColor:"#F5F5F5"}}>
       <Row className="justify-content-md-center mt-5">
         <Col lg={8}>

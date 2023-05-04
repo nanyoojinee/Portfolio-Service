@@ -5,7 +5,7 @@ import { validateEmail } from "./ValidateEmail";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
 import { setPageColor } from "./SetPageColor";
-import caterpillar from "./caterpillar.css";
+import "./caterpillar.css";
 
 function LoginForm() {
   setPageColor();
@@ -97,8 +97,8 @@ function LoginForm() {
   };
 
   return (
-  <Container className="d-flex flex-column justify-content-center align-items-center " style={{ padding : "5rem",maxHeight: "100vh"}}>
-  {/*<div className="caterpillar"></div> {}*/}
+  <Container className="d-flex flex-column justify-content-center align-items-center " style={{ padding : "7rem",maxHeight: "100vh"}}>
+  <div className="caterpillar"></div>
   <Container  style={{ maxWidth: '550px', width: '100%', padding: '85px', border: '1.5px solid rgba(128, 128, 128, 0.5)', borderRadius: "10px", backgroundColor:"#F5F5F5"}}>
     <Row className="text-center">
       <h1><img src = "https://cdn-icons-png.flaticon.com/512/768/768464.png?w=740&t=st=1683117616~exp=1683118216~hmac=1efef7fc266c902b5fedae87213037a482f8adfed985e8114442c3854884bb8e" width="30" height="30"></img>{isTypingComplete ? completionWord : typingTitle}</h1>
