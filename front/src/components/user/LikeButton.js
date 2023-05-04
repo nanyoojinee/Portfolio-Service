@@ -5,7 +5,6 @@ import * as Api from "../../api";
 import HeartImg from "../../img/heart.png";
 import EmptyHeartImg from "../../img/empty-heart.png";
 
-
 const Heart = styled.img`
   width: 20px;
   height: 20px;
@@ -15,7 +14,7 @@ const Heart = styled.img`
 function LikeButton({ user }) {
   const [like, setLike] = useState(user?.socialLikes);
   const userState = useContext(UserStateContext); // 현재 로그인 해있는 사람을 return해주는 userState 정의
-  const [isLiked, setIsLiked] = useState(like)
+  const [isLiked, setIsLiked] = useState(like);
   useEffect(() => {
     const fetchLikeStatus = async () => {
       try {
@@ -26,7 +25,7 @@ function LikeButton({ user }) {
       }
     };
     fetchLikeStatus();
-  }, []);
+  });
   const handleLikeButton = async () => {
     let res;
     try {

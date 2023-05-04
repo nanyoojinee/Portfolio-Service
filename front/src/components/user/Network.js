@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
 import { setPageColor } from "./SetPageColor";
 import * as Api from "../../api";
-import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
 import "../Network.css";
 import Header from "../Header";
@@ -54,15 +53,9 @@ function Network() {
       <Header />
       <Container fluid>
         <span style={{ float: "right" }}></span>
-        <Row
-          xs="auto"
-          className="networkcard-form">
+        <Row xs="auto" className="networkcard-form">
           {users.map((user) => (
-            <NetworkCard
-              key={user.id}
-              user={user}
-              isNetwork
-            />
+            <NetworkCard key={user.id} user={user} isNetwork />
           ))}
         </Row>
         <div>
@@ -72,10 +65,7 @@ function Network() {
           />
         </div>
         <div className="justify-content-center mt-4">
-          <button
-            type="button"
-            onClick={handlePrevPage}
-            disabled={page === 1}>
+          <button type="button" onClick={handlePrevPage} disabled={page === 1}>
             이전 페이지
           </button>
           <div class="pagetext">
@@ -84,7 +74,8 @@ function Network() {
           <button
             type="button"
             onClick={handleNextPage}
-            disabled={page === totalPage}>
+            disabled={page === totalPage}
+          >
             다음 페이지
           </button>
         </div>
