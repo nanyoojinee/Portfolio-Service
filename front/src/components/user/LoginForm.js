@@ -99,8 +99,8 @@ function LoginForm() {
       className="d-flex flex-column justify-content-center align-items-center "
       style={{ padding: "7rem", maxHeight: "100vh" }}
     >
-      <div className="loginform-container">
       <div className="caterpillar"></div>
+      <div className="login-form">
       <Container
         style={{
           maxWidth: "550px",
@@ -125,7 +125,6 @@ function LoginForm() {
         {isTypingComplete && (
           <Row className="mt-5" style={{ minWidth: "13rem"}}>
             <Col lg={12}>
-              <div className="login-form">
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="loginEmail">
                   <Form.Label>이메일 주소</Form.Label>
@@ -156,8 +155,6 @@ function LoginForm() {
                     </Form.Text>
                   )}
                 </Form.Group>
-                </Form>
-                </div>
 
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
@@ -170,6 +167,7 @@ function LoginForm() {
                     </Button>
                   </Col>
                 </Form.Group>
+              </Form>
             </Col>
           </Row>
         )}
