@@ -5,7 +5,7 @@ import * as Api from "../../api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const graduationList = ["재학중", "학사졸업", "석사졸업", "박사졸업"];
+const graduationList = ["재학중", "휴학중", "학사졸업", "석사졸업", "박사졸업"];
 
 function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
   const [school, setSchool] = useState("");
@@ -83,7 +83,7 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
           onChange={(e) => setMajor(e.target.value)}
         />
       </Form.Group>
-      <Row className="mt-3" style={{ width: "500px" }}>
+      <Row className="mt-3" style={{ width: "100%" }}>
         <Form.Group as={Col} controlId="formBasicEntranceDate">
           <Form.Label>* 입학년월</Form.Label>
           <DatePicker

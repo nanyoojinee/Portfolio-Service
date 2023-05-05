@@ -5,6 +5,8 @@ import * as Api from "../../api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+const graduationList = ["재학중", "휴학중", "학사졸업", "석사졸업", "박사졸업"];
+
 function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
   const [school, setSchool] = useState(currentEducation.school);
   const [major, setMajor] = useState(currentEducation.major);
@@ -72,7 +74,7 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
         />
       </Form.Group>
 
-      <Row className="mt-3" style={{ width: "500px" }}>
+      <Row className="mt-3" style={{ width: "100%" }}>
         <Form.Group as={Col} controlId="formBasicEntranceDate">
           <Form.Label>* 입학년월</Form.Label>
           <DatePicker
@@ -131,47 +133,22 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
         </Row>
       </Form.Group>
 
+
       <br />
-      <Form.Check
-        inline
-        label="재학중"
-        name="graduationStatus"
-        type={"radio"}
-        id={`inline-radio-1`}
-        value="재학중"
-        checked={graduationStatus === "재학중"}
-        onChange={(e) => setGraduationStatus(e.target.value)}
-      />
-      <Form.Check
-        inline
-        label="학사졸업"
-        name="graduationStatus"
-        type={"radio"}
-        id={`inline-radio-2`}
-        value="학사졸업"
-        checked={graduationStatus === "학사졸업"}
-        onChange={(e) => setGraduationStatus(e.target.value)}
-      />
-      <Form.Check
-        inline
-        label="석사졸업"
-        name="graduationStatus"
-        type={"radio"}
-        id={`inline-radio-3`}
-        value="석사졸업"
-        checked={graduationStatus === "석사졸업"}
-        onChange={(e) => setGraduationStatus(e.target.value)}
-      />
-      <Form.Check
-        inline
-        label="박사졸업"
-        name="graduationStatus"
-        type={"radio"}
-        id={`inline-radio-4`}
-        value="박사졸업"
-        checked={graduationStatus === "박사졸업"}
-        onChange={(e) => setGraduationStatus(e.target.value)}
-      />
+      {graduationList.map((graduation, index) => (
+        <Form.Check
+          key={graduation}
+          inline
+          label={graduation}
+          name="graduationStatus"
+          type={"radio"}
+          id={`inline-radio-${index}`}
+          value={graduation}
+          checked={graduationStatus === graduation}
+          onChange={(e) => setGraduationStatus(e.target.value)}
+        />
+      ))}
+
       <br />
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>

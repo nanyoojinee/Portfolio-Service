@@ -57,7 +57,7 @@ function Portfolio({ user }) {
 
   return (
     <>
-    <div className="header" style={{ marginTop: "0px", marginBottom: "0px", marginLeft: "0px", marginRight: "0px" }}>
+    <div className="header">
       <div className="header__menu" style={{ marginTop: "10px", marginBottom: "10px" }}>
         <span aria-label="red circle icon" className="header__menu-icon header__menu-icon--red">      
         </span>

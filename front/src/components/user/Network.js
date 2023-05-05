@@ -83,6 +83,15 @@ function Network() {
         <Nav
           activeKey={location.pathname}
           className="justify-content-end">
+          <h1 style={{ display: "grid", fontSize: "2rem" }}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/768/768464.png?w=740&t=st=1683117616~exp=1683118216~hmac=1efef7fc266c902b5fedae87213037a482f8adfed985e8114442c3854884bb8e"
+                alt="우주아이콘"
+                width="30"
+                height="30"
+              ></img>
+              
+          </h1>
           {isLogin && (
             <NavDropdown
               title={

@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const academicStatus = ["재학중", "학사졸업", "석사졸업", "박사졸업"];
+const academicStatus = ["재학중", "휴학중", "학사졸업", "석사졸업", "박사졸업"];
 
 const EducationSchema = new Schema({
   id: {

@@ -34,13 +34,13 @@ function UserCard({ user, setIsEditing, isEditable }) {
       <Card.Body>
         <Row className="justify-content-md-center">
           <Card.Img
-            style={{ width: "15rem", height: "12rem" }}
+            style={{ width: "15rem", height: "12rem", objectFit: "cover" }}
             className="mx-auto d-block mb-3"
             src={imageUrl}
             alt="사용자 업로드 이미지 or 랜덤 고양이 이미지 (http://placekitten.com API 사용)"
           />
         </Row>
-        {/* <Card.Body className="text-center"> */}
+        <Card.Body className="text-center">
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted small">
           {user?.email}
@@ -48,7 +48,7 @@ function UserCard({ user, setIsEditing, isEditable }) {
         <Card.Text style={{ fontSize: "14px" }}>{user?.description}</Card.Text>
         <br></br>
         <Card.Text>{isUser && <LikeButton user={user} />}</Card.Text>
-        {/* </Card.Body> */}
+        </Card.Body>
         {isEditable && (
           <Col>
             <Row className="mt-3 text-center text-info justify-content-center">
