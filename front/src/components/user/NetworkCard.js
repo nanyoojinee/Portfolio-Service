@@ -48,7 +48,7 @@ function NetworkCard({ user, setIsEditing, isEditable }) {
                   </div>
 
                   <div className="link">
-                    <p>{isUser && <LikeButton user={user} />}</p>
+                    <div style={{ textAlign: "center"}}>{isUser && <LikeButton user={user} />}</div>
                     <button
                       className="button"
                       href="#"
