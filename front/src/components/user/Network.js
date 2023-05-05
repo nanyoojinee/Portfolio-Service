@@ -175,6 +175,7 @@ function Network() {
           <button
             type="button"
             className="mx-2"
+            id="network-button"
             onClick={handlePrevPage}
             disabled={page === 1}
           >
@@ -184,6 +185,7 @@ function Network() {
           <button
             type="button"
             className="mx-2"
+            id="network-button"
             onClick={handleNextPage}
             disabled={page === totalPage}
           >

@@ -49,12 +49,12 @@ function RegisterForm() {
       });
 
       // 로그인 페이지로 이동함.
+      alert("회원가입 성공");
       navigate("/login");
     } catch (err) {
       alert("이미 사용중인 이메일입니다.", err);
     }
 
-    alert("회원가입 성공");
   };
 
   return (
