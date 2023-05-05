@@ -22,6 +22,9 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
     if (!school || !major || !entranceDate || !graduationDate || !graduationStatus) {
       return alert("학교 이름, 전공, 입학 및 졸업년월, 졸업상태는 필수 입력 값입니다.");
     }
+    if (graduationDate < entranceDate) {
+      return alert("졸업일은 입학일 이후의 날짜여야 합니다.");
+    }
     const userId = currentEducation.userId;
 
     try {

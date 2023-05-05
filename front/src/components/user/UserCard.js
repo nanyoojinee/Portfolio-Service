@@ -27,6 +27,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           setImageUrl(imageUrl);
         })
         .catch((error) => console.error(error));
+    } else {
+      setImageUrl("http://placekitten.com/200/200");
     }
   }, [user?.profileImage?.path]);
   return (
@@ -37,7 +39,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             style={{ width: "15rem", height: "12rem" }}
             className="mx-auto d-block mb-3"
             src={imageUrl}
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+            alt="사용자 업로드 이미지 or 랜덤 고양이 이미지 (http://placekitten.com API 사용)"
           />
         </Row>
         {/* <Card.Body className="text-center"> */}

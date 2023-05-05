@@ -20,6 +20,9 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     if (!projectName || !startDate || !endDate) {
       return alert("프로젝트 내역, 제작년월은 필수 입력 값입니다.");
     }
+    if (endDate < startDate) {
+      return alert("프로젝트 완료일은 시작일 이후의 날짜여야 합니다.");
+    }
     const userId = currentProject.userId;
 
     try {
