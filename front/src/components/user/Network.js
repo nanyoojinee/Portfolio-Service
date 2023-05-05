@@ -19,7 +19,7 @@ function Network() {
   const [perPage, setPerPage] = useState(6);
   const [totalPage, setTotalPage] = useState(1);
   const [users, setUsers] = useState([]);
-  const [isMobile, setIsMobile] = useState(false);
+  const [displayType, setDisplayType] = useState('typeOne');
 
   const location = useLocation();
   const dispatch = useContext(DispatchContext);
@@ -53,10 +53,12 @@ function Network() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1000) {
-        setIsMobile(true);
+      if (window.innerWidth >= 1400) {
+        setDisplayType('typeOne');
+      } else if (window.innerWidth > 890 && window.innerWidth < 1400) {
+        setDisplayType('typeTwo');
       } else {
-        setIsMobile(false);
+        setDisplayType('typeThree')
       }
     };
     window.addEventListener("resize", handleResize);
@@ -64,6 +66,12 @@ function Network() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const gridTemplateColumns = {
+  typeOne: "1fr 1fr 1fr",
+  typeTwo: "1fr 1fr",
+  typeThree: "1fr"
+}[displayType];
 
   const handlePerPageChange = (value) => {
     setPerPage(value);
@@ -117,7 +125,7 @@ function Network() {
               className="network-cardbody"
               style={{
                 display: "grid",
-                gridTemplateColumns: isMobile ? "100%" : "1fr 1fr 1fr",
+                gridTemplateColumns,
                 placeItems: "center",
               }}>
               {users.map((user) => (

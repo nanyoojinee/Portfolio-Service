@@ -96,9 +96,9 @@ function LoginForm() {
   return (
     <Container
       className="d-flex flex-column justify-content-center align-items-center "
-      style={{ padding: "7rem", maxHeight: "100vh" }}
+      style={{ padding: "7rem", maxHeight: "100vh"}}
     >
-      <div className="caterpillar"></div>
+      <div className="caterpillar" style={{ marginBottom: "5rem"}}></div>
       <div className="login-form">
         <Container
           style={{

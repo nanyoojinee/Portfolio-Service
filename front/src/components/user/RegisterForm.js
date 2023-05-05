@@ -60,20 +60,21 @@ function RegisterForm() {
   return (
     <Container
       className="d-flex flex-column justify-content-center align-items-center "
-      style={{ padding: "10rem", maxHeight: "100vh" }}
+      style={{ padding: "7rem", maxHeight: "100vh" }}
     >
+      <div className="register-form">
       <Container
         style={{
           maxWidth: "550px",
           width: "100%",
-          padding: "1rem",
+          padding: "4rem",
           border: "1.5px solid rgba(128, 128, 128, 0.5)",
           borderRadius: "10px",
           backgroundColor: "#F5F5F5",
         }}
       >
-        <Row className="justify-content-md-center mt-5">
-          <Col lg={8}>
+        <Row className="justify-content-md-center mt-5" style={{ minWidth: "13rem"}}>
+          <Col lg={12}>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="registerEmail">
                 <Form.Label>이메일 주소</Form.Label>
@@ -170,6 +171,7 @@ function RegisterForm() {
           </Col>
         </Form.Group>
       </Container>
+      </div>
     </Container>
   );
 }
