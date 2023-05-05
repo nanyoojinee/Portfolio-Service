@@ -1,4 +1,4 @@
-import { User,Like } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, Like } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -101,20 +101,20 @@ class userAuthService {
     }
 
     if (toUpdate.isLiked) {
-    let userObjectId = user._id; // user(내가 보고있는 게시글의 작성자)의 user스키마의 Objectid를 넣어줌
-    let sendObjectId = mongoose.Types.ObjectId(toUpdate.sendUser); // sendid(로그인 해있는 사람)의 user스키마의 Objectid를 넣어줌
+      let userObjectId = user._id; // user(내가 보고있는 게시글의 작성자)의 user스키마의 Objectid를 넣어줌
+      let sendObjectId = mongoose.Types.ObjectId(toUpdate.sendUser); // sendid(로그인 해있는 사람)의 user스키마의 Objectid를 넣어줌
       const like = await Like.findLike(userObjectId, sendObjectId);
       if (like) {
         if (toUpdate.isLiked === "true") {
           like.isLiked = true;
           user.socialLikes += 1;
-        } else{
+        } else {
           like.isLiked = false;
           user.socialLikes -= 1;
         }
         await like.save();
       } else {
-        const newLike = await Like.createLike(userObjectId, sendObjectId,true);
+        const newLike = await Like.createLike(userObjectId, sendObjectId, true);
         user.socialLikes += 1;
         await newLike.save();
       }
@@ -137,17 +137,18 @@ class userAuthService {
     }
     return user;
   }
-  static async getLikeInfo({userId,sendId}) {
+  static async getLikeInfo({ userId, sendId }) {
     let user = await User.findById({ userId });
     let userObjectId = user._id;
     let sendObjectId = mongoose.Types.ObjectId(sendId);
-    const like = await Like.findLike(userObjectId,sendObjectId);
+    const like = await Like.findLike(userObjectId, sendObjectId);
+    const socialLikes = user.socialLikes;
     if (!like) {
-      const newLike = await Like.createLike(userObjectId, sendObjectId,false);
+      const newLike = await Like.createLike(userObjectId, sendObjectId, false);
       await newLike.save();
       return newLike.isLiked;
     }
-    return like.isLiked;
+    return [like.isLiked, socialLikes];
   }
 
   static async deleteUser({ userId }) {
@@ -161,7 +162,6 @@ class userAuthService {
 
     return { status: "ok" };
   }
-
 }
 
 export { userAuthService };

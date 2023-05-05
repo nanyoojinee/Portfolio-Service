@@ -14,12 +14,13 @@ const Heart = styled.img`
 function LikeButton({ user }) {
   const [like, setLike] = useState(user?.socialLikes);
   const userState = useContext(UserStateContext); // 현재 로그인 해있는 사람을 return해주는 userState 정의
-  const [isLiked, setIsLiked] = useState(like);
+  const [isLiked, setIsLiked] = useState(null);
   useEffect(() => {
     const fetchLikeStatus = async () => {
       try {
         const res = await Api.get(`users/${user.id}/${userState.user._id}`); //user는 게시글 작성자, userState.user는 로그인해있는 유저
-        setIsLiked(res.data);
+        setLike(res.data[1]);
+        setIsLiked(res.data[0]);
       } catch (error) {
         console.error(error);
       }
@@ -54,12 +55,23 @@ function LikeButton({ user }) {
 
   return (
     <>
-      <Heart
-        src={isLiked ? HeartImg : EmptyHeartImg}
-        alt="heart"
-        onClick={handleLikeButton}
-      />{" "}
-      {like}
+      {isLiked === null ? (
+        <div
+          style={{
+            width: 100,
+            height: 24,
+          }}
+        />
+      ) : (
+        <>
+          <Heart
+            src={isLiked ? HeartImg : EmptyHeartImg}
+            alt="heart"
+            onClick={handleLikeButton}
+          />{" "}
+          {like}
+        </>
+      )}
     </>
   );
 }

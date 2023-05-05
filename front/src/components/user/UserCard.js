@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Card, Row, Button, Col } from "react-bootstrap";
 import axios from "axios";
 
 import LikeButton from "./LikeButton";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+function UserCard({ user, setIsEditing, isEditable }) {
   const isUser = !!user;
-  const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("http://placekitten.com/200/200");
 
   useEffect(() => {
@@ -70,18 +68,6 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
               </Col>
             </Row>
           </Col>
-        )}
-
-        {isNetwork && (
-          <Card.Link
-            className="mt-3"
-            href="#"
-            onClick={() => {
-              navigate(`/users/${user.id}`);
-            }}
-          >
-            포트폴리오
-          </Card.Link>
         )}
       </Card.Body>
     </Card>
