@@ -7,9 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { UserStateContext, DispatchContext } from "../../App";
 import "../Network.css";
-import SelectBox from "./SelectBox";
 import NetworkCard from "./NetworkCard";
-import Pagination from "react-js-pagination";
 
 function Network() {
   setPageColor();
@@ -47,6 +45,21 @@ function Network() {
     });
   }, [userState.user, navigate, page, perPage]);
 
+  const handlePrevPage = () => {
+    setPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setPage((prev) => Math.min(prev + 1, totalPage));
+  };
+
+  const handlePerPageChange = (event) => {
+    const newPerPage = Number(event.target.value);
+    setPerPage(event.target.value);
+    setPage(1);
+  };
+
+
   const handlePageChange = (page) => {
     setPage(page);
   };
@@ -72,10 +85,6 @@ function Network() {
   typeTwo: "1fr 1fr",
   typeThree: "1fr"
 }[displayType];
-
-  const handlePerPageChange = (value) => {
-    setPerPage(value);
-  };
 
   return (
     <div>
@@ -146,20 +155,43 @@ function Network() {
               ))}
             </Card.Body>
           </div>
-        <div>
-          <SelectBox
-            perPage={perPage}
-            handlePerPageChange={handlePerPageChange}
-          />
+
+        <div className="d-flex justify-content-end my-3">
+        <label htmlFor="perPage" className="me-2">
+          페이지 당 유저 수:
+        </label>
+        <select
+          id="perPage"
+          value={perPage}
+          onChange={handlePerPageChange}
+        >
+          <option value="6">6</option>
+          <option value="12">12</option>
+          <option value="18">18</option>
+        </select>
+      </div>
+      <div className="d-flex justify-content-center mt-4">
+        <div className = "pagination-box">
+          <button
+            type="button"
+            className="mx-2"
+            onClick={handlePrevPage}
+            disabled={page === 1}
+          >
+            Previous
+          </button>
+          {page} / {totalPage}
+          <button
+            type="button"
+            className="mx-2"
+            onClick={handleNextPage}
+            disabled={page === totalPage}
+          >
+            Next
+          </button>
         </div>
-        <Pagination
-          activePage={page}
-          itemsCountPerPage={perPage}
-          totalItemsCount={totalPage * perPage}
-          prevPageText={"‹"}
-          nextPageText={"›"}
-          onChange={handlePageChange}
-        />
+      </div>
+
       </div>
     </div>
   );

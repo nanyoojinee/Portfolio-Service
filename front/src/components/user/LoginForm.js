@@ -98,7 +98,7 @@ function LoginForm() {
       className="d-flex flex-column justify-content-center align-items-center "
       style={{ padding: "7rem", maxHeight: "100vh"}}
     >
-      <div className="caterpillar" style={{ marginBottom: "5rem"}}></div>
+      <div className="caterpillar"></div>
       <div className="login-form">
         <Container
           style={{
@@ -134,7 +134,7 @@ function LoginForm() {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                     {!isEmailValid && (
-                      <Form.Text className="text-success">
+                      <Form.Text className="text">
                         이메일 형식이 올바르지 않습니다.
                       </Form.Text>
                     )}
@@ -149,7 +149,7 @@ function LoginForm() {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                     {!isPasswordValid && (
-                      <Form.Text className="text-success">
+                      <Form.Text className="text">
                         비밀번호는 8글자 이상입니다.
                       </Form.Text>
                     )}

@@ -14,7 +14,7 @@ function RegisterForm() {
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
   //useState로 confirmPassword 상태를 생성함.
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState();
   //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
 
@@ -73,9 +73,9 @@ function RegisterForm() {
           backgroundColor: "#F5F5F5",
         }}
       >
-        <Row className="justify-content-md-center mt-5" style={{ minWidth: "13rem"}}>
+        <Row className="justify-content-md-center mt-3" style={{ minWidth: "13rem"}}>
           <Col lg={12}>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", maxWidth: "20rem ", minWidth:"13rem"} }>
               <Form.Group controlId="registerEmail">
                 <Form.Label>이메일 주소</Form.Label>
                 <Form.Control
@@ -85,9 +85,14 @@ function RegisterForm() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 {!isEmailValid && (
-                  <Form.Text className="text-success">
+                  <Form.Text className="text">
                     이메일 형식이 올바르지 않습니다.
                   </Form.Text>
+                )}
+                {isEmailValid && (
+                   <Form.Text className={"text-success"}>
+                   올바른 이메일 형식입니다.
+                 </Form.Text>
                 )}
               </Form.Group>
 
@@ -99,11 +104,18 @@ function RegisterForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <div style={{width: "316px"}}>
                 {!isPasswordValid && (
-                  <Form.Text className="text-success">
+                  <Form.Text className="text">
                     문자, 숫자, 기호를 조합하여 8자 이상으로 설정해주세요.
                   </Form.Text>
                 )}
+                {isPasswordValid && (
+                   <Form.Text className={"text-success"}>
+                    사용 가능한 비밀번호입니다.
+                 </Form.Text>
+                )}
+                </div>
               </Form.Group>
 
               <Form.Group controlId="registerConfirmPassword" className="mt-3">
@@ -114,11 +126,13 @@ function RegisterForm() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                {!isPasswordSame && (
+                <div style={{width: "316px"}}>
+                {isPasswordSame && (
                   <Form.Text className="text-success">
-                    비밀번호가 일치하지 않습니다.
+                    비밀번호가 일치합니다.
                   </Form.Text>
                 )}
+                </div>
               </Form.Group>
 
               <Form.Group controlId="registerName" className="mt-3">
@@ -130,13 +144,18 @@ function RegisterForm() {
                   onChange={(e) => setName(e.target.value)}
                 />
                 {!isNameValid && (
-                  <Form.Text className="text-success">
+                  <Form.Text className="text">
                     이름은 2글자 이상으로 설정해 주세요.
+                  </Form.Text>
+                )}
+                {isNameValid && (
+                  <Form.Text className="text-success">
+                    사용 가능한 이름입니다.
                   </Form.Text>
                 )}
               </Form.Group>
 
-              <Form.Group as={Row} className="mt-3 text-center">
+              <Form.Group as={Row} className="mt-5 text-center">
                 <Col sm={{ span: 20 }}>
                   <Button
                     variant="primary"
@@ -162,7 +181,7 @@ function RegisterForm() {
           backgroundColor: "#F5F5F5",
         }}
       >
-        <Form.Group as={Row} className="mt-3 text-center">
+        <Form.Group as={Row} className="mt-5 text-center">
           <Col sm={{ span: 20 }}>
             <Form.Text>계정이 있으신가요? </Form.Text>
             <Button variant="#F5F5F5" onClick={() => navigate("/login")}>
