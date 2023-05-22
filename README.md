@@ -24,18 +24,10 @@
 
 ## 설치 방법
 
-1. 프론트 엔드 서버 실행
+프론트 엔드 서버 실행
 
 ```bash
 cd front
 yarn
 yarn start
 ```
-
-2. 백엔드 서버 실행
-
-```bash
-back 폴더 내부 README 참고
-```
-
----
